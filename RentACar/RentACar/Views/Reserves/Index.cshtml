@@ -1,0 +1,59 @@
+﻿@model IEnumerable<RentACar.Data.Entities.Reserve>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DateReserve)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateStartReserve)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateFinishReserve)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PlaceFinishReserve)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StartReserve)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateReserve)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateStartReserve)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateFinishReserve)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PlaceFinishReserve)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartReserve)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
