@@ -14,9 +14,10 @@ namespace RentACar.Data.Entities
         [Display(Name = "Fecha Final Reserva")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public DateTime DateFinishReserve { get; set; }
-        [Display(Name = "Lugar finalización Reserva")]
+        [Display(Name = "Lugar Reserva")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public String PlaceFinishReserve { get; set; }
+        [Display(Name = "Estado")]
         public Boolean StartReserve { get; set; }
     }
 }
