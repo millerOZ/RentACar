@@ -1,11 +1,13 @@
+using Microsoft.EntityFrameworkCore;
 using RentACar.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddDbContext<DataContext>(o =>  {
-    o.UseSqlServer();
+builder.Services.AddDbContext<DataContext>(o =>
+{
+    o.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 var app = builder.Build();
 

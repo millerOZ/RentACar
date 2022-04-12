@@ -1,0 +1,50 @@
+﻿@model RentACar.Data.Entities.Reserve
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Eliminar</h1>
+<h3>Esta seguro que desea eliminar el item?</h3>
+<div>
+    <h4>Reserva</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DateReserve)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DateReserve)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DateStartReserve)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DateStartReserve)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DateFinishReserve)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DateFinishReserve)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PlaceFinishReserve)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PlaceFinishReserve)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.StartReserve)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.StartReserve)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index">Volver</a>
+    </form>
+</div>
