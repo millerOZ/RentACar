@@ -12,8 +12,9 @@ namespace RentACar.Data
         public async Task SeedAsync()
         {
             await _context.Database.EnsureCreatedAsync();
+            await CheckReservesAsync();
         }
-        private async Task CheckCountriesAsync()
+        private async Task CheckReservesAsync()
         {
             if (!_context.Reserves.Any())
             {
