@@ -4,5 +4,6 @@ namespace RentACar.Data.Entities
 {
     public class User: IdentityUser
     {
+
     }
 }

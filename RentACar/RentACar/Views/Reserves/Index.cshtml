@@ -33,7 +33,9 @@
                             <th>
                                 @Html.DisplayNameFor(model => model.StartReserve)
                             </th>
-                            <th></th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Rentals)
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -56,8 +58,13 @@
                                     @Html.DisplayFor(modelItem => item.StartReserve)
                                 </td>
                                 <td>
-                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-warning">Editar</a> 
-                                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info">Detalles</a> 
+                                    @Html.DisplayFor(modelItem => item.Rentals)
+                                </td>
+
+                                @Html.DisplayFor(modelItem => item.Rentals)
+                                <td>
+                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-warning">Editar</a>
+                                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info">Detalles</a>
                                     <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger">Eliminar</a>
                                 </td>
                             </tr>

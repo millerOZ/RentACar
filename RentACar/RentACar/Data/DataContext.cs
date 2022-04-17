@@ -4,7 +4,7 @@ using RentACar.Data.Entities;
 
 namespace RentACar.Data
 {
-    public class DataContext : IdentityDbContext<User>
+    public class DataContext : DbContext
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
