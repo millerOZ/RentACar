@@ -267,6 +267,123 @@ namespace RentACar.Controllers
             return RedirectToAction(nameof(Details), new { Id = imageVehicle.Vehicle.Id });
         }
 
+        //Add Category/Vehicles
+        [HttpGet]
+        public async Task<IActionResult> AddCategory(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Vehicle vehicle = await _context.Vehicles.FindAsync(id);
+            if (vehicle == null)
+            {
+                return NotFound();
+            }
+
+            AddVehicleCategoryViewModel model = new()
+            {
+                VehicleId = vehicle.Id,
+                Categories = await _combosHelper.GetComboCategoriesAsync(),
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddCategory(AddVehicleCategoryViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                Vehicle vehicle = await _context.Vehicles.FindAsync(model.VehicleId);
+                VehicleCategory vehicleCategory = new()
+                {
+                    Category = await _context.Categories.FindAsync(model.CategoryId),
+                    Vehicle = vehicle,
+                };
+
+                try
+                {
+                    _context.Add(vehicleCategory);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Details), new { Id = vehicle.Id });
+                }
+                catch (Exception exception)
+                {
+                    ModelState.AddModelError(string.Empty, exception.Message);
+                }
+            }
+
+            return View(model);
+        }
+
+
+        // Delete Category/Vehicle
+        public async Task<IActionResult> DeleteCategory(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            VehicleCategory vehicleCategory = await _context.VehicleCategories
+                .Include(vc => vc.Vehicle)
+                .FirstOrDefaultAsync(vc => vc.Id == id);
+            if (vehicleCategory == null)
+            {
+                return NotFound();
+            }
+
+            _context.VehicleCategories.Remove(vehicleCategory);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Details), new { Id = vehicleCategory.Vehicle.Id });
+        }
+
+
+        //Delete /Vehicles
+        [HttpGet]
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Vehicle vehicle = await _context.Vehicles
+                .Include(v => v.VehicleCategories)
+                .Include(v => v.ImageVehicles)
+                .FirstOrDefaultAsync(v => v.Id == id);
+            if (vehicle == null)
+            {
+                return NotFound();
+            }
+
+            return View(vehicle);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(Vehicle model)
+        {
+            Vehicle vehicle = await _context.Vehicles
+               .Include(v => v.ImageVehicles)
+               .Include(v => v.VehicleCategories)
+                .FirstOrDefaultAsync(v => v.Id == model.Id);
+
+            _context.Vehicles.Remove(vehicle);
+            await _context.SaveChangesAsync();
+
+            foreach (ImageVehicle imageVehicle in vehicle.ImageVehicles)
+            {
+                await _blobHelper.DeleteBlobAsync(imageVehicle.ImageId, "vehicles");
+            }
+
+            
+            return RedirectToAction(nameof(Index));
+        }
+
 
 
 
