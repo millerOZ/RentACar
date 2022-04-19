@@ -24,11 +24,12 @@ namespace RentACar.Data
                     DateStartReserve = new System.DateTime(2015, 3, 10, 2, 15, 10),
                     DateFinishReserve = new System.DateTime(2015, 3, 10, 2, 15, 10),
                     PlaceFinishReserve = "Floresta",
-                    StartReserve = false,
+                    StartReserve = true,
                     Rentals = new List<Rental>()
                     {
                         new Rental
                         {
+                            Name = "mILLER",
                             Quantity = 1212,
                             TotalValue = 122,
                             PaymentType = "tajerta",
@@ -38,7 +39,7 @@ namespace RentACar.Data
                             }
                         },
                         new Rental
-                        {
+                        {   Name = "henry",
                             Quantity = 222,
                             TotalValue = 22,
                             PaymentType = "efectivo",

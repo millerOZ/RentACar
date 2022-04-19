@@ -17,10 +17,11 @@ namespace RentACar.Data.Entities
         [Display(Name = "Lugar Reserva")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         [MaxLength(50, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres")]
-        public String PlaceFinishReserve { get; set; }
+        public string PlaceFinishReserve { get; set; }
         [Display(Name = "Estado")]
         public Boolean StartReserve { get; set; }
 
         public ICollection<Rental> Rentals { get; set; }
+        public int RentalNumber => Rentals == null ? 0 : Rentals.Count;
     }
 }
