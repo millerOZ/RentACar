@@ -8,7 +8,7 @@ namespace RentACar.Data.Entities
 
         public Vehicle Vehicle { get; set; }
         public Category Category { get; set; }
-      
+
 
     }
-]
+}
