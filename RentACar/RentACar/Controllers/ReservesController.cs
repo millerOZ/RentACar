@@ -18,7 +18,8 @@ namespace RentACar.Controllers
 
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Reserves.ToListAsync());
+            return View(await _context.Reserves.
+                Include(r => r.Rentals).ToListAsync());
         }
 
         public async Task<IActionResult> Details(int? id)
@@ -29,6 +30,7 @@ namespace RentACar.Controllers
             }
 
             var reserve = await _context.Reserves
+                .Include(r => r.Rentals)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (reserve == null)
             {
@@ -40,7 +42,8 @@ namespace RentACar.Controllers
 
         public IActionResult Create()
         {
-            return View();
+            Reserve reserve = new() { Rentals = new List<Rental>() };
+            return View(reserve);
         }
 
 
@@ -50,10 +53,30 @@ namespace RentACar.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(reserve);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                try
+                {
+                    _context.Add(reserve);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+
+                catch (DbUpdateException dbUpdateException)
+                {
+                    if (dbUpdateException.InnerException.Message.Contains("duplicate"))
+                    {
+                        ModelState.AddModelError(string.Empty, "Ya existe un Reserva con el mismo nombre de cliente.");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
+                    }
+                }
+                catch (Exception exception)
+                {
+                    ModelState.AddModelError(string.Empty, exception.Message);
+                }
             }
+
             return View(reserve);
         }
         public async Task<IActionResult> AddRental(int? id)

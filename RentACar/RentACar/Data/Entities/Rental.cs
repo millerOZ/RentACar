@@ -18,5 +18,7 @@ namespace RentACar.Data.Entities
         public ICollection<RentalType> RentalTypes { get; set; }
 
         public Reserve Reserve { get; set; }
+        [Display(Name = "Tipo de alquiler")] 
+        public int RentalTypesNumber => RentalTypes == null ? 0 : RentalTypes.Count;
     }
 }

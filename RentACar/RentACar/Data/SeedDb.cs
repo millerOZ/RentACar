@@ -29,6 +29,7 @@ namespace RentACar.Data
                     {
                         new Rental
                         {
+                            Name = "mILLER",
                             Quantity = 1212,
                             TotalValue = 122,
                             PaymentType = "tajerta",
@@ -38,7 +39,7 @@ namespace RentACar.Data
                             }
                         },
                         new Rental
-                        {
+                        {   Name = "henry",
                             Quantity = 222,
                             TotalValue = 22,
                             PaymentType = "efectivo",
