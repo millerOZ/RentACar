@@ -22,6 +22,6 @@ namespace RentACar.Data.Entities
         public Boolean StartReserve { get; set; }
 
         public ICollection<Rental> Rentals { get; set; }
-       public int RentalNumber => Rentals == null ? 0 : Rentals.Count;
+        public int RentalNumber => Rentals == null ? 0 : Rentals.Count;
     }
 }

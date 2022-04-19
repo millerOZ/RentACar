@@ -49,10 +49,11 @@ namespace RentACar.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,DateReserve,DateStartReserve,DateFinishReserve,PlaceFinishReserve,StartReserve")] Reserve reserve)
+        public async Task<IActionResult> Create(Reserve reserve)
         {
             if (ModelState.IsValid)
             {
+
                 try
                 {
                     _context.Add(reserve);
