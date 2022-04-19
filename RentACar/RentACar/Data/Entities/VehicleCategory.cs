@@ -11,4 +11,4 @@ namespace RentACar.Data.Entities
       
 
     }
-}
+]
