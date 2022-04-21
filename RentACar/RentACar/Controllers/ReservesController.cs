@@ -40,6 +40,7 @@ namespace RentACar.Controllers
 
             return View(reserve);
         }
+
         public async Task<IActionResult> DetailsRental(int? id)
         {
             if (id == null)
@@ -57,6 +58,24 @@ namespace RentACar.Controllers
             }
 
             return View(rental);
+        }
+
+        public async Task<IActionResult> DetailsRentalType(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            RentalType rentalType = await _context.RentalTypes
+                .Include(c => c.Rental)
+                .FirstOrDefaultAsync(c => c.Id == id);
+            if (rentalType == null)
+            {
+                return NotFound();
+            }
+
+            return View(rentalType);
         }
         public IActionResult Create()
         {
@@ -97,6 +116,7 @@ namespace RentACar.Controllers
 
             return View(reserve);
         }
+
         public async Task<IActionResult> AddRental(int? id)
         {
             if (id == null)
@@ -114,6 +134,7 @@ namespace RentACar.Controllers
             };
             return View(model);
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddRental(RentalViewModel model)
@@ -155,6 +176,62 @@ namespace RentACar.Controllers
 
             return View(model);
         }
+
+        public async Task<IActionResult> AddRentalType(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            Rental rental = await _context.Rentals.FindAsync(id);
+            if (rental == null)
+            {
+                return NotFound();
+            }
+            RentalTypeViewModel model = new()
+            {
+                RentalId = rental.Id,
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddRentalType(RentalTypeViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    RentalType rentalType = new()
+                    {
+                        Rental = await _context.Rentals.FindAsync(model.RentalId),
+                        Name = model.Name,
+                    };
+                    _context.Add(rentalType);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(DetailsRental), new { Id = model.RentalId });
+
+                }
+                catch (DbUpdateException dbUpdateException)
+                {
+                    if (dbUpdateException.InnerException.Message.Contains("duplicate"))
+                    {
+                        ModelState.AddModelError(string.Empty, "Ya existe un tipo alquiler con el mismo nombre en este alquiler.");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
+                    }
+                }
+                catch (Exception exception)
+                {
+                    ModelState.AddModelError(string.Empty, exception.Message);
+                }
+            }
+
+            return View(model);
+        }
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -169,7 +246,6 @@ namespace RentACar.Controllers
             }
             return View(reserve);
         }
-
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -202,6 +278,7 @@ namespace RentACar.Controllers
             }
             return View(reserve);
         }
+
         public async Task<IActionResult> EditRental(int? id)
         {
             if (id == null)
@@ -228,6 +305,7 @@ namespace RentACar.Controllers
 
             return View(model);
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditRental(int id, RentalViewModel model)
@@ -272,6 +350,73 @@ namespace RentACar.Controllers
             }
             return View(model);
         }
+
+        public async Task<IActionResult> EditRentalType(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            RentalType rentalType = await _context.RentalTypes
+                .Include(s => s.Rental)
+                .FirstOrDefaultAsync(c => c.Id == id);
+            if (rentalType == null)
+            {
+                return NotFound();
+            }
+            RentalTypeViewModel model = new()
+            {
+                RentalId = rentalType.Rental.Id,
+                Id = rentalType.Id,
+                Name = rentalType.Name
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditRentalType(int id, RentalTypeViewModel model)
+        {
+            if (id != model.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    RentalType rentalType = new()
+                    {
+                        Id = model.Id,
+                        Name = model.Name,
+                    };
+                    _context.Update(rentalType);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(DetailsRental), new { Id = model.RentalId });
+                }
+                catch (DbUpdateException dbUpdateException)
+                {
+                    if (dbUpdateException.InnerException.Message.Contains("duplicate"))
+                    {
+                        ModelState.AddModelError(string.Empty, "Ya existe un tipo alquiler con el mismo nombre en este alquiler");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
+                    }
+                }
+                catch (Exception exception)
+                {
+                    ModelState.AddModelError(string.Empty, exception.Message);
+                }
+
+            }
+            return View(model);
+        }
+
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -297,6 +442,66 @@ namespace RentACar.Controllers
             _context.Reserves.Remove(reserve);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> DeleteRental(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Rental rental = await _context.Rentals
+                .Include(s => s.Reserve)
+                .FirstOrDefaultAsync(s => s.Id == id);
+            if (rental == null)
+            {
+                return NotFound();
+            }
+
+            return View(rental);
+        }
+
+        [HttpPost, ActionName("DeleteRental")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteRentalConfirmed(int id)
+        {
+            Rental rental = await _context.Rentals
+                .Include(s => s.Reserve)
+                .FirstOrDefaultAsync(s => s.Id == id);
+            _context.Rentals.Remove(rental);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Details), new { Id = rental.Reserve.Id });
+        }
+
+        public async Task<IActionResult> DeleteRentalType(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            RentalType city = await _context.RentalTypes
+                .Include(c => c.Rental)
+                .FirstOrDefaultAsync(s => s.Id == id);
+            if (city == null)
+            {
+                return NotFound();
+            }
+
+            return View(city);
+        }
+
+        [HttpPost, ActionName("DeleteRentalType")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteRentalTypeConfirmed(int id)
+        {
+            RentalType rentalType = await _context.RentalTypes
+                .Include(c => c.Rental)
+                .FirstOrDefaultAsync(s => s.Id == id);
+            _context.RentalTypes.Remove(rentalType);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(DetailsRental), new { Id = rentalType.Rental.Id });
         }
 
         private bool ReserveExists(int id)

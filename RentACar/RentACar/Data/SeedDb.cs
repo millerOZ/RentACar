@@ -35,7 +35,7 @@ namespace RentACar.Data
                             PaymentType = "tajerta",
                             RentalTypes = new List<RentalType>()
                             {
-                                new RentalType {Description =" por kilometros "},
+                                new RentalType {Name ="kilometros "},
                             }
                         },
                         new Rental
@@ -45,7 +45,7 @@ namespace RentACar.Data
                             PaymentType = "efectivo",
                             RentalTypes = new List<RentalType>()
                             {
-                                new RentalType {Description ="Por tiempo"},
+                                new RentalType {Name ="tiempo"},
                             }
                         }
                     }

@@ -1,7 +1,7 @@
 ﻿@model RentACar.Data.Entities.Rental
 
 @{
-    ViewData["Title"] = "DetailsRental";
+    ViewData["Title"] = "Details";
 }
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
 <h1>Detalles</h1>
@@ -10,8 +10,8 @@
    <partial name="_RentalDetails"/>
 </div>
 <div>
-    <a asp-action="AddRentalType" asp-route-id="@Model?.Id" class="btn btn-outline-primary">Agregar Ciudad</a> 
-    <a asp-action="EditState" asp-route-id="@Model?.Id" class="btn btn-outline-warning">Editar</a> 
+    <a asp-action="AddRentalType" asp-route-id="@Model?.Id" class="btn btn-outline-primary">Agregar Tipo Alquiler</a> 
+    <a asp-action="EditRental" asp-route-id="@Model?.Id" class="btn btn-outline-warning">Editar</a> 
     <a asp-action="Details" asp-route-id="@Model?.Reserve.Id" class="btn btn-outline-success">Volver</a>
 </div>
 <hr />
@@ -27,7 +27,7 @@
                     <thead>
                         <tr>
                             <th>
-                                @Html.DisplayNameFor(model => model.RentalTypes.FirstOrDefault().Description)
+                                @Html.DisplayNameFor(model => model.RentalTypes.FirstOrDefault().Name)
                             </th>
                             <th></th>
                         </tr>
@@ -37,12 +37,12 @@
                         {
                             <tr>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Description)
+                                    @Html.DisplayFor(modelItem => item.Name)
                                 </td>
                                 <td>
-                                    <a asp-action="EditRentalTypes" asp-route-id="@item.Id" class="btn btn-outline-warning">Editar</a>
-                                    <a asp-action="DetailsRentalTypes" asp-route-id="@item.Id" class="btn btn-outline-info">Detalles</a>
-                                    <a asp-action="DeleteRentalTypes" asp-route-id="@item.Id" class="btn btn-outline-danger">Eliminar</a>
+                                    <a asp-action="EditRentalType" asp-route-id="@item.Id" class="btn btn-outline-warning">Editar</a>
+                                    <a asp-action="DetailsRentalType" asp-route-id="@item.Id" class="btn btn-outline-info">Detalles</a>
+                                    <a asp-action="DeleteRentalType" asp-route-id="@item.Id" class="btn btn-outline-danger">Eliminar</a>
                                 </td>
                             </tr>
                         }
