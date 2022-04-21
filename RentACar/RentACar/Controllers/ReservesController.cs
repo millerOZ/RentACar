@@ -40,13 +40,29 @@ namespace RentACar.Controllers
 
             return View(reserve);
         }
+        public async Task<IActionResult> DetailsRental(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
+            var rental = await _context.Rentals
+                .Include(s => s.Reserve)
+                .Include(s => s.RentalTypes)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (rental == null)
+            {
+                return NotFound();
+            }
+
+            return View(rental);
+        }
         public IActionResult Create()
         {
             Reserve reserve = new() { Rentals = new List<Rental>() };
             return View(reserve);
         }
-
 
         [HttpPost]
         [ValidateAntiForgeryToken]
