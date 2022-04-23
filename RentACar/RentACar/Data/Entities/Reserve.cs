@@ -20,9 +20,9 @@ namespace RentACar.Data.Entities
         public string PlaceFinishReserve { get; set; }
         [Display(Name = "Estado")]
         public Boolean StartReserve { get; set; }
-        
-        public ICollection<Rental> Rentals { get; set; }
         [Display(Name = "Alquier")]
+        public ICollection<Rental> Rentals { get; set; }
+        [Display(Name = "Cant Alquier")]
         public int RentalNumber => Rentals == null ? 0 : Rentals.Count;
     }
 }

@@ -249,7 +249,7 @@ namespace RentACar.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,DateReserve,DateStartReserve,DateFinishReserve,PlaceFinishReserve,StartReserve")] Reserve reserve)
+        public async Task<IActionResult> Edit(int id, Reserve reserve)
         {
             if (id != reserve.Id)
             {

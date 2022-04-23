@@ -319,7 +319,6 @@ namespace RentACar.Controllers
             return View(model);
         }
 
-
         // Delete Category/Vehicle
         public async Task<IActionResult> DeleteCategory(int? id)
         {
@@ -340,7 +339,6 @@ namespace RentACar.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Details), new { Id = vehicleCategory.Vehicle.Id });
         }
-
 
         //Delete /Vehicles
         [HttpGet]
