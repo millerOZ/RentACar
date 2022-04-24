@@ -12,8 +12,8 @@ using RentACar.Data;
 namespace RentACar.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220424000417_mergecevehic1")]
-    partial class mergecevehic1
+    [Migration("20220424161936_login1222")]
+    partial class login1222
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -558,7 +558,7 @@ namespace RentACar.Migrations
             modelBuilder.Entity("RentACar.Data.Entities.VehicleCategory", b =>
                 {
                     b.HasOne("RentACar.Data.Entities.Category", "Category")
-                        .WithMany("vehicleCategories")
+                        .WithMany("VehicleCategories")
                         .HasForeignKey("CategoryId");
 
                     b.HasOne("RentACar.Data.Entities.Vehicle", "Vehicle")
@@ -572,7 +572,7 @@ namespace RentACar.Migrations
 
             modelBuilder.Entity("RentACar.Data.Entities.Category", b =>
                 {
-                    b.Navigation("vehicleCategories");
+                    b.Navigation("VehicleCategories");
                 });
 
             modelBuilder.Entity("RentACar.Data.Entities.Rental", b =>

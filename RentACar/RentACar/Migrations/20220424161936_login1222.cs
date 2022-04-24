@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace RentACar.Migrations
 {
-    public partial class mergecevehic : Migration
+    public partial class login1222 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

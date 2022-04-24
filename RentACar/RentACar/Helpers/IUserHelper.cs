@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using RentACar.Data.Entities;
+using RentACar.Models;
 
 namespace RentACar.Helpers
 {
@@ -14,5 +15,9 @@ namespace RentACar.Helpers
         Task AddUserToRoleAsync(User user, string roleName);
 
         Task<bool> IsUserInRoleAsync(User user, string roleName);
+        Task<SignInResult> LoginAsync(LoginViewModel model);
+
+        Task LogoutAsync();
+
     }
 }
