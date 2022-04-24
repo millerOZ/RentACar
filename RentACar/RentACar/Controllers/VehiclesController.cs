@@ -128,7 +128,6 @@ namespace RentACar.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, CreateVehicleViewModel model)
         {
             if (id != model.Id)
@@ -211,7 +210,6 @@ namespace RentACar.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddImage(AddVehicleImageViewModel model)
         {
             if (ModelState.IsValid)
@@ -267,7 +265,9 @@ namespace RentACar.Controllers
             return RedirectToAction(nameof(Details), new { Id = imageVehicle.Vehicle.Id });
         }
 
-        //Add Category/Vehicles
+
+
+        //Add Category/Vehicles---------
         [HttpGet]
         public async Task<IActionResult> AddCategory(int? id)
         {
@@ -276,28 +276,42 @@ namespace RentACar.Controllers
                 return NotFound();
             }
 
-            Vehicle vehicle = await _context.Vehicles.FindAsync(id);
+            Vehicle vehicle = await _context.Vehicles
+                .Include(v => v.VehicleCategories)
+                .ThenInclude(vc => vc.Category)
+                .FirstOrDefaultAsync(v => v.Id == id);
             if (vehicle == null)
             {
                 return NotFound();
             }
 
+            List<Category> categories = vehicle.VehicleCategories.Select(vc => new Category
+            {
+                Id = vc.Category.Id,
+                Name = vc.Category.Name,
+            }).ToList();
+
+
             AddVehicleCategoryViewModel model = new()
             {
                 VehicleId = vehicle.Id,
-                Categories = await _combosHelper.GetComboCategoriesAsync(),
+                Categories = await _combosHelper.GetComboCategoriesAsync(categories),
             };
 
             return View(model);
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddCategory(AddVehicleCategoryViewModel model)
         {
+
+            Vehicle vehicle = await _context.Vehicles
+                .Include(v => v.VehicleCategories)
+                .ThenInclude(vc => vc.Category)
+                .FirstOrDefaultAsync(v => v.Id == model.VehicleId);
+
             if (ModelState.IsValid)
             {
-                Vehicle vehicle = await _context.Vehicles.FindAsync(model.VehicleId);
                 VehicleCategory vehicleCategory = new()
                 {
                     Category = await _context.Categories.FindAsync(model.CategoryId),
@@ -316,6 +330,13 @@ namespace RentACar.Controllers
                 }
             }
 
+            List<Category> categories = vehicle.VehicleCategories.Select(vc => new Category
+            {
+                Id = vc.Category.Id,
+                Name = vc.Category.Name,
+            }).ToList();
+
+            model.Categories = await _combosHelper.GetComboCategoriesAsync(categories);
             return View(model);
         }
 
@@ -380,7 +401,7 @@ namespace RentACar.Controllers
                 await _blobHelper.DeleteBlobAsync(imageVehicle.ImageId, "vehicles");
             }
 
-            
+
             return RedirectToAction(nameof(Index));
         }
 

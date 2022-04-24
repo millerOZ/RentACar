@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using RentACar.Data.Entities;
 
 namespace RentACar.Helpers
 {
@@ -7,7 +8,7 @@ namespace RentACar.Helpers
 
         Task<IEnumerable<SelectListItem>> GetComboCategoriesAsync();
 
-        //Task<IEnumerable<SelectListItem>> GetComboCategoriesAsync();
+        Task<IEnumerable<SelectListItem>> GetComboCategoriesAsync(IEnumerable<Category> filter);
 
 
 

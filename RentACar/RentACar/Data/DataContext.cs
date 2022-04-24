@@ -18,7 +18,7 @@ namespace RentACar.Data
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Reserve>().HasIndex(r => r.Id).IsUnique();
-             modelBuilder.Entity<Category>().HasIndex(c => c.Name).IsUnique();
+            modelBuilder.Entity<Category>().HasIndex(c => c.Name).IsUnique();
             modelBuilder.Entity<Vehicle>().HasIndex(v => v.Plaque).IsUnique();
             modelBuilder.Entity<VehicleCategory>().HasIndex("VehicleId", "CategoryId").IsUnique();
 
