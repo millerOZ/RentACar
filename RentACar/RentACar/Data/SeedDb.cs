@@ -1,30 +1,72 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RentACar.Data.Entities;
 using RentACar.Helpers;
+using Shooping.Enums;
+
 
 namespace RentACar.Data
 {
     public class SeedDb
     {
         private readonly DataContext _context;
+        private readonly IUserHelper _userHelper;
         private readonly IBlobHelper _blobHelper;
-
-
-        public SeedDb(DataContext context, IBlobHelper blobHelper)
+        public SeedDb(DataContext context, IUserHelper userHelper, IBlobHelper blobHelper)
         {
             _context = context;
+            _userHelper = userHelper;
             _blobHelper = blobHelper;
         }
         public async Task SeedAsync()
         {
             await _context.Database.EnsureCreatedAsync();
             await CheckReservesAsync();
+            await CheckRolesAsync();
             await CheckCategoriesAsync();
             await CheckVehiclesAsync();
-
         }
 
-        
+        private async Task CheckRolesAsync()
+        {
+            await _userHelper.CheckRoleAsync(UserType.Admin.ToString());
+            await _userHelper.CheckRoleAsync(UserType.User.ToString());
+        }
+
+        private async Task<User> CheckUserAsync(
+             string email,
+             string firstName,
+             string lastName,
+             string documentType,
+             string document,
+             string phone,
+             string typeLicence,
+             string licence,
+             UserType userType)
+
+        {
+            User user = await _userHelper.GetUserAsync(email);
+            if (user == null)
+            {
+                user = new User
+                {
+                    UserName = email,
+                    Email = email,
+                    FirstName = firstName,
+                    LastName = lastName,
+                    DocumentType = documentType,
+                    Document = document,
+                    PhoneNumber = phone,
+                    TypeLicence = typeLicence,
+                    Licence = licence,
+                    UserType = userType,
+                };
+
+                await _userHelper.AddUserAsync(user, "123456");
+                await _userHelper.AddUserToRoleAsync(user, userType.ToString());
+            }
+
+            return user;
+        }
 
         private async Task CheckVehiclesAsync()
         {
@@ -108,7 +150,7 @@ namespace RentACar.Data
                             PaymentType = "tajerta",
                             RentalTypes = new List<RentalType>()
                             {
-                                new RentalType {Description =" por kilometros "},
+                                new RentalType {Name ="kilometros "},
                             }
                         },
                         new Rental
@@ -118,7 +160,7 @@ namespace RentACar.Data
                             PaymentType = "efectivo",
                             RentalTypes = new List<RentalType>()
                             {
-                                new RentalType {Description ="Por tiempo"},
+                                new RentalType {Name ="tiempo"},
                             }
                         }
                     }

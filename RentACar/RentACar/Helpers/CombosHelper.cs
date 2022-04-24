@@ -21,8 +21,8 @@ namespace RentACar.Helpers
                 Text = c.Name,
                 Value = c.Id.ToString()
             })
-                           .OrderBy(c => c.Text)
-                           .ToListAsync();
+            .OrderBy(c => c.Text)
+            .ToListAsync();
 
             list.Insert(0, new SelectListItem
             {

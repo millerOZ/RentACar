@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RentACar.Data;
 
@@ -11,9 +12,10 @@ using RentACar.Data;
 namespace RentACar.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220423235859_mergecevehic")]
+    partial class mergecevehic
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -556,7 +558,7 @@ namespace RentACar.Migrations
             modelBuilder.Entity("RentACar.Data.Entities.VehicleCategory", b =>
                 {
                     b.HasOne("RentACar.Data.Entities.Category", "Category")
-                        .WithMany("VehicleCategories")
+                        .WithMany("vehicleCategories")
                         .HasForeignKey("CategoryId");
 
                     b.HasOne("RentACar.Data.Entities.Vehicle", "Vehicle")
@@ -570,7 +572,7 @@ namespace RentACar.Migrations
 
             modelBuilder.Entity("RentACar.Data.Entities.Category", b =>
                 {
-                    b.Navigation("VehicleCategories");
+                    b.Navigation("vehicleCategories");
                 });
 
             modelBuilder.Entity("RentACar.Data.Entities.Rental", b =>
