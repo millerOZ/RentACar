@@ -19,7 +19,7 @@ namespace RentACar.Helpers
             _context = context;
             _userManager = userManager;
             _roleManager = roleManager;
-            //_signInManager = signInManager;
+            _signInManager = signInManager;
         }
 
 
