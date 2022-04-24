@@ -24,8 +24,8 @@ namespace RentACar.Data
             await CheckRolesAsync();
             await CheckCategoriesAsync();
             await CheckVehiclesAsync();
-            await CheckUserAsync("prueba@prueba.com", "Luis", "Higuita", "Cedula Ciudadania", "1035442878", "3004340561", "A2", "54124566", UserType.Admin);
-            await CheckUserAsync("prueba2@prueba.com", "Eduardo", "Espitia", "Cedula Ciudadania", "1034142878", "3002340561", "A1", "54124566", UserType.User);
+            await CheckUserAsync("1035442878", "Luis", "Higuita", "prueba@prueba.com",  "300434061", "Cr54-32", UserType.Admin);
+            await CheckUserAsync("3002340561", "Eduardo", "Espitia", "user@prueba.com", "3002340561", "Cr343-212", UserType.User);
         }
 
         private async Task CheckRolesAsync()
@@ -35,15 +35,13 @@ namespace RentACar.Data
         }
 
         private async Task<User> CheckUserAsync(
-             string email,
-             string firstName,
-             string lastName,
-             string documentType,
-             string document,
-             string phone,
-             string typeLicence,
-             string licence,
-             UserType userType)
+            string document,
+            string firstName,
+            string lastName,
+            string email,
+            string phone,
+            string address,
+            UserType userType)
 
         {
             User user = await _userHelper.GetUserAsync(email);
@@ -55,11 +53,12 @@ namespace RentACar.Data
                     Email = email,
                     FirstName = firstName,
                     LastName = lastName,
-                    DocumentType = documentType,
+                    DocumentType = document,
                     Document = document,
-                    PhoneNumber = phone,
-                    TypeLicence = typeLicence,
-                    Licence = licence,
+                    Phone = phone,
+                    TypeLicence = "A1",
+                    Licence = "1232",
+                    Address = address,
                     UserType = userType,
                 };
 

@@ -6,10 +6,6 @@ namespace RentACar.Data.Entities
 {
     public class User: IdentityUser
     {
-        [Display(Name = "Email")]
-        [MaxLength(50, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
-        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        public string Email { get; set; }
 
         [Display(Name = "Nombres")]
         [MaxLength(30, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
@@ -48,6 +44,10 @@ namespace RentACar.Data.Entities
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string Licence { get; set; }
 
+        [Display(Name = "Dirección")]
+        [MaxLength(200, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        public string Address { get; set; }
 
         [Display(Name = "Foto")]
         public Guid ImageId { get; set; }
