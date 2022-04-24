@@ -1,0 +1,17 @@
+﻿@model RentACar.Data.Entities.RentalType
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Detalles</h1>
+
+<div>
+   <partial name="_RentalTypeDetails"/>
+</div>
+<div>
+    <a asp-action="EditRentalType" asp-route-id="@Model?.Id" class="btn btn-outline-warning">Editar</a> 
+    <a asp-action="DetailsRental"  asp-route-id="@Model?.Rental.Id"  class="btn btn-outline-success">Volver</a>
+</div>
+
+
