@@ -2,22 +2,24 @@
 using Microsoft.EntityFrameworkCore;
 using RentACar.Data;
 using RentACar.Data.Entities;
+using RentACar.Models;
 
 namespace RentACar.Helpers
 {
-    public class UserHelper: IUserHelper
+    public class UserHelper : IUserHelper
     {
         private readonly UserManager<User> _userManager;
         private readonly DataContext _context;
         private readonly RoleManager<IdentityRole> _roleManager;
-       // private readonly SignInManager<User> _signInManager;
+        private readonly SignInManager<User> _signInManager;
 
-        public UserHelper(DataContext context, UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
+        public UserHelper(DataContext context, UserManager<User> userManager, RoleManager<IdentityRole> roleManager, SignInManager<User> signInManager)
         {
-                _context = context;
-                _userManager = userManager;
-                 _roleManager = roleManager;
-            //_signInManager = signInManager;
+
+            _context = context;
+            _userManager = userManager;
+            _roleManager = roleManager;
+            _signInManager = signInManager;
         }
 
 
@@ -56,6 +58,16 @@ namespace RentACar.Helpers
         public async Task<bool> IsUserInRoleAsync(User user, string roleName)
         {
             return await _userManager.IsInRoleAsync(user, roleName);
+        }
+
+        public async Task<SignInResult> LoginAsync(LoginViewModel model)
+        {
+            return await _signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, false);
+        }
+
+        public async Task LogoutAsync()
+        {
+            await _signInManager.SignOutAsync();
         }
     }
 }

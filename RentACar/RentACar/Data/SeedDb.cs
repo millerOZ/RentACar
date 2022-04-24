@@ -24,6 +24,8 @@ namespace RentACar.Data
             await CheckRolesAsync();
             await CheckCategoriesAsync();
             await CheckVehiclesAsync();
+            await CheckUserAsync("1035442878", "Luis", "Higuita", "prueba@prueba.com",  "300434061", "Cr54-32", UserType.Admin);
+            await CheckUserAsync("3002340561", "Eduardo", "Espitia", "user@prueba.com", "3002340561", "Cr343-212", UserType.User);
 
         }
 
@@ -34,15 +36,13 @@ namespace RentACar.Data
         }
 
         private async Task<User> CheckUserAsync(
-             string email,
-             string firstName,
-             string lastName,
-             string documentType,
-             string document,
-             string phone,
-             string typeLicence,
-             string licence,
-             UserType userType)
+            string document,
+            string firstName,
+            string lastName,
+            string email,
+            string phone,
+            string address,
+            UserType userType)
 
         {
             User user = await _userHelper.GetUserAsync(email);
@@ -54,11 +54,12 @@ namespace RentACar.Data
                     Email = email,
                     FirstName = firstName,
                     LastName = lastName,
-                    DocumentType = documentType,
+                    DocumentType = document,
                     Document = document,
-                    PhoneNumber = phone,
-                    TypeLicence = typeLicence,
-                    Licence = licence,
+                    Phone = phone,
+                    TypeLicence = "A1",
+                    Licence = "1232",
+                    Address = address,
                     UserType = userType,
                 };
 
