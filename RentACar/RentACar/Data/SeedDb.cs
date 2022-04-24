@@ -21,6 +21,7 @@ namespace RentACar.Data
             await CheckReservesAsync();
             await CheckCategoriesAsync();
             await CheckVehiclesAsync();
+
         }
 
         
