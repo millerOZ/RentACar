@@ -19,7 +19,7 @@ namespace RentACar.Data
             await CheckReservesAsync();
             await CheckRolesAsync();
             await CheckUserAsync("prueba@prueba.com", "Luis", "Higuita", "Cedula Ciudadania", "1035442878", "3004340561", "A2", "54124566", UserType.Admin);
-           // await CheckUserAsync("prueba2@prueba.com", "Eduardo", "Espitia", "Cedula Ciudadania", "1034142878", "3002340561", "A1", "54124566", UserType.User);
+            await CheckUserAsync("prueba2@prueba.com", "Eduardo", "Espitia", "Cedula Ciudadania", "1034142878", "3002340561", "A1", "54124566", UserType.User);
         }
 
         private async Task CheckRolesAsync()
@@ -57,7 +57,7 @@ namespace RentACar.Data
                     UserType = userType,
                 };
 
-                await _userHelper.AddUserAsync(user, "12345678");
+                await _userHelper.AddUserAsync(user, "123456");
                 await _userHelper.AddUserToRoleAsync(user, userType.ToString());
             }
 
