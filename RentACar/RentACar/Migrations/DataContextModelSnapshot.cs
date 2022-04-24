@@ -556,7 +556,7 @@ namespace RentACar.Migrations
             modelBuilder.Entity("RentACar.Data.Entities.VehicleCategory", b =>
                 {
                     b.HasOne("RentACar.Data.Entities.Category", "Category")
-                        .WithMany("vehicleCategories")
+                        .WithMany("VehicleCategories")
                         .HasForeignKey("CategoryId");
 
                     b.HasOne("RentACar.Data.Entities.Vehicle", "Vehicle")
@@ -570,7 +570,7 @@ namespace RentACar.Migrations
 
             modelBuilder.Entity("RentACar.Data.Entities.Category", b =>
                 {
-                    b.Navigation("vehicleCategories");
+                    b.Navigation("VehicleCategories");
                 });
 
             modelBuilder.Entity("RentACar.Data.Entities.Rental", b =>
