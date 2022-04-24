@@ -35,15 +35,15 @@ namespace RentACar.Controllers
                 }
                 if (i == 2)
                 {
-                    vehiclesHome.LastOrDefault().Vehicle1 = vehicle;
+                    vehiclesHome.LastOrDefault().Vehicle2 = vehicle;
                 }
                 if (i == 3)
                 {
-                    vehiclesHome.LastOrDefault().Vehicle1 = vehicle;
+                    vehiclesHome.LastOrDefault().Vehicle3 = vehicle;
                 }
                 if (i == 4)
                 {
-                    vehiclesHome.LastOrDefault().Vehicle1 = vehicle;
+                    vehiclesHome.LastOrDefault().Vehicle4 = vehicle;
                     vehiclesHome.Add(new VehiclesHomeViewModel());
                     i = 0;
                 }
