@@ -24,6 +24,7 @@ namespace RentACar.Data
             await CheckRolesAsync();
             await CheckCategoriesAsync();
             await CheckVehiclesAsync();
+
         }
 
         private async Task CheckRolesAsync()

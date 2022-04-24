@@ -14,9 +14,9 @@ namespace RentACar.Helpers
 
         public UserHelper(DataContext context, UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
         {
-            this._context = context;
-            this._userManager = userManager;
-            this._roleManager = roleManager;
+                _context = context;
+                _userManager = userManager;
+                 _roleManager = roleManager;
             //_signInManager = signInManager;
         }
 
