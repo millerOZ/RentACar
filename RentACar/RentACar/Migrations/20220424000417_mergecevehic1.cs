@@ -4,7 +4,7 @@
 
 namespace RentACar.Migrations
 {
-    public partial class updateRentalTypes : Migration
+    public partial class mergecevehic1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

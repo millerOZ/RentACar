@@ -24,5 +24,6 @@ namespace RentACar.Data.Entities
         public ICollection<Rental> Rentals { get; set; }
         [Display(Name = "Cant Alquier")]
         public int RentalNumber => Rentals == null ? 0 : Rentals.Count;
+        public ICollection<User> Users { get; set; }
     }
 }

@@ -1,19 +1,63 @@
 ﻿using RentACar.Data.Entities;
+using RentACar.Helpers;
+using Shooping.Enums;
 
 namespace RentACar.Data
 {
     public class SeedDb
     {
         private readonly DataContext _context;
-        public SeedDb(DataContext context)
+        private readonly IUserHelper _userHelper;
+        public SeedDb(DataContext context, IUserHelper userHelper)
         {
             _context = context;
+            _userHelper = userHelper;
         }
         public async Task SeedAsync()
         {
             await _context.Database.EnsureCreatedAsync();
             await CheckReservesAsync();
+            await CheckUserAsync("prueba@prueba.com", "Luis", "Higuita", "Cedula Ciudadania", "1035442878", "3004340561", "A2", "54124566", UserType.Admin);
+            //await CheckUserAsync("prueba2@prueba.com", "Eduardo", "Espitia", "Cedula Ciudadania", "1034142878", "3002340561", "A1", "54124566", UserType.User);
         }
+
+        private async Task<User> CheckUserAsync(
+             string email,
+             string firstName,
+             string lastName,
+             string documentType,
+             string document,
+             string phone,
+             string typeLicence,
+             string licence,
+             UserType userType)
+
+        {
+            User user = await _userHelper.GetUserAsync(email);
+            if (user == null)
+            {
+                user = new User
+                {
+                    UserName = email,
+                    Email = email,
+                    FirstName = firstName,
+                    LastName = lastName,
+                    DocumentType = documentType,
+                    Document = document,
+                    PhoneNumber = phone,
+                    TypeLicence = typeLicence,
+                    Licence = licence,
+                    UserType = userType,
+                };
+
+                await _userHelper.AddUserAsync(user, "12345678");
+                await _userHelper.AddUserToRoleAsync(user, userType.ToString());
+            }
+
+            return user;
+        }
+
+
         private async Task CheckReservesAsync()
         {
             if (!_context.Reserves.Any())
