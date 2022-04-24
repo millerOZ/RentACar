@@ -1,4 +1,5 @@
-﻿using RentACar.Data.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using RentACar.Data.Entities;
 using RentACar.Helpers;
 using Shooping.Enums;
 
@@ -9,11 +10,12 @@ namespace RentACar.Data
     {
         private readonly DataContext _context;
         private readonly IUserHelper _userHelper;
-        public SeedDb(DataContext context, IUserHelper userHelper)
+        private readonly IBlobHelper _blobHelper;
+        public SeedDb(DataContext context, IUserHelper userHelper, IBlobHelper blobHelper)
         {
             _context = context;
             _userHelper = userHelper;
-
+            _blobHelper = blobHelper;
         }
         public async Task SeedAsync()
         {
