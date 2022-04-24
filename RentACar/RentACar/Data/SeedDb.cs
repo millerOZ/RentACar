@@ -26,6 +26,7 @@ namespace RentACar.Data
             await CheckVehiclesAsync();
             await CheckUserAsync("1035442878", "Luis", "Higuita", "prueba@prueba.com",  "300434061", "Cr54-32", UserType.Admin);
             await CheckUserAsync("3002340561", "Eduardo", "Espitia", "user@prueba.com", "3002340561", "Cr343-212", UserType.User);
+
         }
 
         private async Task CheckRolesAsync()

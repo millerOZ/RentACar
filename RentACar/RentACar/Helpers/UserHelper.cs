@@ -6,19 +6,20 @@ using RentACar.Models;
 
 namespace RentACar.Helpers
 {
-    public class UserHelper: IUserHelper
+    public class UserHelper : IUserHelper
     {
         private readonly UserManager<User> _userManager;
         private readonly DataContext _context;
         private readonly RoleManager<IdentityRole> _roleManager;
-       private readonly SignInManager<User> _signInManager;
+        private readonly SignInManager<User> _signInManager;
 
         public UserHelper(DataContext context, UserManager<User> userManager, RoleManager<IdentityRole> roleManager, SignInManager<User> signInManager)
         {
-            this._context = context;
-            this._userManager = userManager;
-            this._roleManager = roleManager;
-            _signInManager = signInManager;
+
+            _context = context;
+            _userManager = userManager;
+            _roleManager = roleManager;
+            //_signInManager = signInManager;
         }
 
 
