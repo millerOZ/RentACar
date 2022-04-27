@@ -1,0 +1,110 @@
+﻿@model IEnumerable<RentACar.Models.VehiclesHomeViewModel>
+
+<style type="text/css">
+    .card {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        border: 1px solid lightgray;
+        box-shadow: 2px 2px 8px 4px #d3d3d3d1;
+        border-radius: 15px;
+        font-family: sans-serif;
+        margin: 5px;
+    }
+</style>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+@foreach (var item in Model)
+{
+    <div class="row row-cols-1 row-cols-md-4 g-4 mt-1">
+        @if (item.Vehicle1 != null)
+        {
+            <div class="col-md-3">
+                <div class="card bg-dark text-Black">
+                    <div class="card h-100">
+                        <div class="card_title">@item.Vehicle1.Serie</div>
+                        <div class="card_body">
+                            <img src="@item.Vehicle1.ImageFullPath" style="height:150px; max-width:280px;" />
+                            <p class="mt-2">
+                                @item.Vehicle1.Brand
+                                <h4>@Html.DisplayFor(modelItem => item.Vehicle1.Plaque)</h4>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="card_foot">
+                        <a asp-action="Details" asp-route-id="@item.Vehicle1.Id" class="btn btn-secondary">Detalles</a>
+                        <a asp-action="Add" asp-route-id="@item.Vehicle1.Id" class="btn btn-primary">Reservar</a>
+                    </div>
+                </div>
+            </div>
+        }
+        @if (item.Vehicle2 != null)
+        {
+            <div class="col-md-3">
+                <div class="card bg-dark text-Black">
+                    <div class="card h-100">
+                        <div class="card_title">@item.Vehicle2.Serie</div>
+                        <div class="card_body">
+                            <img src="@item.Vehicle2.ImageFullPath" style="height:150px; max-width:280px;" />
+                            <p class="mt-2">
+                                @item.Vehicle2.Brand
+                                <h4>@Html.DisplayFor(modelItem => item.Vehicle2.Plaque)</h4>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="card_foot">
+                        <a asp-action="Details" asp-route-id="@item.Vehicle1.Id" class="btn btn-secondary">Detalles</a>
+                        <a asp-action="Add" asp-route-id="@item.Vehicle1.Id" class="btn btn-primary">Reservar</a>
+                    </div>
+                </div>
+            </div>
+        }
+        @if (item.Vehicle3 != null)
+        {
+            <div class="col-md-3">
+                <div class="card bg-dark text-Black">
+                    <div class="card h-100">
+                        <div class="card_title">@item.Vehicle3.Serie</div>
+                        <div class="card_body">
+                            <img src="@item.Vehicle3.ImageFullPath" style="height:150px; max-width:280px;" />
+                            <p class="mt-2">
+                                @item.Vehicle3.Brand
+                                <h4>@Html.DisplayFor(modelItem => item.Vehicle3.Plaque)</h4>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="card_foot">
+                        <a asp-action="Details" asp-route-id="@item.Vehicle1.Id" class="btn btn-secondary">Detalles</a>
+                        <a asp-action="Add" asp-route-id="@item.Vehicle1.Id" class="btn btn-primary">Reservar</a>
+                    </div>
+                </div>
+            </div>
+        }
+        @if (item.Vehicle4 != null)
+        {
+            <div class="col-md-3">
+                <div class="card bg-dark text-Black">
+                    <div class="card h-100">
+                        <div class="card_title">@item.Vehicle4.Serie</div>
+                        <div class="card_body">
+                            <img src="@item.Vehicle4.ImageFullPath" style="height:150px; max-width:280px;" />
+                            <p class="mt-2">
+                                @item.Vehicle4.Brand
+                                <h4>@Html.DisplayFor(modelItem => item.Vehicle4.Plaque)</h4>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="card_foot">
+                        <a asp-action="Details" asp-route-id="@item.Vehicle1.Id" class="btn btn-secondary">Detalles</a>
+                        <a asp-action="Add" asp-route-id="@item.Vehicle1.Id" class="btn btn-primary">Reservar</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
