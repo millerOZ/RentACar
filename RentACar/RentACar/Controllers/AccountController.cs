@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RentACar.Helpers;
 using RentACar.Models;
+using Shooping.Enums;
 
 namespace RentACar.Controllers
 {
@@ -41,6 +42,19 @@ namespace RentACar.Controllers
         {
             await _userHelper.LogoutAsync();
             return RedirectToAction("Index", "Home");
+        }
+        public async Task<IActionResult> Register()
+        {
+            AddUserViewModel model = new()
+            {
+                Id = Guid.Empty.ToString(),
+                //Countries = await _combosHelper.GetComboCountriesAsync(),
+                //States = await _combosHelper.GetComboStatesAsync(0),
+                //Cities = await _combosHelper.GetComboCitiesAsync(0),
+                UserType = UserType.User,
+            };
+
+            return View(model);
         }
     }
 }
