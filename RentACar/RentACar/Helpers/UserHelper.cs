@@ -28,6 +28,33 @@ namespace RentACar.Helpers
             return await _userManager.CreateAsync(user, password);
         }
 
+        public async Task<User> AddUserAsync(AddUserViewModel model)
+        {
+            User user = new()
+            {
+                Address = model.Address,
+                Document = model.Document,
+                Email = model.Username,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                ImageId = model.ImageId,
+                PhoneNumber = model.PhoneNumber,
+               //City = await _context.Cities.FindAsync(model.CityId),
+                UserName = model.Username,
+                UserType = model.UserType
+            };
+
+            IdentityResult result = await _userManager.CreateAsync(user, model.Password);
+            if (result != IdentityResult.Success)
+            {
+                return null;
+            }
+
+            User newUser = await GetUserAsync(model.Username);
+            await AddUserToRoleAsync(newUser, user.UserType.ToString());
+            return newUser;
+        }
+
         public async Task AddUserToRoleAsync(User user, string roleName)
         {
             await _userManager.AddToRoleAsync(user, roleName);
@@ -44,6 +71,16 @@ namespace RentACar.Helpers
                 });
             }
 
+        }
+
+        public async Task<IdentityResult> ConfirmEmailAsync(User user, string token)
+        {
+            return await _userManager.ConfirmEmailAsync(user, token);
+        }
+
+        public async Task<string> GenerateEmailConfirmationTokenAsync(User user)
+        {
+            return await _userManager.GenerateEmailConfirmationTokenAsync(user);
         }
 
         public async Task<User> GetUserAsync(string email)

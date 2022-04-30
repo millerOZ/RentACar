@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RentACar.Data.Entities;
 using RentACar.Helpers;
-using Shooping.Enums;
+using RentACar.Enums;
 
 
 namespace RentACar.Data
@@ -24,8 +24,8 @@ namespace RentACar.Data
             await CheckRolesAsync();
             await CheckCategoriesAsync();
             await CheckVehiclesAsync();
-            await CheckUserAsync("1035442878", "Luis", "Higuita", "prueba@prueba.com",  "300434061", "Cr54-32", UserType.Admin);
-            await CheckUserAsync("3002340561", "Eduardo", "Espitia", "user@prueba.com", "3002340561", "Cr343-212", UserType.User);
+            await CheckUserAsync("1035442878", "Luis", "Higuita", "prueba@yopmail.com",  "300434061", "Cr54-32", UserType.Admin);
+            await CheckUserAsync("3002340561", "Eduardo", "Espitia", "user@yopmail.com", "3002340561", "Cr343-212", UserType.User);
 
         }
 
@@ -65,6 +65,9 @@ namespace RentACar.Data
 
                 await _userHelper.AddUserAsync(user, "123456");
                 await _userHelper.AddUserToRoleAsync(user, userType.ToString());
+
+                string token = await _userHelper.GenerateEmailConfirmationTokenAsync(user);
+                await _userHelper.ConfirmEmailAsync(user, token);
             }
 
             return user;

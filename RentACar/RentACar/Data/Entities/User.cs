@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Shooping.Enums;
+using RentACar.Enums;
 using System.ComponentModel.DataAnnotations;
 
 namespace RentACar.Data.Entities

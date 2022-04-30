@@ -1,4 +1,4 @@
-﻿namespace Shooping.Enums
+﻿namespace RentACar.Enums
 {
     public enum UserType
     {
