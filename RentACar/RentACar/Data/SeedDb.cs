@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RentACar.Data.Entities;
-using RentACar.Helpers;
 using RentACar.Enums;
+using RentACar.Helpers;
 
 
 namespace RentACar.Data
@@ -23,9 +23,11 @@ namespace RentACar.Data
             await CheckReservesAsync();
             await CheckRolesAsync();
             await CheckCategoriesAsync();
+            await CheckDocumentTypeAsync();
+            await CheckLicenceTypeAsync();
             await CheckVehiclesAsync();
-            await CheckUserAsync("1035442878", "Luis", "Higuita", "prueba@yopmail.com",  "300434061", "Cr54-32", UserType.Admin);
-            await CheckUserAsync("3002340561", "Eduardo", "Espitia", "user@yopmail.com", "3002340561", "Cr343-212", UserType.User);
+            await CheckUserAsync("1035442878", "A1", "Luis", "Higuita", "prueba@yopmail.com", "300434061", "Cr54-32", UserType.Admin);
+            await CheckUserAsync("3002340561", "A2", "Eduardo", "Espitia", "user@yopmail.com", "3002340561", "Cr343-212", UserType.User);
 
         }
 
@@ -37,6 +39,7 @@ namespace RentACar.Data
 
         private async Task<User> CheckUserAsync(
             string document,
+            string licence,
             string firstName,
             string lastName,
             string email,
@@ -54,11 +57,11 @@ namespace RentACar.Data
                     Email = email,
                     FirstName = firstName,
                     LastName = lastName,
-                    DocumentType = document,
+                    DocumentType = _context.DocumentTypes.FirstOrDefault(),
                     Document = document,
+                    Licence = licence,
                     Phone = phone,
-                    TypeLicence = "A1",
-                    Licence = "1232",
+                    LicenceType = _context.LicenceTypes.FirstOrDefault(),
                     Address = address,
                     UserType = userType,
                 };
@@ -186,6 +189,30 @@ namespace RentACar.Data
                 _context.Categories.Add(new Category { Name = "Scooter" });
                 _context.Categories.Add(new Category { Name = "Electricos" });
                 _context.Categories.Add(new Category { Name = "Bicicletas" });
+                await _context.SaveChangesAsync();
+            }
+        }
+        private async Task CheckDocumentTypeAsync()
+        {
+            if (!_context.DocumentTypes.Any())
+            {
+                _context.DocumentTypes.Add(new DocumentType { Name = "Tarjeta de identidad " });
+                _context.DocumentTypes.Add(new DocumentType { Name = "Cédula de ciudadanía " });
+                _context.DocumentTypes.Add(new DocumentType { Name = "NIT" });
+                _context.DocumentTypes.Add(new DocumentType { Name = "Pasaporte" });
+
+                await _context.SaveChangesAsync();
+            }
+        }
+        private async Task CheckLicenceTypeAsync()
+        {
+            if (!_context.LicenceTypes.Any())
+            {
+                _context.LicenceTypes.Add(new LicenceType { Name = "A1 " });
+                _context.LicenceTypes.Add(new LicenceType { Name = "A2 " });
+                _context.LicenceTypes.Add(new LicenceType { Name = "B1" });
+                _context.LicenceTypes.Add(new LicenceType { Name = "B2" });
+
                 await _context.SaveChangesAsync();
             }
         }

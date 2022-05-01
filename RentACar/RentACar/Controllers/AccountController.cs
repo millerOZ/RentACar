@@ -59,11 +59,12 @@ namespace RentACar.Controllers
             AddUserViewModel model = new()
             {
                 Id = Guid.Empty.ToString(),
-                categories = await _combosHelper.GetComboCategoriesAsync(),
+                DocumentTypes = await _combosHelper.GetComboDocumentTypesAsync(),
+                LicenceTypes = await _combosHelper.GetComboLicenceTypesAsync(),
 
                 //Countries = await _combosHelper.GetComboCountriesAsync(),
                 //States = await _combosHelper.GetComboStatesAsync(0),
-                //Cities = await _combosHelper.GetComboCitiesAsync(0),
+                //Cities = await _combosHelper.GetComboCitiesAsync(0) ,
                 UserType = UserType.User,
             };
 
@@ -87,8 +88,8 @@ namespace RentACar.Controllers
                 if (user == null)
                 {
                     _flashMessage.Danger("Este correo ya está siendo usado.");
-                    model.categories = await _combosHelper.GetComboCategoriesAsync();
-                    //model.Countries = await _combosHelper.GetComboCountriesAsync();
+                    model.DocumentTypes = await _combosHelper.GetComboCategoriesAsync();
+                    model.LicenceTypes = await _combosHelper.GetComboLicenceTypesAsync();
                     //model.States = await _combosHelper.GetComboStatesAsync(model.CountryId);
                     //model.Cities = await _combosHelper.GetComboCitiesAsync(model.StateId);
                     return View(model);
@@ -116,7 +117,8 @@ namespace RentACar.Controllers
 
                 ModelState.AddModelError(string.Empty, response.Message);
             }
-            model.categories = await _combosHelper.GetComboCategoriesAsync();
+            model.DocumentTypes = await _combosHelper.GetComboDocumentTypesAsync();
+            model.LicenceTypes = await _combosHelper.GetComboLicenceTypesAsync();
             //model.Countries = await _combosHelper.GetComboCountriesAsync();
             //model.States = await _combosHelper.GetComboStatesAsync(model.CountryId);
             //model.Cities = await _combosHelper.GetComboCitiesAsync(model.StateId);

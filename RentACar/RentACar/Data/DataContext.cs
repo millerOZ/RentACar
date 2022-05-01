@@ -13,6 +13,8 @@ namespace RentACar.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<ImageVehicle> ImageVehicles { get; set; }
         public DbSet<Vehicle> Vehicles { get; set; }
+        public DbSet<DocumentType> DocumentTypes { get; set; }
+        public DbSet<LicenceType> LicenceTypes { get; set; }
         public DbSet<VehicleCategory> VehicleCategories { get; set; }
         public DbSet<Reserve> Reserves { get; set; }
         public DbSet<Rental> Rentals { get; set; }
@@ -24,6 +26,8 @@ namespace RentACar.Data
             modelBuilder.Entity<Rental>().HasIndex("Name", "ReserveId").IsUnique();
             modelBuilder.Entity<RentalType>().HasIndex("Name", "RentalId").IsUnique();
             modelBuilder.Entity<Category>().HasIndex(c => c.Name).IsUnique();
+            modelBuilder.Entity<DocumentType>().HasIndex(c => c.Name).IsUnique();
+            modelBuilder.Entity<LicenceType>().HasIndex(c => c.Name).IsUnique();
             modelBuilder.Entity<Vehicle>().HasIndex(v => v.Plaque).IsUnique();
             modelBuilder.Entity<VehicleCategory>().HasIndex("VehicleId", "CategoryId").IsUnique();
 

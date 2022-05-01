@@ -38,9 +38,12 @@ namespace RentACar.Helpers
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 ImageId = model.ImageId,
-                PhoneNumber = model.PhoneNumber,
-               //City = await _context.Cities.FindAsync(model.CityId),
+                Phone = model.PhoneNumber,
+                DocumentType = await _context.DocumentTypes.FindAsync(model.DocumentTypeId),
+                LicenceType = await _context.LicenceTypes.FindAsync(model.LicenceTypeId),
+                //City = await _context.Cities.FindAsync(model.CityId),
                 UserName = model.Username,
+                Licence = model.Licence,
                 UserType = model.UserType
             };
 

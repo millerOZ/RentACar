@@ -17,12 +17,6 @@ namespace RentACar.Data.Entities
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string LastName { get; set; }
 
-        //TODO: Show list of types of documents
-        [Display(Name = "Tipo de Documento")]
-        [MaxLength(20, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
-        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        public string DocumentType { get; set; }
-
         [Display(Name = "Documento")]
         [MaxLength(20, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio. ")]
@@ -33,11 +27,10 @@ namespace RentACar.Data.Entities
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string Phone { get; set; }
 
-        //TODO: Show list of types of licenses
         [Display(Name = "Tipo de Licencia")]
         [MaxLength(20, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        public string TypeLicence { get; set; }
+        public LicenceType LicenceType { get; set; }
 
         [Display(Name = "Licencia")]
         [MaxLength(20, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
@@ -52,7 +45,6 @@ namespace RentACar.Data.Entities
         [Display(Name = "Foto")]
         public Guid ImageId { get; set; }
 
-        //TODO: Pending to put the correct paths
         [Display(Name = "Foto")]
         public string ImageFullPath => ImageId == Guid.Empty
             ? $"https://localhost:7279/image/NoImage.png"
@@ -68,5 +60,8 @@ namespace RentACar.Data.Entities
         public string FullNameWithDocument => $"{FirstName} {LastName} - {Document}";
 
         public Reserve Reserve { get; set; }
+
+        [Display(Name = "Tipo Documento")]
+        public DocumentType DocumentType { get; set; }
     }
 }
