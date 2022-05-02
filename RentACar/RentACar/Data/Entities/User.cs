@@ -55,8 +55,8 @@ namespace RentACar.Data.Entities
         //TODO: Pending to put the correct paths
         [Display(Name = "Foto")]
         public string ImageFullPath => ImageId == Guid.Empty
-            ? $"https://localhost:7279/image/NoImage.png"
-            : $"https://shoppingprep.blob.core.windows.net/users/{ImageId}";
+            ? $"https://localhost:7279/Images/NotImage.png"
+            : $"https://shopping4.blob.core.windows.net/users/{ImageId}";
 
         [Display(Name = "Tipo de usuario")]
         public UserType UserType { get; set; }
