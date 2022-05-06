@@ -30,6 +30,13 @@ builder.Services.AddIdentity<User, IdentityRole>(cfg =>
 }).AddDefaultTokenProviders()
    .AddEntityFrameworkStores<DataContext>();
 
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Account/NotAuthorized";
+    options.AccessDeniedPath = "/Account/NotAuthorized";
+});
+
+
 builder.Services.AddTransient<SeedDb>();
 builder.Services.AddFlashMessage();
 builder.Services.AddScoped<IUserHelper, UserHelper>();
@@ -53,6 +60,7 @@ void seedData()
         app.UseHsts();
     }
 
+    app.UseStatusCodePagesWithReExecute("/error/{0}");
     app.UseHttpsRedirection();
     app.UseStaticFiles();
     app.UseRouting();

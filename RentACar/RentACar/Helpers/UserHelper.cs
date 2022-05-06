@@ -90,7 +90,6 @@ namespace RentACar.Helpers
         {
             return await _context.Users
             .Include(u => u.Reserve)
-            //TODO: La relación si seria con reserva
             .FirstOrDefaultAsync(u => u.Email == email);
 
         }
@@ -98,10 +97,14 @@ namespace RentACar.Helpers
         public async Task<User> GetUserAsync(Guid userId)
         {
             return await _context.Users
-                .Include(u => u.DocumentType)
-                // .ThenInclude(c => c.)
-                //.ThenInclude(s => s.Country)
-                .FirstOrDefaultAsync(u => u.Id == userId.ToString());
+            .Include(u => u.Reserve)
+            .Include(u => u.DocumentType)
+            .FirstOrDefaultAsync(u => u.Id == userId.ToString());
+        }
+
+        public async Task<IdentityResult> ChangePasswordAsync(User user, string oldPassword, string newPassword)
+        {
+            return await _userManager.ChangePasswordAsync(user, oldPassword, newPassword);
         }
 
         public async Task<bool> IsUserInRoleAsync(User user, string roleName)
@@ -117,6 +120,11 @@ namespace RentACar.Helpers
         public async Task LogoutAsync()
         {
             await _signInManager.SignOutAsync();
+        }
+
+        public async Task<IdentityResult> UpdateUserAsync(User user)
+        {
+            return await _userManager.UpdateAsync(user);
         }
     }
 }

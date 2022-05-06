@@ -147,5 +147,57 @@ namespace RentACar.Controllers
 
             return View();
         }
+        public IActionResult NotAuthorized()
+        {
+            return View();  
+        }
+          public async Task<IActionResult> ChangeUser()
+        {
+            User user = await _userHelper.GetUserAsync(User.Identity.Name);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            EditUserViewModel model = new()
+            {
+                Address = user.Address,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                PhoneNumber = user.PhoneNumber,
+                ImageId = user.ImageId,
+                Id = user.Id,
+                Document = user.Document,
+              //  TypeLicence = user.LicenceType,
+                Licence = user.Licence
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ChangeUser(EditUserViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                Guid imageId = model.ImageId;
+
+                 User user = await _userHelper.GetUserAsync(User.Identity.Name);
+
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
+                user.Address = model.Address;
+                user.PhoneNumber = model.PhoneNumber;
+                user.ImageId = imageId;
+               // user.LicenceType = model.LicenceType;
+                user.Document = model.Document;
+
+                await _userHelper.UpdateUserAsync(user);
+                return RedirectToAction("Index", "Home");
+            }
+
+            return View(model);
+        }
     }
 }

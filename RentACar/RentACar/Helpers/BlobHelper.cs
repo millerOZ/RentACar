@@ -49,7 +49,5 @@ namespace RentACar.Helpers
             await blockBlob.UploadFromStreamAsync(stream);
             return name;
         }
-
-
     }
 }
