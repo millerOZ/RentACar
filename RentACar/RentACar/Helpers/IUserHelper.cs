@@ -6,7 +6,9 @@ namespace RentACar.Helpers
 {
     public interface IUserHelper
     {
-        Task<User> GetUserAsync(string email); 
+        Task<User> GetUserAsync(string email);
+
+        Task<User> GetUserAsync(Guid userId);
 
         Task<IdentityResult> AddUserAsync(User user, string password);
 

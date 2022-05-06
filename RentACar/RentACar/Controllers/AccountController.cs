@@ -5,6 +5,7 @@ using RentACar.Models;
 using RentACar.Enums;
 using Vereyon.Web;
 using RentACar.Common;
+using Microsoft.AspNetCore.Identity;
 
 namespace RentACar.Controllers
 {
@@ -124,6 +125,27 @@ namespace RentACar.Controllers
             //model.Cities = await _combosHelper.GetComboCitiesAsync(model.StateId);
 
             return View(model);
+        }
+        public async Task<IActionResult> ConfirmEmail(string userId, string token)
+        {
+            if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(token))
+            {
+                return NotFound();
+            }
+
+            User user = await _userHelper.GetUserAsync(new Guid(userId));
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            IdentityResult result = await _userHelper.ConfirmEmailAsync(user, token);
+            if (!result.Succeeded)
+            {
+                return NotFound();
+            }
+
+            return View();
         }
     }
 }

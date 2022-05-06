@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using RentACar.Enums;
 using System.ComponentModel.DataAnnotations;
 
 namespace RentACar.Data.Entities
 {
+    [Authorize(Roles = "Admin")]
     public class User: IdentityUser
     {
 
