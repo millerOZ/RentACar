@@ -26,8 +26,8 @@ namespace RentACar.Data
             await CheckDocumentTypeAsync();
             await CheckLicenceTypeAsync();
             await CheckVehiclesAsync();
-            await CheckUserAsync("1035442878", "A1", "Luis", "Higuita", "prueba@yopmail.com", "300434061", "Cr54-32", UserType.Admin);
-            await CheckUserAsync("3002340561", "A2", "Eduardo", "Espitia", "user@yopmail.com", "3002340561", "Cr343-212", UserType.User);
+            await CheckUserAsync("1035442878", "A1", "Luis", "Higuita", "prueba@yopmail.com", "300434061", "Cr54-32", "bob.jpg", UserType.Admin);
+            await CheckUserAsync("3002340561", "A2", "Eduardo", "Espitia", "user@yopmail.com", "3002340561", "Cr343-212", "Brad.jpg",UserType.User);
 
         }
 
@@ -45,25 +45,29 @@ namespace RentACar.Data
             string email,
             string phone,
             string address,
+            string image,
             UserType userType)
 
         {
             User user = await _userHelper.GetUserAsync(email);
             if (user == null)
             {
+                Guid imageId = await _blobHelper.UploadBlobAsync($"{Environment.CurrentDirectory}\\wwwroot\\images\\users\\{image}", "users");
+
                 user = new User
                 {
-                    UserName = email,
-                    Email = email,
                     FirstName = firstName,
                     LastName = lastName,
-                    DocumentType = _context.DocumentTypes.FirstOrDefault(),
-                    Document = document,
-                    Licence = licence,
-                    Phone = phone,
-                    LicenceType = _context.LicenceTypes.FirstOrDefault(),
+                    Email = email,
+                    UserName = email,
+                    PhoneNumber = phone,
                     Address = address,
+                    Document = document,
+                    DocumentType = _context.DocumentTypes.FirstOrDefault(),
+                    Licence = licence,
+                    LicenceType = _context.LicenceTypes.FirstOrDefault(),
                     UserType = userType,
+                    ImageId = imageId
                 };
 
                 await _userHelper.AddUserAsync(user, "123456");

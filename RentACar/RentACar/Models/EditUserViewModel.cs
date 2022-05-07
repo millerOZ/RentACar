@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using RentACar.Data.Entities;
 using System.ComponentModel.DataAnnotations;
 
 namespace RentACar.Models

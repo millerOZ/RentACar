@@ -6,19 +6,22 @@ using RentACar.Enums;
 using Vereyon.Web;
 using RentACar.Common;
 using Microsoft.AspNetCore.Identity;
+using RentACar.Data;
 
 namespace RentACar.Controllers
 {
     public class AccountController : Controller
     {
         private readonly IUserHelper _userHelper;
+        private readonly DataContext _context;
         private readonly ICombosHelper _combosHelper;
         private readonly IBlobHelper _blobHelper;
         private readonly IMailHelper _mailHelper;
         private readonly IFlashMessage _flashMessage;
-        public AccountController(IUserHelper userHelper, ICombosHelper combosHelper, IBlobHelper blobHelper, IMailHelper mailHelper, IFlashMessage flashMessage)
+        public AccountController(IUserHelper userHelper, DataContext context, ICombosHelper combosHelper, IBlobHelper blobHelper, IMailHelper mailHelper, IFlashMessage flashMessage)
         {
             _userHelper = userHelper;
+            _context = context;
             _combosHelper = combosHelper;
             _blobHelper = blobHelper;
             _mailHelper = mailHelper;
@@ -42,9 +45,26 @@ namespace RentACar.Controllers
                 Microsoft.AspNetCore.Identity.SignInResult result = await _userHelper.LoginAsync(model);
                 if (result.Succeeded)
                 {
+                    if (Request.Query.Keys.Contains("ReturnUrl"))
+                    {
+                        return Redirect(Request.Query["ReturnUrl"].First());
+                    }
+
                     return RedirectToAction("Index", "Home");
+
                 }
-               
+                if (result.IsLockedOut)
+                {
+                    ModelState.AddModelError(string.Empty, "Ha superado el máximo número de intentos, su cuenta está bloqueada, intente de nuevo en 5 minutos.");
+                }
+                else if (result.IsNotAllowed)
+                {
+                    ModelState.AddModelError(string.Empty, "El usuario no ha sido habilitado, debes de seguir las instrucciones del correo enviado para poder habilitar el usuario.");
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Email o contraseña incorrectos.");
+                }
             }
             ModelState.AddModelError(string.Empty, "Email y contraseña incorrectos");
 
@@ -106,10 +126,10 @@ namespace RentACar.Controllers
                 Response response = _mailHelper.SendMail(
                     $"{model.FirstName} {model.LastName}",
                     model.Username,
-                    "Shopping - Confirmación de Email",
-                    $"<h1>Shopping - Confirmación de Email</h1>" +
+                    "RentACar - Confirmación de Email",
+                    $"<h1>RentACar - Confirmación de Email</h1>" +
                         $"Para habilitar el usuario por favor hacer click en el siguiente link:, " +
-                        $"<hr/><br/><p><a href = \"{tokenLink}\">Confirmar Email</a></p>");
+                        $"<hr/><br/><p><a style='color: blue' href = \"{tokenLink}\">Confirmar Email</a></p>");
                 if (response.IsSuccess)
                 {
                     _flashMessage.Info("Usuario registrado. Para poder ingresar al sistema, siga las instrucciones que han sido enviadas a su correo.");
@@ -149,9 +169,19 @@ namespace RentACar.Controllers
         }
         public IActionResult NotAuthorized()
         {
-            return View();  
+            return View();
         }
-          public async Task<IActionResult> ChangeUser()
+        public JsonResult GetDocumentTypes(int documentTypeId)
+        {
+            DocumentType documentType = _context.DocumentTypes
+                .FirstOrDefault(c => c.Id == documentTypeId);
+            if (documentType == null)
+            {
+                return null;
+            }
+            return Json(documentType.Id);
+        }
+        public async Task<IActionResult> ChangeUser()
         {
             User user = await _userHelper.GetUserAsync(User.Identity.Name);
             if (user == null)
@@ -162,14 +192,17 @@ namespace RentACar.Controllers
             EditUserViewModel model = new()
             {
                 Address = user.Address,
+                Document = user.Document,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 PhoneNumber = user.PhoneNumber,
                 ImageId = user.ImageId,
                 Id = user.Id,
-                Document = user.Document,
-              //  TypeLicence = user.LicenceType,
-                Licence = user.Licence
+                LicenceTypes = await _combosHelper.GetComboLicenceTypesAsync(),
+                //LicenceTypeId = user.LicenceType.Id,
+                Licence = user.Licence,
+                DocumentTypes = await _combosHelper.GetComboDocumentTypesAsync(),
+                //DocumentTypeId = user.DocumentType.Id
             };
 
             return View(model);
@@ -183,21 +216,30 @@ namespace RentACar.Controllers
             {
                 Guid imageId = model.ImageId;
 
-                 User user = await _userHelper.GetUserAsync(User.Identity.Name);
+                if (model.ImageFile != null)
+                {
+                    imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "users");
+                }
+                User user = await _userHelper.GetUserAsync(User.Identity.Name);
 
                 user.FirstName = model.FirstName;
                 user.LastName = model.LastName;
                 user.Address = model.Address;
                 user.PhoneNumber = model.PhoneNumber;
                 user.ImageId = imageId;
-               // user.LicenceType = model.LicenceType;
                 user.Document = model.Document;
+
 
                 await _userHelper.UpdateUserAsync(user);
                 return RedirectToAction("Index", "Home");
             }
-
+            model.DocumentTypes = await _combosHelper.GetComboDocumentTypesAsync();
+            model.LicenceTypes = await _combosHelper.GetComboLicenceTypesAsync();
             return View(model);
+        }
+        public IActionResult ChangePassword()
+        {
+            return View();
         }
     }
 }

@@ -24,10 +24,10 @@ namespace RentACar.Data.Entities
         [Required(ErrorMessage = "El campo {0} es obligatorio. ")]
         public string Document { get; set; }
 
-        [Display(Name = "Celular")]
-        [MaxLength(20, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
-        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        public string Phone { get; set; }
+        //[Display(Name = "Celular")]
+        //[MaxLength(20, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
+        //[Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        //public string Phone { get; set; }
 
         [Display(Name = "Tipo de Licencia")]
         [MaxLength(20, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
