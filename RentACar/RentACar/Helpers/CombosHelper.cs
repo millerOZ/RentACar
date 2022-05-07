@@ -56,6 +56,85 @@ namespace RentACar.Helpers
             list.Insert(0, new SelectListItem { Text = "[Seleccione una categoría...", Value = "0" });
             return list;
         }
+        public async Task<IEnumerable<SelectListItem>> GetComboDocumentTypesAsync()
+        {
+            List<SelectListItem> list = await _context.DocumentTypes.Select(c => new SelectListItem
+            {
+                Text = c.Name,
+                Value = c.Id.ToString()
+            })
+                .OrderBy(c => c.Text)
+                .ToListAsync();
 
+            list.Insert(0, new SelectListItem { Text = "[Seleccione un país...", Value = "0" });
+            return list;
+        }
+
+        public async Task<IEnumerable<SelectListItem>> GetComboDocumentTypesAsync(IEnumerable<DocumentType> filter)
+        {
+            List<DocumentType> documentTypes = await _context.DocumentTypes.ToListAsync();
+            List<DocumentType> documentTypesFiltered = new();
+            foreach (DocumentType documentType in documentTypes)
+            {
+                if (!filter.Any(c => c.Id == documentType.Id))
+                {
+                    documentTypesFiltered.Add(documentType);
+                }
+            }
+
+            List<SelectListItem> list = documentTypesFiltered.Select(c => new SelectListItem
+            {
+                Text = c.Name,
+                Value = c.Id.ToString()
+            })
+                .OrderBy(c => c.Text)
+                .ToList();
+
+            list.Insert(0, new SelectListItem { Text = "[Seleccione un tipo documento...", Value = "0" });
+            return list;
+        }
+
+        public async Task<IEnumerable<SelectListItem>> GetComboLicenceTypesAsync()
+        {
+            List<SelectListItem> list = await _context.LicenceTypes.Select(c => new SelectListItem
+            {
+                Text = c.Name,
+                Value = c.Id.ToString()
+            })
+            .OrderBy(c => c.Text)
+            .ToListAsync();
+
+            list.Insert(0, new SelectListItem
+            {
+                Text = "[Seleccione un tipo de licencia...]",
+                Value = "0"
+            });
+
+            return list;
+        }
+
+        public async Task<IEnumerable<SelectListItem>> GetComboLicenceTypesAsync(IEnumerable<DocumentType> filter)
+        {
+            List<LicenceType> licenceTypes = await _context.LicenceTypes.ToListAsync();
+            List<LicenceType> licenceTypesFiltered = new();
+            foreach (LicenceType licenceType in licenceTypes)
+            {
+                if (!filter.Any(c => c.Id == licenceType.Id))
+                {
+                    licenceTypesFiltered.Add(licenceType);
+                }
+            }
+
+            List<SelectListItem> list = licenceTypesFiltered.Select(c => new SelectListItem
+            {
+                Text = c.Name,
+                Value = c.Id.ToString()
+            })
+                .OrderBy(c => c.Text)
+                .ToList();
+
+            list.Insert(0, new SelectListItem { Text = "[Seleccione un tipo de licencia...", Value = "0" });
+            return list;
+        }
     }
 }

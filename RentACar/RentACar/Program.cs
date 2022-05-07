@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using RentACar.Data;
 using RentACar.Data.Entities;
 using RentACar.Helpers;
+using Vereyon.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,18 +16,33 @@ builder.Services.AddDbContext<DataContext>(o =>
 //TODO : Make strongest password
 builder.Services.AddIdentity<User, IdentityRole>(cfg =>
 {
+    cfg.Tokens.AuthenticatorTokenProvider = TokenOptions.DefaultAuthenticatorProvider;
+    cfg.User.RequireUniqueEmail = true;
     cfg.User.RequireUniqueEmail = true;
     cfg.Password.RequireDigit = false;
     cfg.Password.RequiredUniqueChars = 0;
     cfg.Password.RequireLowercase = false;
     cfg.Password.RequireNonAlphanumeric = false;
     cfg.Password.RequireUppercase = false;
-}).AddEntityFrameworkStores<DataContext>();
+    cfg.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromSeconds(30);
+    cfg.Lockout.MaxFailedAccessAttempts = 3;
+    cfg.Lockout.AllowedForNewUsers = true;
+}).AddDefaultTokenProviders()
+   .AddEntityFrameworkStores<DataContext>();
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Account/NotAuthorized";
+    options.AccessDeniedPath = "/Account/NotAuthorized";
+});
+
 
 builder.Services.AddTransient<SeedDb>();
+builder.Services.AddFlashMessage();
 builder.Services.AddScoped<IUserHelper, UserHelper>();
 builder.Services.AddScoped<ICombosHelper, CombosHelper>();//Combos
 builder.Services.AddScoped<IBlobHelper, BlobHelper>(); //Conexi�n al blob Azure
+builder.Services.AddScoped<IMailHelper, MailHelper>();
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 var app = builder.Build();
 seedData();
@@ -44,6 +60,7 @@ void seedData()
         app.UseHsts();
     }
 
+    app.UseStatusCodePagesWithReExecute("/error/{0}");
     app.UseHttpsRedirection();
     app.UseStaticFiles();
     app.UseRouting();
