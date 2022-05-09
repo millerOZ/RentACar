@@ -7,7 +7,7 @@ using Vereyon.Web;
 using RentACar.Common;
 using Microsoft.AspNetCore.Identity;
 using RentACar.Data;
-
+using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 namespace RentACar.Controllers
 {
     public class AccountController : Controller
@@ -42,31 +42,26 @@ namespace RentACar.Controllers
         {
             if (ModelState.IsValid)
             {
-                Microsoft.AspNetCore.Identity.SignInResult result = await _userHelper.LoginAsync(model);
+                SignInResult result = await _userHelper.LoginAsync(model);
                 if (result.Succeeded)
                 {
-                    if (Request.Query.Keys.Contains("ReturnUrl"))
-                    {
-                        return Redirect(Request.Query["ReturnUrl"].First());
-                    }
-
+                   
                     return RedirectToAction("Index", "Home");
 
                 }
                 if (result.IsLockedOut)
                 {
-                    ModelState.AddModelError(string.Empty, "Ha superado el máximo número de intentos, su cuenta está bloqueada, intente de nuevo en 5 minutos.");
+                    _flashMessage.Danger(string.Empty, "Ha superado el máximo número de intentos, su cuenta está bloqueada, intente de nuevo en 5 minutos.");
                 }
                 else if (result.IsNotAllowed)
                 {
-                    ModelState.AddModelError(string.Empty, "El usuario no ha sido habilitado, debes de seguir las instrucciones del correo enviado para poder habilitar el usuario.");
+                    _flashMessage.Danger(string.Empty, "El usuario no ha sido habilitado, debes de seguir las instrucciones del correo enviado para poder habilitar el usuario.");
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Email o contraseña incorrectos.");
+                    _flashMessage.Danger(string.Empty, "Email o contraseña incorrectos.");
                 }
             }
-            ModelState.AddModelError(string.Empty, "Email y contraseña incorrectos");
 
             return View(model);
         }
@@ -74,6 +69,10 @@ namespace RentACar.Controllers
         {
             await _userHelper.LogoutAsync();
             return RedirectToAction("Index", "Home");
+        }
+        public IActionResult NotAuthorized()
+        {
+            return View();
         }
         public async Task<IActionResult> Register()
         {
@@ -146,6 +145,7 @@ namespace RentACar.Controllers
 
             return View(model);
         }
+       
         public async Task<IActionResult> ConfirmEmail(string userId, string token)
         {
             if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(token))
@@ -167,10 +167,7 @@ namespace RentACar.Controllers
 
             return View();
         }
-        public IActionResult NotAuthorized()
-        {
-            return View();
-        }
+       
         public JsonResult GetDocumentTypes(int documentTypeId)
         {
             DocumentType documentType = _context.DocumentTypes
@@ -241,5 +238,98 @@ namespace RentACar.Controllers
         {
             return View();
         }
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (model.OldPassword == model.NewPassword)
+                {
+                    ModelState.AddModelError(string.Empty, "Debes ingresar una contraseña diferente.");
+                    return View(model);
+                }
+
+                User? user = await _userHelper.GetUserAsync(User.Identity.Name);
+                if (user != null)
+                {
+                    IdentityResult? result = await _userHelper.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("ChangeUser");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, result.Errors.FirstOrDefault().Description);
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Usuario no encontrado.");
+                }
+            }
+
+            return View(model);
+        }
+        public IActionResult RecoverPassword()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> RecoverPassword(RecoverPasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                User user = await _userHelper.GetUserAsync(model.Email);
+                if (user == null)
+                {
+                    _flashMessage.Danger("El email no corresponde a ningún usuario registrado.");
+                    return View(model);
+                }
+
+                string myToken = await _userHelper.GeneratePasswordResetTokenAsync(user);
+                string link = Url.Action(
+                    "ResetPassword",
+                    "Account",
+                    new { token = myToken }, protocol: HttpContext.Request.Scheme);
+                _mailHelper.SendMail(
+                    $"{user.FullName}",
+                    model.Email,
+                    "Shopping - Recuperación de Contraseña",
+                    $"<h1>Shopping - Recuperación de Contraseña</h1>" +
+                    $"Para recuperar la contraseña haga click en el siguiente enlace:" +
+                    $"<p><a href = \"{link}\">Reset Password</a></p>");
+                _flashMessage.Info("Las instrucciones para recuperar la contraseña han sido enviadas a su correo.");
+                return RedirectToAction(nameof(Login));
+            }
+
+            return View(model);
+        }
+        public IActionResult ResetPassword(string token)
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
+        {
+            User user = await _userHelper.GetUserAsync(model.UserName);
+            if (user != null)
+            {
+                IdentityResult result = await _userHelper.ResetPasswordAsync(user, model.Token, model.Password);
+                if (result.Succeeded)
+                {
+                    _flashMessage.Info("Contraseña cambiada con éxito.");
+                    return RedirectToAction(nameof(Login));
+                }
+
+                _flashMessage.Danger("Error cambiando la contraseña.");
+                return View(model);
+            }
+
+            _flashMessage.Danger("Usuario no encontrado.");
+            return View(model);
+        }
+
     }
+
 }
