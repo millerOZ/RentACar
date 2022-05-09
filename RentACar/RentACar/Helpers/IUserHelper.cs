@@ -30,5 +30,8 @@ namespace RentACar.Helpers
 
         Task<IdentityResult> UpdateUserAsync(User user);
 
+        Task<string> GeneratePasswordResetTokenAsync(User user);
+        Task<IdentityResult> ResetPasswordAsync(User user, string token, string password);
+
     }
 }
