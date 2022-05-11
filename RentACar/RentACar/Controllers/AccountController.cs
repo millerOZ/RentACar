@@ -51,15 +51,15 @@ namespace RentACar.Controllers
                 }
                 if (result.IsLockedOut)
                 {
-                    _flashMessage.Danger(string.Empty, "Ha superado el máximo número de intentos, su cuenta está bloqueada, intente de nuevo en 5 minutos.");
+                    ModelState.AddModelError(string.Empty, "Ha superado el máximo número de intentos, su cuenta está bloqueada, intente de nuevo en 5 minutos.");
                 }
                 else if (result.IsNotAllowed)
                 {
-                    _flashMessage.Danger(string.Empty, "El usuario no ha sido habilitado, debes de seguir las instrucciones del correo enviado para poder habilitar el usuario.");
+                    ModelState.AddModelError(string.Empty, "El usuario no ha sido habilitado, debes de seguir las instrucciones del correo enviado para poder habilitar el usuario.");
                 }
                 else
                 {
-                    _flashMessage.Danger(string.Empty, "Email o contraseña incorrectos.");
+                    ModelState.AddModelError(string.Empty, "Email o contraseña incorrectos.");
                 }
             }
 
@@ -107,7 +107,7 @@ namespace RentACar.Controllers
                 User user = await _userHelper.AddUserAsync(model);
                 if (user == null)
                 {
-                    _flashMessage.Danger("Este correo ya está siendo usado.");
+                    ModelState.AddModelError(string.Empty, "Este correo ya está siendo usado.");
                     model.DocumentTypes = await _combosHelper.GetComboCategoriesAsync();
                     model.LicenceTypes = await _combosHelper.GetComboLicenceTypesAsync();
                     //model.States = await _combosHelper.GetComboStatesAsync(model.CountryId);
@@ -131,7 +131,7 @@ namespace RentACar.Controllers
                         $"<hr/><br/><p><a style='color: blue' href = \"{tokenLink}\">Confirmar Email</a></p>");
                 if (response.IsSuccess)
                 {
-                    _flashMessage.Info("Usuario registrado. Para poder ingresar al sistema, siga las instrucciones que han sido enviadas a su correo.");
+                    ModelState.AddModelError(string.Empty, "Usuario registrado. Para poder ingresar al sistema, siga las instrucciones que han sido enviadas a su correo.");
                     return RedirectToAction(nameof(Login));
                 }
 
@@ -282,7 +282,7 @@ namespace RentACar.Controllers
                 User user = await _userHelper.GetUserAsync(model.Email);
                 if (user == null)
                 {
-                    _flashMessage.Danger("El email no corresponde a ningún usuario registrado.");
+                    ModelState.AddModelError(string.Empty, "El email no corresponde a ningún usuario registrado.");
                     return View(model);
                 }
 
@@ -298,7 +298,7 @@ namespace RentACar.Controllers
                     $"<h1>Shopping - Recuperación de Contraseña</h1>" +
                     $"Para recuperar la contraseña haga click en el siguiente enlace:" +
                     $"<p><a href = \"{link}\">Reset Password</a></p>");
-                _flashMessage.Info("Las instrucciones para recuperar la contraseña han sido enviadas a su correo.");
+                ModelState.AddModelError(string.Empty, "Las instrucciones para recuperar la contraseña han sido enviadas a su correo.");
                 return RedirectToAction(nameof(Login));
             }
 
@@ -318,15 +318,15 @@ namespace RentACar.Controllers
                 IdentityResult result = await _userHelper.ResetPasswordAsync(user, model.Token, model.Password);
                 if (result.Succeeded)
                 {
-                    _flashMessage.Info("Contraseña cambiada con éxito.");
+                    ModelState.AddModelError(string.Empty, "Contraseña cambiada con éxito.");
                     return RedirectToAction(nameof(Login));
                 }
 
-                _flashMessage.Danger("Error cambiando la contraseña.");
+                ModelState.AddModelError(string.Empty, "Error cambiando la contraseña.");
                 return View(model);
             }
 
-            _flashMessage.Danger("Usuario no encontrado.");
+            ModelState.AddModelError(string.Empty, "Usuario no encontrado.");
             return View(model);
         }
 
