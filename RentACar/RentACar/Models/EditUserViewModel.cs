@@ -48,7 +48,7 @@ namespace RentACar.Models
         [Display(Name = "Foto")]
         public string ImageFullPath => ImageId == Guid.Empty
             ? $"https://localhost:7279/images/Notimage.png"
-            : $"https://shopping4.blob.core.windows.net/users/{ImageId}";
+            : $"https://rentacar13.blob.core.windows.net/users/{ImageId}";
 
         [Display(Name = "Image")]
         public IFormFile? ImageFile { get; set; }

@@ -4,7 +4,7 @@
 
 namespace RentACar.Migrations
 {
-    public partial class Users : Migration
+    public partial class userimages : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
