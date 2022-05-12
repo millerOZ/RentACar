@@ -15,6 +15,6 @@ namespace RentACar.Data.Entities
         [Display(Name = "Foto")]
         public string ImageFullPath => ImageId == Guid.Empty
             ? $"https://https://localhost:7179//images/noimage.png"
-            : $"https://rentacar1.blob.core.windows.net/vehicles/{ImageId}";
+            : $"https://rentacar13.blob.core.windows.net/vehicles/{ImageId}";
     }
 }

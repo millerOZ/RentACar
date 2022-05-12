@@ -39,7 +39,7 @@ namespace RentACar.Helpers
         {
             Stream stream = File.OpenRead(image);
             return await UploadBlobAsync(stream, containerName);
-        }
+        }                                                                                                    
 
         private async Task<Guid> UploadBlobAsync(Stream stream, string containerName)
         {

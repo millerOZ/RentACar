@@ -12,8 +12,8 @@ using RentACar.Data;
 namespace RentACar.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220430143835_Users")]
-    partial class Users
+    [Migration("20220511213326_usermodel")]
+    partial class usermodel
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -178,6 +178,27 @@ namespace RentACar.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("RentACar.Data.Entities.DocumentType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("DocumentTypes");
+                });
+
             modelBuilder.Entity("RentACar.Data.Entities.ImageVehicle", b =>
                 {
                     b.Property<int>("Id")
@@ -197,6 +218,27 @@ namespace RentACar.Migrations
                     b.HasIndex("VehicleId");
 
                     b.ToTable("ImageVehicles");
+                });
+
+            modelBuilder.Entity("RentACar.Data.Entities.LicenceType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("LicenceTypes");
                 });
 
             modelBuilder.Entity("RentACar.Data.Entities.Rental", b =>
@@ -318,10 +360,8 @@ namespace RentACar.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.Property<string>("DocumentType")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                    b.Property<int?>("DocumentTypeId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -348,6 +388,9 @@ namespace RentACar.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
+                    b.Property<int>("LicenceTypeId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
@@ -365,11 +408,6 @@ namespace RentACar.Migrations
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
@@ -385,11 +423,6 @@ namespace RentACar.Migrations
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
-                    b.Property<string>("TypeLicence")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -398,6 +431,10 @@ namespace RentACar.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DocumentTypeId");
+
+                    b.HasIndex("LicenceTypeId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -552,9 +589,23 @@ namespace RentACar.Migrations
 
             modelBuilder.Entity("RentACar.Data.Entities.User", b =>
                 {
+                    b.HasOne("RentACar.Data.Entities.DocumentType", "DocumentType")
+                        .WithMany()
+                        .HasForeignKey("DocumentTypeId");
+
+                    b.HasOne("RentACar.Data.Entities.LicenceType", "LicenceType")
+                        .WithMany()
+                        .HasForeignKey("LicenceTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("RentACar.Data.Entities.Reserve", "Reserve")
                         .WithMany("Users")
                         .HasForeignKey("ReserveId");
+
+                    b.Navigation("DocumentType");
+
+                    b.Navigation("LicenceType");
 
                     b.Navigation("Reserve");
                 });
