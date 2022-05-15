@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RentACar.Models
 {
@@ -21,10 +22,19 @@ namespace RentACar.Models
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public string Plaque { get; set; }
 
-        [Display(Name = "Observaciones")]
-        [MaxLength(500, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
-        public string Remarks { get; set; }
-    }
+        [Column(TypeName = "decimal(18,2)")]
+        [DisplayFormat(DataFormatString = "{0:C2}")]
+        [Display(Name = "Valor Diario")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        public decimal PriceDay { get; set; }
 
+
+        [Display(Name = "Descripción")]
+        [MaxLength(500, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
+        public string Description { get; set; }
+
+
+
+    }
 }
 

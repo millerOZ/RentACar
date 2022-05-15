@@ -1,4 +1,9 @@
-﻿@model IEnumerable<RentACar.Models.VehiclesHomeViewModel>
+﻿
+@model RentACar.Models.HomeViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
 
 <style type="text/css">
     .card {
@@ -13,98 +18,38 @@
     }
 </style>
 
-@{
-    ViewData["Title"] = "Index";
-}
+    <a asp-action="ShowCart" class="btn btn-outline-primary">Mis Reservas (@Model.Quantity)</a>
 
-@foreach (var item in Model)
-{
-    <div class="row row-cols-1 row-cols-md-4 g-4 mt-1">
-        @if (item.Vehicle1 != null)
+<div class="row row-cols-1 row-cols-md-4 g-4 mt-1">
+    @if (Model.Vehicles.Count() > 0)
+    {
+        @foreach (var item in Model.Vehicles)
         {
-            <div class="col-md-3">
-                <div class="card bg-dark text-Black">
-                    <div class="card h-100">
-                        <div class="card_title">@item.Vehicle1.Serie</div>
-                        <div class="card_body">
-                            <img src="@item.Vehicle1.ImageFullPath" style="height:150px; max-width:280px;" />
-                            <p class="mt-2">
-                                @item.Vehicle1.Brand
-                                <h4>@Html.DisplayFor(modelItem => item.Vehicle1.Plaque)</h4>
-                            </p>
-                        </div>
+            <div class="col">
+                <div class="card h-100">
+                    <div class="text-center zoom">
+                        <img src="@item.ImageFullPath" style="height:150px; max-width:200px; border-radius:50%;" class="text-center"/>
                     </div>
-                    <div class="card_foot">
-                        <a asp-action="Details" asp-route-id="@item.Vehicle1.Id" class="btn btn-secondary">Detalles</a>
-                        <a asp-action="Add" asp-route-id="@item.Vehicle1.Id" class="btn btn-primary">Reservar</a>
+                    <div class="card-body">
+                        <p class="card-text smfnt">Serie:  @item.Serie</p>
+                        <p class="card-text smfnt">Marca:   @item.Brand</p>
+                        <p class="card-text smfnt">Placa:   @item.Plaque</p>
+                        <p class="card-text smfnt">Valor Diario:    @Html.DisplayFor(modelItem => item.PriceDay)</p>
+                    </div>
+                    <div class="card-footer text-center">
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-secondary"><i class="fa-solid fa-circle-info"></i> Ver</a>
+                        <a asp-controller="Users" asp-action="ChangeUser" asp-route-id="@item.Id" class="btn btn-sm btn-primary"><i class="fa-solid fa-car-side"></i>Reservar</a>
                     </div>
                 </div>
             </div>
         }
-        @if (item.Vehicle2 != null)
-        {
-            <div class="col-md-3">
-                <div class="card bg-dark text-Black">
-                    <div class="card h-100">
-                        <div class="card_title">@item.Vehicle2.Serie</div>
-                        <div class="card_body">
-                            <img src="@item.Vehicle2.ImageFullPath" style="height:150px; max-width:280px;" />
-                            <p class="mt-2">
-                                @item.Vehicle2.Brand
-                                <h4>@Html.DisplayFor(modelItem => item.Vehicle2.Plaque)</h4>
-                            </p>
-                        </div>
-                    </div>
+    }
+    else
+    {
+        <h3>No hay Vehiculos con su criterio de búsqueda</h3>
+    }
+</div>
 
-                    <div class="card_foot">
-                        <a asp-action="Details" asp-route-id="@item.Vehicle1.Id" class="btn btn-secondary">Detalles</a>
-                        <a asp-action="Add" asp-route-id="@item.Vehicle1.Id" class="btn btn-primary">Reservar</a>
-                    </div>
-                </div>
-            </div>
-        }
-        @if (item.Vehicle3 != null)
-        {
-            <div class="col-md-3">
-                <div class="card bg-dark text-Black">
-                    <div class="card h-100">
-                        <div class="card_title">@item.Vehicle3.Serie</div>
-                        <div class="card_body">
-                            <img src="@item.Vehicle3.ImageFullPath" style="height:150px; max-width:280px;" />
-                            <p class="mt-2">
-                                @item.Vehicle3.Brand
-                                <h4>@Html.DisplayFor(modelItem => item.Vehicle3.Plaque)</h4>
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="card_foot">
-                        <a asp-action="Details" asp-route-id="@item.Vehicle1.Id" class="btn btn-secondary">Detalles</a>
-                        <a asp-action="Add" asp-route-id="@item.Vehicle1.Id" class="btn btn-primary">Reservar</a>
-                    </div>
-                </div>
-            </div>
-        }
-        @if (item.Vehicle4 != null)
-        {
-            <div class="col-md-3">
-                <div class="card bg-dark text-Black">
-                    <div class="card h-100">
-                        <div class="card_title">@item.Vehicle4.Serie</div>
-                        <div class="card_body">
-                            <img src="@item.Vehicle4.ImageFullPath" style="height:150px; max-width:280px;" />
-                            <p class="mt-2">
-                                @item.Vehicle4.Brand
-                                <h4>@Html.DisplayFor(modelItem => item.Vehicle4.Plaque)</h4>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="card_foot">
-                        <a asp-action="Details" asp-route-id="@item.Vehicle1.Id" class="btn btn-secondary">Detalles</a>
-                        <a asp-action="Add" asp-route-id="@item.Vehicle1.Id" class="btn btn-primary">Reservar</a>
-                    </div>
-                </div>
-            </div>
-        }
-    </div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

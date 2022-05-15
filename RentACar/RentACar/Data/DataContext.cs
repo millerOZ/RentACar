@@ -14,18 +14,20 @@ namespace RentACar.Data
         public DbSet<ImageVehicle> ImageVehicles { get; set; }
         public DbSet<Vehicle> Vehicles { get; set; }
         public DbSet<VehicleCategory> VehicleCategories { get; set; }
-        public DbSet<Reserve> Reserves { get; set; }
-        public DbSet<Rental> Rentals { get; set; }
-        public DbSet<RentalType> RentalTypes { get; set; }
+        public DbSet<DocumentType> DocumentTypes { get; set; }
+        public DbSet<LicenceType> LicenceTypes { get; set; }
+        public DbSet<TemporalReserve> TemporalReserves { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Reserve>().HasIndex(r => r.Id).IsUnique();
-            modelBuilder.Entity<Rental>().HasIndex("Name", "ReserveId").IsUnique();
-            modelBuilder.Entity<RentalType>().HasIndex("Name", "RentalId").IsUnique();
             modelBuilder.Entity<Category>().HasIndex(c => c.Name).IsUnique();
             modelBuilder.Entity<Vehicle>().HasIndex(v => v.Plaque).IsUnique();
             modelBuilder.Entity<VehicleCategory>().HasIndex("VehicleId", "CategoryId").IsUnique();
+            modelBuilder.Entity<DocumentType>().HasIndex(d => d.Name).IsUnique();
+            modelBuilder.Entity<LicenceType>().HasIndex(l => l.Name).IsUnique();
+            modelBuilder.Entity<TemporalReserve>().HasIndex(tr => tr.Id).IsUnique();
+
 
         }
     }

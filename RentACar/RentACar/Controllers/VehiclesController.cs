@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RentACar.Data;
 using RentACar.Data.Entities;
@@ -7,6 +8,7 @@ using RentACar.Models;
 
 namespace RentACar.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class VehiclesController : Controller
     {
         private readonly DataContext _context;
@@ -54,7 +56,8 @@ namespace RentACar.Controllers
                     Plaque = model.Plaque,
                     Brand = model.Brand,
                     Serie = model.Serie,
-                    Remarks = model.Remarks
+                    PriceDay = model.PriceDay,
+                    Description = model.Description
                 };
 
                 vehicle.VehicleCategories = new List<VehicleCategory>()
@@ -121,7 +124,8 @@ namespace RentACar.Controllers
                 Id = vehicle.Id,
                 Brand = vehicle.Brand,
                 Serie = vehicle.Serie,
-                Remarks = vehicle.Remarks
+                PriceDay = vehicle.PriceDay,
+                Description = vehicle.Description
             };
 
             return View(model);
@@ -141,7 +145,8 @@ namespace RentACar.Controllers
                 vehicle.Plaque = model.Plaque;
                 vehicle.Brand = model.Brand;
                 vehicle.Serie = model.Serie;
-                vehicle.Remarks = model.Remarks;
+                vehicle.PriceDay = model.PriceDay;
+                vehicle.Description = model.Description;
                 _context.Update(vehicle);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -259,7 +264,7 @@ namespace RentACar.Controllers
                 return NotFound();
             }
 
-            await _blobHelper.DeleteBlobAsync(imageVehicle.ImageId, "vehicles");
+            await _blobHelper.DeleteBlobAsync(imageVehicle.ImageId, "Vehicles");
             _context.ImageVehicles.Remove(imageVehicle);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Details), new { Id = imageVehicle.Vehicle.Id });

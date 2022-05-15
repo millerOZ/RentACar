@@ -1,29 +1,28 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using RentACar.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace RentACar.Data.Entities
 {
     public class Reserve
     {
         public int Id { get; set; }
-        [Display(Name = "Fecha Reserva")]
+
+        public User User { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd hh:mm tt}")]
+        [Display(Name = "Fecha")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        public DateTime DateReserve { get; set; }
-        [Display(Name = "Fecha Inicio Reserva")]
-        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        public DateTime DateStartReserve { get; set; }
-        [Display(Name = "Fecha Final Reserva")]
-        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        public DateTime DateFinishReserve { get; set; }
-        [Display(Name = "Lugar Reserva")]
-        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        [MaxLength(50, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres")]
-        public string PlaceFinishReserve { get; set; }
+        public DateTime Date { get; set; }
+
         [Display(Name = "Estado")]
-        public Boolean StartReserve { get; set; }
-        [Display(Name = "Alquier")]
-        public ICollection<Rental> Rentals { get; set; }
-        [Display(Name = "Cant Alquier")]
-        public int RentalNumber => Rentals == null ? 0 : Rentals.Count;
-        public ICollection<User> Users { get; set; }
+        public ReserveStatus ReserveStatus { get; set; }
+
+        public ICollection<TemporalReserve> TemporalReserves { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:C2}")]
+        [Display(Name = "Valor")]
+        public decimal Value => TemporalReserves == null ? 0 : TemporalReserves.Sum(tr => tr.Value);
+
     }
+
 }

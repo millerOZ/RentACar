@@ -16,6 +16,34 @@ html {
 body {
     margin-bottom: 60px;
 }
+/* Carrusel Imagenes*/
+.carousel-inner {
+    width: auto;
+    height: 500px;
+    max-height: 500px !important;
+}
+
+.carousel-content {
+    color: black;
+    display: flex;
+    text-align: center;
+}
+
+/*Zoom images*/
+.zoom {
+    padding: 5px;
+    background-color: transparent;
+    transition: transform .2s;
+    width: auto;
+    height: auto;
+    margin: 0 auto;
+}
+
+    .zoom:hover {
+        -ms-transform: scale(2); /* IE 9 */
+        -webkit-transform: scale(2); /* Safari 3-8 */
+        transform: scale(2);
+    }
 
 @charset "utf-8";
 
@@ -53,7 +81,7 @@ body {
     color: white;
 }
 
-.foot a:after {
+    .foot a:after {
         position: absolute;
         top: 0;
         right: 0;
@@ -61,32 +89,4 @@ body {
         left: 0;
         z-index: 1;
         content: ""
-}
-/*Zoom images*/
-.zoom {
-    padding: 5px;
-    background-color: transparent;
-    transition: transform .2s;
-    width: auto;
-    height: auto;
-    margin: 0 auto;
-}
-
-    .zoom:hover {
-        -ms-transform: scale(2); /* IE 9 */
-        -webkit-transform: scale(2); /* Safari 3-8 */
-        transform: scale(2);
     }
-
-/**Carousel */
-.carousel-inner {
-    width: auto;
-    height: 500px;
-    max-height: 500px !important;
-}
-
-.carousel-content {
-    color: black;
-    display: flex;
-    text-align: center;
-}

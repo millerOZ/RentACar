@@ -57,5 +57,42 @@ namespace RentACar.Helpers
             return list;
         }
 
+        public async Task<IEnumerable<SelectListItem>> GetComboDocumenTypeAsync()
+        {
+            List<SelectListItem> list = await _context.DocumentTypes.Select(d => new SelectListItem
+            {
+                Text = d.Name,
+                Value = d.Id.ToString()
+            })
+            .OrderBy(d => d.Text)
+            .ToListAsync();
+
+            list.Insert(0, new SelectListItem
+            {
+                Text = "[Seleccione tipo de documento...]",
+                Value = "0"
+            });
+
+            return list;
+        }
+
+        public async Task<IEnumerable<SelectListItem>> GetComboLicenceTypesAsync()
+        {
+            List<SelectListItem> list = await _context.LicenceTypes.Select(l => new SelectListItem
+            {
+                Text = l.Name,
+                Value = l.Id.ToString()
+            })
+         .OrderBy(l => l.Text)
+         .ToListAsync();
+
+            list.Insert(0, new SelectListItem
+            {
+                Text = "[Seleccione tipo de licencia...]",
+                Value = "0"
+            });
+
+            return list;
+        }
     }
 }

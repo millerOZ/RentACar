@@ -1,4 +1,4 @@
-﻿using Shooping.Enums;
+﻿using RentACar.Enums;
 using System.ComponentModel.DataAnnotations;
 
 namespace RentACar.Models
@@ -26,5 +26,6 @@ namespace RentACar.Models
 
         [Display(Name = "Tipo de usuario")]
         public UserType UserType { get; set; }
+
     }
 }

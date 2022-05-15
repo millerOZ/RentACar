@@ -22,5 +22,6 @@ namespace RentACar.Models
         [StringLength(20, MinimumLength = 6, ErrorMessage = "El campo {0} debe tener entre {2} y {1} carácteres.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string Confirm { get; set; }
+
     }
 }
