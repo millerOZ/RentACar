@@ -24,10 +24,10 @@ namespace RentACar.Data
             await CheckRolesAsync();
             await CheckCategoriesAsync();
             await CheckVehiclesAsync();
-            await CheckUserAsync("1035442878", "Luis", "Higuita", "prueba@yopmail.com", "300434061", "Cr54-32", "Admin.jpg", UserType.Admin);
-            await CheckUserAsync("3002340561", "Eduardo", "Espitia", "user@yopmail.com", "3002340561", "Cr343-212", "User.JPG", UserType.User);
             await CheckLicenceTypesAsync();
             await CheckDocumentTypeAsync();
+            await CheckUserAsync("1035442878", "Luis", "Higuita", "prueba@yopmail.com", "300434061", "Cr54-32", "Admin.jpg", UserType.Admin);
+            await CheckUserAsync("3002340561", "Eduardo", "Espitia", "user@yopmail.com", "3002340561", "Cr343-212", "User.JPG", UserType.User);
         }
 
 

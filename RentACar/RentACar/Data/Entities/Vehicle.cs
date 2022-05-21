@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using RentACar.Enums;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RentACar.Data.Entities
@@ -11,6 +12,7 @@ namespace RentACar.Data.Entities
         [MaxLength(20, ErrorMessage = "El campo {0} debe tener maximo {1} caracteres")]
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public string Brand { get; set; }
+        public VehicleStatus VehicleStatus { get; set; }
 
         [Display(Name = "Serie")]
         [MaxLength(50, ErrorMessage = "El campo {0} debe tener maximo {1} caracteres")]

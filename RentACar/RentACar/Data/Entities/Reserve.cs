@@ -1,5 +1,6 @@
 ﻿using RentACar.Enums;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RentACar.Data.Entities
 {
@@ -17,11 +18,28 @@ namespace RentACar.Data.Entities
         [Display(Name = "Estado")]
         public ReserveStatus ReserveStatus { get; set; }
 
-        public ICollection<TemporalReserve> TemporalReserves { get; set; }
-
+        [Column(TypeName = "decimal(18,2)")]
         [DisplayFormat(DataFormatString = "{0:C2}")]
         [Display(Name = "Valor")]
-        public decimal Value => TemporalReserves == null ? 0 : TemporalReserves.Sum(tr => tr.Value);
+        public decimal Value => Vehicle == null ? 0 : Vehicle.PriceDay * (decimal)(ReturnDate - DeliveryDate).Days;
+
+        [Display(Name = "vehiculo")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        public Vehicle Vehicle { get; set; }
+
+        [DataType(DataType.MultilineText)]
+        [Display(Name = "Comentarios")]
+        public string Comments { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd hh:mm tt}")]
+        [Display(Name = "Fecha inicio reserva")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        public DateTime DeliveryDate { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd hh:mm tt}")]
+        [Display(Name = "Fecha final reserva")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        public DateTime ReturnDate { get; set; }
 
     }
 

@@ -247,37 +247,16 @@ namespace RentACar.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("ReserveStatus")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Reserve");
-                });
-
-            modelBuilder.Entity("RentACar.Data.Entities.TemporalReserve", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
                     b.Property<string>("Comments")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DeliveryDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("ReserveId")
+                    b.Property<int>("ReserveStatus")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("ReturnDate")
@@ -286,21 +265,16 @@ namespace RentACar.Migrations
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int?>("VehicleId")
+                    b.Property<int>("VehicleId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Id")
-                        .IsUnique();
-
-                    b.HasIndex("ReserveId");
 
                     b.HasIndex("UserId");
 
                     b.HasIndex("VehicleId");
 
-                    b.ToTable("TemporalReserves");
+                    b.ToTable("Reserves");
                 });
 
             modelBuilder.Entity("RentACar.Data.Entities.User", b =>
@@ -439,6 +413,9 @@ namespace RentACar.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<int>("VehicleStatus")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("Plaque")
@@ -538,22 +515,11 @@ namespace RentACar.Migrations
                         .WithMany("Reserves")
                         .HasForeignKey("UserId");
 
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("RentACar.Data.Entities.TemporalReserve", b =>
-                {
-                    b.HasOne("RentACar.Data.Entities.Reserve", null)
-                        .WithMany("TemporalReserves")
-                        .HasForeignKey("ReserveId");
-
-                    b.HasOne("RentACar.Data.Entities.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-
                     b.HasOne("RentACar.Data.Entities.Vehicle", "Vehicle")
                         .WithMany()
-                        .HasForeignKey("VehicleId");
+                        .HasForeignKey("VehicleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("User");
 
@@ -603,11 +569,6 @@ namespace RentACar.Migrations
             modelBuilder.Entity("RentACar.Data.Entities.LicenceType", b =>
                 {
                     b.Navigation("Users");
-                });
-
-            modelBuilder.Entity("RentACar.Data.Entities.Reserve", b =>
-                {
-                    b.Navigation("TemporalReserves");
                 });
 
             modelBuilder.Entity("RentACar.Data.Entities.User", b =>
