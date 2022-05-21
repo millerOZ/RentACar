@@ -14,6 +14,7 @@ namespace RentACar.Controllers
         private readonly IUserHelper _userHelper;
         private readonly DataContext _context;
 
+
         public HomeController(ILogger<HomeController> logger, IUserHelper userHelper, DataContext context)
         {
             _logger = logger;

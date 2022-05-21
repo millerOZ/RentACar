@@ -11,7 +11,5 @@ namespace RentACar.Data.Entities
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public string? Name { get; set; }
 
-        public ICollection<User> Users { get; set; }
-
     }
 }
