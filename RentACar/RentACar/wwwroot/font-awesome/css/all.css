@@ -943,13 +943,11 @@ readers do not read off random characters that represent icons */
 .fa-bacterium::before {
   content: "\e05a"; }
 
-.fa-bag-RentACar::before {
-    content: "\f290";
-}
+.fa-bag-shopping::before {
+  content: "\f290"; }
 
-.fa-RentACar-bag::before {
-    content: "\f290";
-}
+.fa-shopping-bag::before {
+  content: "\f290"; }
 
 .fa-bahai::before {
   content: "\f666"; }
@@ -1008,11 +1006,10 @@ readers do not read off random characters that represent icons */
 .fa-baseball-bat-ball::before {
   content: "\f432"; }
 
-.fa-basket-RentACar::before {
-    content: "\f291";
-}
+.fa-basket-shopping::before {
+  content: "\f291"; }
 
-.fa-RentACar-basket::before {
+.fa-shopping-basket::before {
   content: "\f291"; }
 
 .fa-basketball::before {
@@ -1522,13 +1519,11 @@ readers do not read off random characters that represent icons */
 .fa-cart-plus::before {
   content: "\f217"; }
 
-.fa-cart-RentACar::before {
-    content: "\f07a";
-}
+.fa-cart-shopping::before {
+  content: "\f07a"; }
 
-.fa-RentACar-cart::before {
-    content: "\f07a";
-}
+.fa-shopping-cart::before {
+  content: "\f07a"; }
 
 .fa-cash-register::before {
   content: "\f788"; }
