@@ -4,23 +4,27 @@
     <div class="col-md-6">
 
         <div class="form-group">
+            <span class="required">*</span>
             <label asp-for="DocumentTypeId" class="control-label"></label>
             <select asp-for="DocumentTypeId" asp-items="Model.DocumentTypes" class="form-control"></select>
             <span asp-validation-for="DocumentTypeId" class="text-danger"></span>
         </div>
-             <div class="form-group">
+        <div class="form-group">
+            <span class="required">*</span>
             <label asp-for="Document" class="control-label"></label>
             <input asp-for="Document" class="form-control" />
             <span asp-validation-for="Document" class="text-danger"></span>
         </div>
 
         <div class="form-group">
+            <span class="required">*</span>
             <label asp-for="FirstName" class="control-label"></label>
             <input asp-for="FirstName" class="form-control" />
             <span asp-validation-for="FirstName" class="text-danger"></span>
         </div>
 
         <div class="form-group">
+            <span class="required">*</span>
             <label asp-for="LastName" class="control-label"></label>
             <input asp-for="LastName" class="form-control" />
             <span asp-validation-for="LastName" class="text-danger"></span>
@@ -32,18 +36,21 @@
     <div class="col-md-6">
 
         <div class="form-group">
+            <span class="required">*</span>
             <label asp-for="Address" class="control-label"></label>
             <input asp-for="Address" class="form-control" />
             <span asp-validation-for="Address" class="text-danger"></span>
         </div>
 
         <div class="form-group">
+            <span class="required">*</span>
             <label asp-for="Phone" class="control-label"></label>
             <input asp-for="Phone" class="form-control" />
             <span asp-validation-for="Phone" class="text-danger"></span>
         </div>
 
         <div class="form-group">
+            <span class="required">*</span>
             <label asp-for="LicenceTypeId" class="control-label"></label>
             <select asp-for="LicenceTypeId" asp-items="Model.LicenceTypes" class="form-control"></select>
             <span asp-validation-for="LicenceTypeId" class="text-danger"></span>
