@@ -4,8 +4,12 @@
     {
         Nuevo,
         Entregado,
-        Enviado,
         Confirmado,
         Cancelado
+    }
+    public enum VehicleStatus
+    {
+        Disponible,
+        NoDisponible,
     }
 }
