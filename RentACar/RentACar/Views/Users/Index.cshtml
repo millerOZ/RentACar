@@ -4,11 +4,53 @@
     ViewData["Title"] = "Index";
 }
 
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
+<flash dismissable="true" />
 
-<p>
-    <a asp-action="Create" class="btn btn-outline-primary">Nuevo Administrador</a>
+<div class="container-fluid">
+    <div class="card mt-2">
+        <div class="card-header text-danger">
+            <i class="fa fa-users"></i>  <strong>Usuarios</strong>
+        </div>
+        <div class="card-body">
+            <div id="view-all">
+                @await Html.PartialAsync("_ViewAll", Model)
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script src="~/js/showmodal.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#UsersTable').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+                },
+                "aLengthMenu": [
+                    [25, 50, 100, 200, -1],
+                    [25, 50, 100, 200, "Todos"]
+                ]
+            });
+        });
+    </script>
+}
+
+
+
+@*@{
+    ViewData["Title"] = "Index";
+}
+
+<flash dismissable="true" />
+
+<p  class="mb-2">
+   <a asp-action="Create" class="btn btn-outline-primary"><i class="fa-solid fa-circle-plus"></i> Nuevo Administrador</a>
 </p>
+
 <div class="row row-cols-1 row-cols-md-4 g-4 mt-1">
     @if (Model.Count() > 0)
     {
@@ -41,8 +83,10 @@
         <h3>No hay usuarios registrados</h3>
     }
 </div>
+
 @section Scripts {
     @{
     await Html.RenderPartialAsync("_ValidationScriptsPartial");
 }
 }
+*@

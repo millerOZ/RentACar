@@ -14,7 +14,7 @@ namespace RentACar.Data.Entities
 
         public ICollection<VehicleCategory> VehicleCategories { get; set; }
 
-        [Display(Name = "# Productos")]
+        [Display(Name = "# vehiculos")]
         public int VehicleNumber => VehicleCategories == null ? 0 : VehicleCategories.Count();
     }
 }
