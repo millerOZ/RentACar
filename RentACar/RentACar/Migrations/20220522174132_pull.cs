@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace RentACar.Migrations
 {
-    public partial class reserveModel : Migration
+    public partial class pull : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
