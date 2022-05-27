@@ -44,7 +44,7 @@ namespace RentACar.Data.Entities
         //TODO: Pending to put the correct paths
         [Display(Name = "Foto")]
         public string ImageFullPath => ImageId == Guid.Empty
-            ? $"https://localhost:7279/image/NoImage.png"
+            ? $"https://localhost:7279/Images/NoImage.png"
             : $"https://rentacar1.blob.core.windows.net/users/{ImageId}";
 
         [Display(Name = "Tipo de usuario")]
