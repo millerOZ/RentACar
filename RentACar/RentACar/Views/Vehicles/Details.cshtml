@@ -3,6 +3,8 @@
     ViewData["Title"] = "Details";
 }
 
+<flash dismissable="true" />
+
 <h1>Detalles</h1>
 
 <div>
@@ -10,85 +12,49 @@
 </div>
 
 <div>
-    <a asp-action="AddImage" asp-route-id="@Model?.Id" class="btn btn-outline-primary">Adicionar Imagen</a>
-    <a asp-action="AddCategory" asp-route-id="@Model?.Id" class="btn btn-outline-secondary">Adicionar Categoría</a>
-    <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-outline-warning">Editar Vehículo</a>
-    <a asp-action="Index" class="btn btn-outline-success">Regresar</a>
+    <a asp-action="Index" class="btn btn-outline-success"><i class="fa-solid fa-arrow-rotate-left"></i> Regresar</a>
 </div>
-
- 
 <hr />
 
+<!-- Content Wrapper. Contains page content -->
 <div class="row">
-    <div class="col-md-6">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">Imágenes</h3>
-            </div>
-            <div class="panel-body">
-                <table class="table table-hover table-responsive table-striped" id="ImagesTable">
-                    <thead>
-                        <tr>
-                            <th>
-                                @Html.DisplayNameFor(model => model.ImageVehicles.FirstOrDefault().ImageFullPath)
-                            </th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model.ImageVehicles)
-                        {
-                            <tr>
-                                <td>
-                                    <img src="@item.ImageFullPath" style="width:150px;" />
-                                </td>
-                                <td>
-                                    <a asp-action="DeleteImage" asp-route-id="@item.Id" class="btn btn-outline-danger"><i class="fa-solid fa-trash"></i></a>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
+    <div class="col-md-12">
+        <div class="container-fluid">
+            <div class="card mt-2">
+                <div class="card-header text-dark">
+                    <i class="fa fa-file-image"></i>  <strong>Imágenes</strong>
+                </div>
+                <div class="card-body">
+                    <div id="view-all">
+                        @await Html.PartialAsync("_ViewAllimages", Model)
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-md-6">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">Categorías</h3>
-            </div>
-            <div class="panel-body">
-                <table class="table table-hover table-responsive table-striped" id="CategoriesTable">
-                    <thead>
-                        <tr>
-                            <th>
-                                @Html.DisplayNameFor(model => model.VehicleCategories.FirstOrDefault().Category.Name)
-                            </th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model.VehicleCategories)
-                        {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Category.Name)
-                                </td>
-                                <td>
-                                    <a asp-action="DeleteCategory" asp-route-id="@item.Id" class="btn btn-outline-danger"><i class="fa-solid fa-trash"></i></a>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
+    <div class="col-md-12">
+        <div class="container-fluid">
+            <div class="card mt-2">
+                <div class="card-header text-dark">
+                    <i class="fa fa-object-group"></i>  <strong>Categorías</strong>
+                </div>
+                <div class="card-body">
+                    <div id="view-all">
+                        @await Html.PartialAsync("_ViewAllCategories", Model)
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+<partial name="_AddOrEditDialog" />
+<partial name="_DeleteDialog" />
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-     
+
+    <script src="~/js/showmodal.js"></script>
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -111,5 +77,10 @@
                 ]
             });
         });
+    </script>
+
+    <script>
+        sc_deleteDialog.openModal('deleteItem', true, 'btnYesDelete', '/Vehicles/DeleteImage/', false);
+        sc_deleteDialog.openModal('deleteItem2', true, 'btnYesDelete', '/Vehicles/DeleteCategory/', false);
     </script>
 }
