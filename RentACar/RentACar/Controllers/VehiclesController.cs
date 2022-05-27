@@ -393,7 +393,7 @@ namespace RentACar.Controllers
             Vehicle vehicle = await _context.Vehicles
                 .Include(v => v.VehicleCategories)
                 .Include(v => v.ImageVehicles)
-                .FirstOrDefaultAsync(p => p.Id == id);
+                .FirstOrDefaultAsync(vc => vc.Id == id);
             if (vehicle == null)
             {
                 return NotFound();
