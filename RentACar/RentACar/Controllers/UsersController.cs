@@ -7,6 +7,7 @@ using RentACar.Data.Entities;
 using RentACar.Enums;
 using RentACar.Helpers;
 using RentACar.Models;
+using Vereyon.Web;
 
 namespace RentACar.Controllers
 {
@@ -18,15 +19,17 @@ namespace RentACar.Controllers
         private readonly ICombosHelper _combosHelper;
         private readonly IBlobHelper _blobHelper;
         private readonly IMailHelper _mailHelper;
+        private readonly IFlashMessage _flashMessage;
 
 
-        public UsersController(IUserHelper userHelper, DataContext context, ICombosHelper combosHelper, IBlobHelper blobHelper, IMailHelper mailHelper)
+        public UsersController(IUserHelper userHelper, DataContext context, ICombosHelper combosHelper, IBlobHelper blobHelper, IMailHelper mailHelper, IFlashMessage flashMessage)
         {
             _userHelper = userHelper;
             _context = context;
             _combosHelper = combosHelper;
             _blobHelper = blobHelper;
             _mailHelper = mailHelper;
+            _flashMessage = flashMessage;
         }
 
         public async Task<IActionResult> Index()
@@ -66,7 +69,8 @@ namespace RentACar.Controllers
                 User user = await _userHelper.AddUserAsync(model);
                 if (user == null)
                 {
-                    ModelState.AddModelError(string.Empty, "Este correo ya está siendo usado.");
+                    //ModelState.AddModelError(string.Empty, "Este correo ya está siendo usado.");
+                    _flashMessage.Danger("Este correo ya está siendo usado.");
                     model.DocumentTypes = await _combosHelper.GetComboDocumenTypeAsync();
                     model.LicenceTypes = await _combosHelper.GetComboLicenceTypesAsync();
                     return View(model);
@@ -88,7 +92,9 @@ namespace RentACar.Controllers
                         $"<p><a href = \"{tokenLink}\">Confirmar Email</a></p>");
                 if (response.IsSuccess)
                 {
-                    ViewBag.Message = "Las instrucciones para habilitar el usuario han sido enviadas al correo.";
+                    //ViewBag.Message = "Las instrucciones para habilitar el usuario han sido enviadas al correo.";
+                    //return View(model);
+                    _flashMessage.Info("Usuario registrado. Para poder ingresar al sistema, siga las instrucciones que han sido enviadas a su correo.");
                     return View(model);
                 }
 
@@ -101,8 +107,8 @@ namespace RentACar.Controllers
             return View(model);
         }
 
-         
 
+       
 
 
 
