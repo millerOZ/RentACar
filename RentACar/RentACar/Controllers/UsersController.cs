@@ -73,7 +73,9 @@ namespace RentACar.Controllers
                     _flashMessage.Danger("Este correo ya está siendo usado.");
                     model.DocumentTypes = await _combosHelper.GetComboDocumenTypeAsync();
                     model.LicenceTypes = await _combosHelper.GetComboLicenceTypesAsync();
-                    return View(model);
+                    // return View(model);
+                    return RedirectToAction("Index", "Users");
+                    // return Json(new { isValid = true, html = ModalHelper.RenderRazorViewToString(this, "_ViewAll", model) });
                 }
 
                 string myToken = await _userHelper.GenerateEmailConfirmationTokenAsync(user);
@@ -95,16 +97,18 @@ namespace RentACar.Controllers
                     //ViewBag.Message = "Las instrucciones para habilitar el usuario han sido enviadas al correo.";
                     //return View(model);
                     _flashMessage.Info("Usuario registrado. Para poder ingresar al sistema, siga las instrucciones que han sido enviadas a su correo.");
-                    return View(model);
+                    // return View(model);
+                    return RedirectToAction("Index", "Users");
                 }
 
                 ModelState.AddModelError(string.Empty, response.Message);
-
+                return Json(new { isValid = true, html = ModalHelper.RenderRazorViewToString(this, "_ViewAll", model) });
             }
 
             model.DocumentTypes = await _combosHelper.GetComboDocumenTypeAsync();
             model.LicenceTypes = await _combosHelper.GetComboLicenceTypesAsync();
-            return View(model);
+            //return View(model);
+            return Json(new { isValid = false, html = ModalHelper.RenderRazorViewToString(this, "Create", model) });
         }
 
 
