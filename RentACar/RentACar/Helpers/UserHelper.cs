@@ -37,7 +37,7 @@ namespace RentACar.Helpers
                 Email = model.Username,
                 FirstName = model.FirstName,
                 LastName = model.LastName,
-                //ImageId = imageId,
+                ImageId = model.ImageId,
                 Phone = model.Phone,
                 UserName = model.Username,
                 UserType = model.UserType
