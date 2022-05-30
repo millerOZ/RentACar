@@ -173,7 +173,7 @@ namespace RentACar.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("RentACar.Data.Entities.DocumentType", b =>
@@ -194,7 +194,7 @@ namespace RentACar.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("DocumentTypes");
+                    b.ToTable("DocumentTypes", (string)null);
                 });
 
             modelBuilder.Entity("RentACar.Data.Entities.ImageVehicle", b =>
@@ -215,7 +215,7 @@ namespace RentACar.Migrations
 
                     b.HasIndex("VehicleId");
 
-                    b.ToTable("ImageVehicles");
+                    b.ToTable("ImageVehicles", (string)null);
                 });
 
             modelBuilder.Entity("RentACar.Data.Entities.LicenceType", b =>
@@ -236,7 +236,7 @@ namespace RentACar.Migrations
                         .IsUnique()
                         .HasFilter("[Name] IS NOT NULL");
 
-                    b.ToTable("LicenceTypes");
+                    b.ToTable("LicenceTypes", (string)null);
                 });
 
             modelBuilder.Entity("RentACar.Data.Entities.Reserve", b =>
@@ -274,7 +274,7 @@ namespace RentACar.Migrations
 
                     b.HasIndex("VehicleId");
 
-                    b.ToTable("Reserves");
+                    b.ToTable("Reserves", (string)null);
                 });
 
             modelBuilder.Entity("RentACar.Data.Entities.User", b =>
@@ -421,7 +421,7 @@ namespace RentACar.Migrations
                     b.HasIndex("Plaque")
                         .IsUnique();
 
-                    b.ToTable("Vehicles");
+                    b.ToTable("Vehicles", (string)null);
                 });
 
             modelBuilder.Entity("RentACar.Data.Entities.VehicleCategory", b =>
@@ -446,7 +446,7 @@ namespace RentACar.Migrations
                         .IsUnique()
                         .HasFilter("[VehicleId] IS NOT NULL AND [CategoryId] IS NOT NULL");
 
-                    b.ToTable("VehicleCategories");
+                    b.ToTable("VehicleCategories", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -529,11 +529,11 @@ namespace RentACar.Migrations
             modelBuilder.Entity("RentACar.Data.Entities.User", b =>
                 {
                     b.HasOne("RentACar.Data.Entities.DocumentType", "DocumentType")
-                        .WithMany()
+                        .WithMany("Users")
                         .HasForeignKey("DocumentTypeId");
 
                     b.HasOne("RentACar.Data.Entities.LicenceType", "LicenceType")
-                        .WithMany()
+                        .WithMany("Users")
                         .HasForeignKey("LicenceTypeId");
 
                     b.Navigation("DocumentType");
