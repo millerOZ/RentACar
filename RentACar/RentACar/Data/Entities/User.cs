@@ -18,10 +18,10 @@ namespace RentACar.Data.Entities
         public string LastName { get; set; }
 
         [Display(Name = "Tipo de licencia")]
-        public LicenceType? LicenceType { get; set; }
+        public LicenceType LicenceType { get; set; }
 
         [Display(Name = "Tipo de documento")]
-        public DocumentType? DocumentType { get; set; }
+        public DocumentType DocumentType { get; set; }
 
         [Display(Name = "Documento")]
         [MaxLength(20, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
@@ -44,7 +44,7 @@ namespace RentACar.Data.Entities
         //TODO: Pending to put the correct paths
         [Display(Name = "Foto")]
         public string ImageFullPath => ImageId == Guid.Empty
-            ? $"https://localhost:7279/image/NoImage.png"
+            ? $"https://localhost:7279/Images/NoImage.png"
             : $"https://rentacar1.blob.core.windows.net/users/{ImageId}";
 
         [Display(Name = "Tipo de usuario")]

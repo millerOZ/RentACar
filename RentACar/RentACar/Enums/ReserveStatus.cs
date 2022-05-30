@@ -3,13 +3,9 @@
     public enum ReserveStatus
     {
         Nuevo,
-        Entregado,
-        Confirmado,
-        Cancelado
+        Confirmada,
+        finalizada,
+        Cancelada
     }
-    public enum VehicleStatus
-    {
-        Disponible,
-        NoDisponible,
-    }
+   
 }

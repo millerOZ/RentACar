@@ -12,20 +12,22 @@ namespace RentACar.Data.Entities
         [MaxLength(20, ErrorMessage = "El campo {0} debe tener maximo {1} caracteres")]
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public string Brand { get; set; }
-        public VehicleStatus VehicleStatus { get; set; }
 
         [Display(Name = "Serie")]
         [MaxLength(50, ErrorMessage = "El campo {0} debe tener maximo {1} caracteres")]
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public string Serie { get; set; }
-        
+
+        [Display(Name = "Estado")]
+        public VehicleStatus VehicleStatus { get; set; }
+
 
         [Display(Name = "Placa")]
         [MaxLength(20, ErrorMessage = "El campo {0} debe tener maximo {1} caracteres")]
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public string Plaque { get; set; }
 
-        [Column(TypeName = "decimal(18,2)")]
+
         [DisplayFormat(DataFormatString = "{0:C2}")]
         [Display(Name = "Valor Diario")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
@@ -39,7 +41,7 @@ namespace RentACar.Data.Entities
 
         [Display(Name = "Categorías")]
         public int CategoriesNumber => VehicleCategories == null ? 0 : VehicleCategories.Count;
-        
+
         public ICollection<ImageVehicle> ImageVehicles { get; set; }
 
         [Display(Name = "Fotos")]
@@ -48,8 +50,11 @@ namespace RentACar.Data.Entities
         //TODO: Pending to change to the correct path
         [Display(Name = "Fotos")]
         public string ImageFullPath => ImageVehicles == null || ImageVehicles.Count == 0
-            ? $"https://https://localhost:7279/images/noimage.png"
+            ? $"https://https://localhost:7203/images/noimage.png"
             : ImageVehicles.FirstOrDefault().ImageFullPath;
+
+
+        public ICollection<ReserveDetail> ReserveDetails { get; set; }
 
     }
 }
