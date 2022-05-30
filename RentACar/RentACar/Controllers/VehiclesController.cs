@@ -5,6 +5,7 @@ using RentACar.Data;
 using RentACar.Data.Entities;
 using RentACar.Helpers;
 using RentACar.Models;
+using Vereyon.Web;
 
 namespace RentACar.Controllers
 {
@@ -14,12 +15,14 @@ namespace RentACar.Controllers
         private readonly DataContext _context;
         private readonly ICombosHelper _combosHelper;
         private readonly IBlobHelper _blobHelper;
+        private readonly IFlashMessage _flashMessage;
 
-        public VehiclesController(DataContext context, ICombosHelper combosHelper, IBlobHelper blobHelper)
+        public VehiclesController(DataContext context, ICombosHelper combosHelper, IBlobHelper blobHelper, IFlashMessage flashMessage)
         {
             _context = context;
             _combosHelper = combosHelper;
             _blobHelper = blobHelper;
+            _flashMessage = flashMessage;
         }
         public async Task<IActionResult> Index()
         {
@@ -80,22 +83,27 @@ namespace RentACar.Controllers
                 {
                     _context.Add(vehicle);
                     await _context.SaveChangesAsync();
+                    _flashMessage.Info("Registro creado.");
                     return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateException dbUpdateException)
                 {
                     if (dbUpdateException.InnerException.Message.Contains("duplicate"))
                     {
-                        ModelState.AddModelError(string.Empty, "Ya existe un Vehículo con ña misma Placa.");
+                        // ModelState.AddModelError(string.Empty, "Ya existe un Vehículo con ña misma Placa.");
+                        _flashMessage.Danger("Ya existe un Vehículo con la misma Placa.");
+                        return RedirectToAction(nameof(Index));
                     }
                     else
                     {
-                        ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
+                        //ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
+                        _flashMessage.Danger(dbUpdateException.InnerException.Message);
                     }
                 }
                 catch (Exception exception)
                 {
-                    ModelState.AddModelError(string.Empty, exception.Message);
+                    //ModelState.AddModelError(string.Empty, exception.Message);
+                    _flashMessage.Danger(exception.Message);
                 }
             }
 
