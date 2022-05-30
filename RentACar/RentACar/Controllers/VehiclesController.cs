@@ -157,22 +157,27 @@ namespace RentACar.Controllers
                 vehicle.Description = model.Description;
                 _context.Update(vehicle);
                 await _context.SaveChangesAsync();
+                _flashMessage.Info("vehículo actulizado.");
                 return RedirectToAction(nameof(Index));
             }
             catch (DbUpdateException dbUpdateException)
             {
                 if (dbUpdateException.InnerException.Message.Contains("duplicate"))
                 {
-                    ModelState.AddModelError(string.Empty, "Ya existe un vehículo con la misma placa.");
+                    //ModelState.AddModelError(string.Empty, "Ya existe un vehículo con la misma placa.");
+                    _flashMessage.Danger("Ya existe un vehículo con la misma placa.");
+                    return RedirectToAction(nameof(Index));
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
+                    //ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
+                    _flashMessage.Danger(dbUpdateException.InnerException.Message);
                 }
             }
             catch (Exception exception)
             {
                 ModelState.AddModelError(string.Empty, exception.Message);
+                _flashMessage.Danger(exception.Message);
             }
 
             return View(model);
@@ -406,7 +411,7 @@ namespace RentACar.Controllers
 
             _context.Vehicles.Remove(vehicle);
             await _context.SaveChangesAsync();
-
+            _flashMessage.Info("vehículo borrado.");
             foreach (ImageVehicle imageVehicle in vehicle.ImageVehicles)
             {
                 await _blobHelper.DeleteBlobAsync(imageVehicle.ImageId, "vehicles");
