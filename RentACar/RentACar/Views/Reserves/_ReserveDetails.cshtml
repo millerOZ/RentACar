@@ -1,0 +1,60 @@
+﻿@model RentACar.Data.Entities.Reserve
+
+<h4>Reserva</h4>
+<hr />
+<dl class="row">
+    <dt class = "col-sm-2">
+        @Html.DisplayNameFor(model => model.Date)
+    </dt>
+    <dd class = "col-sm-10">
+        @Html.DisplayFor(model => model.Date)
+    </dd>
+    <dt class = "col-sm-2">
+        @Html.DisplayNameFor(model => model.User.FullName)
+    </dt>
+    <dd class = "col-sm-10">
+        @Html.DisplayFor(model => model.User.FullName)
+    </dd>
+    <dt class = "col-sm-2">
+        @Html.DisplayNameFor(model => model.User.Email)
+    </dt>
+    <dd class = "col-sm-10">
+        @Html.DisplayFor(model => model.User.Email)
+    </dd>
+    <dt class = "col-sm-2">
+        @Html.DisplayNameFor(model => model.User.Phone)
+    </dt>
+    <dd class = "col-sm-10">
+        @Html.DisplayFor(model => model.User.Phone)
+    </dd>
+    <dt class = "col-sm-2">
+        @Html.DisplayNameFor(model => model.Comments)
+    </dt>
+    <dd class = "col-sm-10">
+        @Html.DisplayFor(model => model.Comments)
+    </dd>
+    <dt class = "col-sm-2">
+        @Html.DisplayNameFor(model => model.ReserveStatus)
+    </dt>
+    <dd class = "col-sm-10">
+        @Html.DisplayFor(model => model.ReserveStatus)
+    </dd>
+    <dt class = "col-sm-2">
+        @Html.DisplayNameFor(model => model.DeliveryDate)
+    </dt>
+    <dd class = "col-sm-10">
+        @Html.DisplayFor(model => model.DeliveryDate)
+    </dd>
+    <dt class = "col-sm-2">
+        @Html.DisplayNameFor(model => model.ReturnDate)
+    </dt>
+    <dd class = "col-sm-10">
+        @Html.DisplayFor(model => model.ReturnDate)
+    </dd>
+    <dt class = "col-sm-2">
+        @Html.DisplayNameFor(model => model.Value)
+    </dt>
+    <dd class = "col-sm-10">
+        @Html.DisplayFor(model => model.Value)
+    </dd>
+</dl>

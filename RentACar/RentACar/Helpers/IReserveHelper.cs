@@ -9,7 +9,8 @@ namespace RentACar.Helpers
 
         Task<Response> ProcessReserveAsync(ReserveViewModel model);
 
-        Task<Response> CancelReserveAsync(int? id);
+        Task<Response> CancelReserveAsync(int id);
+        Task<Response> FinaliceReserveAsync(int id);
 
     }
 }

@@ -1,0 +1,93 @@
+﻿@model IEnumerable<RentACar.Data.Entities.ReserveDetail>
+
+<table class="table table-striped table-responsive-md table-bordered smfont" id="DetailsTable">
+    <colgroup>
+        <col span="1" />
+        <col span="1" />
+        <col span="1" />
+        <col span="1" />
+        <col span="1" />
+        <col span="1" />
+    </colgroup>
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Vehicle.Serie)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Comments)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Vehicle.PriceDay)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Vehicle.Plaque)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DeliveryDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReturnDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Value)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Vehicle.ImageFullPath)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Vehicle.Serie)
+            </td>
+            <td>
+                @{
+                    if (item.Comments != null)
+                    {
+                        string[] noteWords = item.Comments.Split(' ');
+                        if (noteWords.Count() > 7)
+                        {
+                            <a class="" role="button" data-bs-toggle="collapse" href="#collapseSum@(item.Id)" aria-expanded="false" aria-controls="collapseSum@(item.Id)">
+                                @(string.Join(" ", noteWords.Take(7)) + "...")
+                            </a>
+                            <div class="collapse" id="collapseSum@(item.Id)">
+                                <div class="card card-body bg-light">
+                                    @(string.Join(" ", noteWords.Skip(7)))
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(modelItem => item.Comments);
+                        }
+                    }
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Vehicle.PriceDay)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Vehicle.Plaque)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DeliveryDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReturnDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Value)
+            </td>
+            <td>
+                    <div class="zoom">
+                    <img src="@item.Vehicle.ImageFullPath" style="width:100px;" />
+                </div>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

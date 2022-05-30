@@ -53,7 +53,7 @@ namespace RentACar.Helpers
             return new Response { IsSuccess = true };
         }
 
-        public async Task<Response> CancelReserveAsync(int? id)
+        public async Task<Response> CancelReserveAsync(int id)
         {
             Reserve reserve = await _context.Reserves
                 .Include(rd => rd.ReserveDetails)
@@ -70,6 +70,27 @@ namespace RentACar.Helpers
 
             }
             reserve.ReserveStatus = ReserveStatus.Cancelada;
+            await _context.SaveChangesAsync();
+            return new Response { IsSuccess = true };
+        }
+
+        public async Task<Response> FinaliceReserveAsync(int id)
+        {
+            Reserve reserve = await _context.Reserves
+                .Include(rd => rd.ReserveDetails)
+                .ThenInclude(rv => rv.Vehicle)
+                .FirstOrDefaultAsync(s => s.Id == id);
+
+            foreach (ReserveDetail reserveDetail in reserve.ReserveDetails)
+            {
+                Vehicle vehicle = await _context.Vehicles.FindAsync(reserveDetail.Vehicle.Id);
+                if (vehicle != null)
+                {
+                    vehicle.VehicleStatus = VehicleStatus.Diponible;
+                }
+
+            }
+            reserve.ReserveStatus = ReserveStatus.finalizada;
             await _context.SaveChangesAsync();
             return new Response { IsSuccess = true };
         }
