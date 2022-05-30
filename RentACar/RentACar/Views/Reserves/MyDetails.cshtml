@@ -1,0 +1,108 @@
+﻿@model RentACar.Data.Entities.Reserve
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<flash dismissable="true" />
+
+<h1>Detalles</h1>
+
+<div>
+    <partial name="_ReserveDetails" />    
+</div>
+
+<div>
+    <a asp-action="MyReserves" class="btn btn-outline-success">Regresar</a>
+</div>
+
+
+<hr />
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Vehiculo</h3>
+            </div>
+            <div class="panel-body">
+                <table class="table table-hover table-responsive table-striped" id="MyTable">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ReserveDetails.FirstOrDefault().Vehicle.Serie)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ReserveDetails.FirstOrDefault().Comments)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ReserveDetails.FirstOrDefault().Vehicle.PriceDay)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ReserveDetails.FirstOrDefault().DeliveryDate)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ReserveDetails.FirstOrDefault().ReturnDate)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ReserveDetails.FirstOrDefault().Value)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ReserveDetails.FirstOrDefault().Vehicle.ImageFullPath)
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.ReserveDetails)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Vehicle.Serie)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Comments)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Vehicle.PriceDay)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DeliveryDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ReturnDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Value)
+                                </td>
+                                <td>
+                                    <div class="zoom">
+                                        <img src="@item.Vehicle.ImageFullPath" style="width:100px;" />
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#MyTable').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+                },
+                "aLengthMenu": [
+                    [25, 50, 100, 200, -1],
+                    [25, 50, 100, 200, "Todos"]
+                ]
+            });
+        });
+    </script>
+}

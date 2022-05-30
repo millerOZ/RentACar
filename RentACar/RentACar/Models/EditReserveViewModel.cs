@@ -3,12 +3,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace RentACar.Models
 {
-    public class EditTemporalReserveViewModel
+    public class EditReserveViewModel
     {
 
-        [DataType(DataType.MultilineText)]
-        [Display(Name = "Comentarios")]
-        public string Comments { get; set; }
+        public int Id { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd hh:mm tt}")]
         [Display(Name = "Fecha inicio reserva")]
@@ -19,6 +17,12 @@ namespace RentACar.Models
         [Display(Name = "Fecha final reserva")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public DateTime ReturnDate { get; set; }
+
+        [DataType(DataType.MultilineText)]
+        [Display(Name = "Comentarios")]
+        public string Comments { get; set; }
+
+
 
     }
 }
