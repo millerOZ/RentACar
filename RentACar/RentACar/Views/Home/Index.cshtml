@@ -55,14 +55,16 @@
             <div class= "col">
                 <div class="card h-100" text-dark" style="max-width: 800px;">
                     <div class="row g-0">
+                        <h5 class="text-center">@item.Serie </h5>
                     <div class="col-md-4 ">
+                        
                         <div class="text-center zoom">
                         <img src="@item.ImageFullPath" style="height:100px; max-width:100px; border-radius:50%;" class="img-fluid rounded-start" />
                         </div>
                     </div>
                     <div class="col-md-8">
                     <div class="card-body">
-                        <p class="card-text smfnt">  @item.Serie</p>
+                        <p class="card-text smfnt">  </p>
                         <p class="card-text smfnt">   @item.Brand</p>
                         <p class="card-text smfnt">  @item.Plaque</p>
                         <p class="text-smfnt"> @Html.DisplayFor(modelItem => item.PriceDay)</p>                       

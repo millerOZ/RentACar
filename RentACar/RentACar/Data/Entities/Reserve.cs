@@ -37,9 +37,9 @@ namespace RentACar.Data.Entities
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public DateTime ReturnDate { get; set; }
 
-        [Column(TypeName = "decimal(18,2)")]
+
         [DisplayFormat(DataFormatString = "{0:C2}")]
-        [Display(Name = "Valor Diario")]
+        [Display(Name = "Valor")]
         public decimal Value => ReserveDetails == null ? 0 : ReserveDetails.Sum(rd => rd.Value);
     }
 

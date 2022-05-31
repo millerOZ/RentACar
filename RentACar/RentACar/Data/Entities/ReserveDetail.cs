@@ -28,9 +28,6 @@ namespace RentACar.Data.Entities
 
         public Vehicle Vehicle { get; set; }
 
-        [Column(TypeName = "decimal(18,2)")]
-        [DisplayFormat(DataFormatString = "{0:C2}")]
-        [Display(Name = "Valor Diario")]
         public decimal Value => Vehicle == null ? 0 : (decimal)ReturnDate.Subtract(DeliveryDate).TotalDays * Vehicle.PriceDay;
 
         //public decimal Value ()

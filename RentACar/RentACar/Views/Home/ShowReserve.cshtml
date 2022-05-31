@@ -4,8 +4,6 @@
     ViewData["Title"] = "Cart";
 }
 
-
-
 <h1>Reserva</h1>
 
 <dl class="row">
@@ -35,7 +33,6 @@
             </a>
         </div>
     </div>
-
     <div class="col-md-6">
         <dl class="row">
             <dt class="col-sm-4">
@@ -62,11 +59,9 @@
             <dd class="col-sm-8">
                 @Html.DisplayFor(model => model.Vehicle.Description)
             </dd>
-
         </dl>
     </div>
 </dl>
-
 
 <form asp-action="ShowReserve">
     <dl class="row">
@@ -77,28 +72,32 @@
 
             <div class="form-group">
                 <label asp-for="DeliveryDate" class="control-label"></label>
-                <input asp-for="DeliveryDate" type="datetime-local" class="form-control" />
+                <input asp-for="DeliveryDate" type="date" class="form-control" />
                 <span asp-validation-for="DeliveryDate" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ReturnDate" class="control-label"></label>
-                <input asp-for="ReturnDate" type="datetime-local" class="form-control" />
+                <input asp-for="ReturnDate" type="date" class="form-control" />
                 <span asp-validation-for="ReturnDate" class="text-danger"></span>
             </div>
-        </div>
-        <div class="col-md-6">
             <div class="form-group">
                 <label asp-for="Comments" class="control-label"></label>
                 <input asp-for="Comments" class="form-control" />
                 <span asp-validation-for="Comments" class="text-danger"></span>
             </div>
         </div>
+       
     </dl>
-    <div class="form-group mt-2 text-center">
+    <div class="form-group mt-2" style="text-align">
         <input type="submit" value="Reservar" class="btn btn-outline-primary" />
         <a asp-action="Index" class="btn btn-outline-success">Regresar</a>
     </div>
 </form>
+
+
+
+
+
 @section Scripts {
     @{
     await Html.RenderPartialAsync("_ValidationScriptsPartial");
@@ -115,3 +114,6 @@
     });
 </script>
 }
+© 2022 GitHub, Inc.
+Terms
+Privacy
