@@ -67,7 +67,7 @@
                         <p class="card-text smfnt">  </p>
                         <p class="card-text smfnt">   @item.Brand</p>
                         <p class="card-text smfnt">  @item.Plaque</p>
-                        <p class="text-smfnt"> @Html.DisplayFor(modelItem => item.PriceDay)</p>                       
+                        <p class="text-smfnt"> @item.PriceDay)</p>                       
                                             <div text-center">
                         <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-secondary"><i class="fa-solid fa-circle-info"></i> Ver</a>
                         <a asp-action="ShowReserve" asp-route-id="@item.Id" class="btn btn-sm btn-primary"><i class="fa-solid fa-car-side"></i>Reservar</a>
