@@ -13,11 +13,12 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Date)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.User.FullName)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            
             <th>
                 @Html.DisplayNameFor(model => model.Comments)
             </th>
@@ -28,7 +29,7 @@
                 @Html.DisplayNameFor(model => model.DeliveryDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DeliveryDate)
+                @Html.DisplayNameFor(model => model.ReturnDate)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Value)
@@ -40,10 +41,10 @@
         {
         <tr>
             <td>
-                <a asp-action="Details" asp-controller="Reserves" asp-route-Id="@item.Id">@Html.DisplayFor(modelItem => item.Date)</a>
+                <a asp-action="Details" asp-controller="Reserves" asp-route-Id="@item.Id">@Html.DisplayFor(modelItem => item.User.FullName)</a>
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.User.FullName)
+                @Html.DisplayFor(modelItem => item.Date)
             </td>
             <td>
                 @{

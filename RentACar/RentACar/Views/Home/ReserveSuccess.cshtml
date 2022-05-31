@@ -7,9 +7,16 @@
 <div class="col-md-12">
     <form asp-action="Details">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                        {
         <div class="form-group mt-2">
+            <a  asp-area="" asp-controller="Reserves"asp-action="Index" class="btn btn-outline-success">Mis reservas</a>
+        </div>
+                        }else{
+                            <div class="form-group mt-2">
             <a  asp-area="" asp-controller="Reserves"asp-action="MyReserves" class="btn btn-outline-success">Mis reservas</a>
         </div>
+                        }
     </form>
 </div>
 
