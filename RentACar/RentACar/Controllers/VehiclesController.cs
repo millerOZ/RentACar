@@ -6,6 +6,7 @@ using RentACar.Data.Entities;
 using RentACar.Helpers;
 using RentACar.Models;
 using Vereyon.Web;
+using static RentACar.Helpers.ModalHelper;
 
 namespace RentACar.Controllers
 {
@@ -15,14 +16,14 @@ namespace RentACar.Controllers
         private readonly DataContext _context;
         private readonly ICombosHelper _combosHelper;
         private readonly IBlobHelper _blobHelper;
-        private readonly IFlashMessage _flashMessage;
+        private readonly IFlashMessage _flashMessages;
 
-        public VehiclesController(DataContext context, ICombosHelper combosHelper, IBlobHelper blobHelper, IFlashMessage flashMessage)
+        public VehiclesController(DataContext context, ICombosHelper combosHelper, IBlobHelper blobHelper, IFlashMessage flashMessages)
         {
             _context = context;
             _combosHelper = combosHelper;
             _blobHelper = blobHelper;
-            _flashMessage = flashMessage;
+            _flashMessages = flashMessages;
         }
         public async Task<IActionResult> Index()
         {
@@ -33,6 +34,7 @@ namespace RentACar.Controllers
                 .ToListAsync());
         }
 
+        [NoDirectAccess]
         public async Task<IActionResult> Create()
         {
             CreateVehicleViewModel model = new()
@@ -83,16 +85,22 @@ namespace RentACar.Controllers
                 {
                     _context.Add(vehicle);
                     await _context.SaveChangesAsync();
-                    _flashMessage.Info("Registro creado.");
-                    return RedirectToAction(nameof(Index));
+                    _flashMessages.Confirmation("Vehiculo creado.");
+                    return Json(new
+                    {
+                        isValid = true,
+                        html = ModalHelper.RenderRazorViewToString(this, "_ViewAllVehicles", _context.Vehicles)
+                        //.Include(p => p.ImageVehicles)
+                        //.Include(p => p.VehicleCategories)
+                        //.ThenInclude(pc => pc.Category).ToList()
+                    });
+
                 }
                 catch (DbUpdateException dbUpdateException)
                 {
                     if (dbUpdateException.InnerException.Message.Contains("duplicate"))
                     {
-                        // ModelState.AddModelError(string.Empty, "Ya existe un Vehículo con ña misma Placa.");
-                        _flashMessage.Danger("Ya existe un Vehículo con la misma Placa.");
-                        return RedirectToAction(nameof(Index));
+                        ModelState.AddModelError(string.Empty, "Ya existe un Vehículo con la misma Placa.");
                     }
                     else
                     {
@@ -108,19 +116,16 @@ namespace RentACar.Controllers
             }
 
             model.Categories = await _combosHelper.GetComboCategoriesAsync();
-            return View(model);
+            return Json(new { isValid = false, html = ModalHelper.RenderRazorViewToString(this, "Create", model) });
         }
 
 
-        [HttpGet] //Edit/Vehicles
-        public async Task<IActionResult> Edit(int? id)
+        //[HttpGet] //Edit/Vehicles
+        [NoDirectAccess]
+        public async Task<IActionResult> Edit(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
             Vehicle vehicle = await _context.Vehicles.FindAsync(id);
+
             if (vehicle == null)
             {
                 return NotFound();
@@ -140,6 +145,7 @@ namespace RentACar.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, CreateVehicleViewModel model)
         {
             if (id != model.Id)
@@ -157,25 +163,37 @@ namespace RentACar.Controllers
                 vehicle.Description = model.Description;
                 _context.Update(vehicle);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                _flashMessages.Confirmation("Registro actualizado.");
+                return Json(new
+                {
+                    isValid = true,
+                    html = ModalHelper.RenderRazorViewToString(this, "_ViewAllVehicles", _context.Vehicles
+                    .Include(p => p.ImageVehicles)
+                    .Include(p => p.VehicleCategories)
+                    .ThenInclude(pc => pc.Category).ToList())
+                });
             }
             catch (DbUpdateException dbUpdateException)
             {
                 if (dbUpdateException.InnerException.Message.Contains("duplicate"))
                 {
-                    ModelState.AddModelError(string.Empty, "Ya existe un vehículo con la misma placa.");
+                    //ModelState.AddModelError(string.Empty, "Ya existe un vehículo con la misma placa.");
+                    _flashMessage.Danger("Ya existe un vehículo con la misma placa.");
+                    return RedirectToAction(nameof(Index));
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
+                    //ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
+                    _flashMessage.Danger(dbUpdateException.InnerException.Message);
                 }
             }
             catch (Exception exception)
             {
                 ModelState.AddModelError(string.Empty, exception.Message);
+                _flashMessage.Danger(exception.Message);
             }
 
-            return View(model);
+            return Json(new { isValid = false, html = ModalHelper.RenderRazorViewToString(this, "Edit", model) });
         }
 
         //Details-Vehicles
@@ -375,50 +393,27 @@ namespace RentACar.Controllers
         }
 
         //Delete /Vehicles
-        [HttpGet]
-        public async Task<IActionResult> Delete(int? id)
+        [NoDirectAccess]
+        public async Task<IActionResult> Delete(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
             Vehicle vehicle = await _context.Vehicles
                 .Include(v => v.VehicleCategories)
                 .Include(v => v.ImageVehicles)
-                .FirstOrDefaultAsync(v => v.Id == id);
+                .FirstOrDefaultAsync(vc => vc.Id == id);
             if (vehicle == null)
             {
                 return NotFound();
             }
-
-            return View(vehicle);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(Vehicle model)
-        {
-            Vehicle vehicle = await _context.Vehicles
-               .Include(v => v.ImageVehicles)
-               .Include(v => v.VehicleCategories)
-                .FirstOrDefaultAsync(v => v.Id == model.Id);
-
-            _context.Vehicles.Remove(vehicle);
-            await _context.SaveChangesAsync();
 
             foreach (ImageVehicle imageVehicle in vehicle.ImageVehicles)
             {
                 await _blobHelper.DeleteBlobAsync(imageVehicle.ImageId, "vehicles");
             }
 
-
+            _context.Vehicles.Remove(vehicle);
+            await _context.SaveChangesAsync();
+            _flashMessages.Info("Registro borrado.");
             return RedirectToAction(nameof(Index));
         }
-
-
-
-
-
     }
 }

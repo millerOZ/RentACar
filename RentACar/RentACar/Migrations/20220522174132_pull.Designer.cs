@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RentACar.Data;
 
@@ -11,9 +12,10 @@ using RentACar.Data;
 namespace RentACar.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220522174132_pull")]
+    partial class pull
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -265,43 +267,16 @@ namespace RentACar.Migrations
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<int>("VehicleId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Reserves");
-                });
-
-            modelBuilder.Entity("RentACar.Data.Entities.ReserveDetail", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Comments")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DeliveryDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("ReserveId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("ReturnDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("VehicleId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ReserveId");
-
                     b.HasIndex("VehicleId");
 
-                    b.ToTable("ReserveDetails");
+                    b.ToTable("Reserves");
                 });
 
             modelBuilder.Entity("RentACar.Data.Entities.User", b =>
@@ -542,20 +517,13 @@ namespace RentACar.Migrations
                         .WithMany("Reserves")
                         .HasForeignKey("UserId");
 
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("RentACar.Data.Entities.ReserveDetail", b =>
-                {
-                    b.HasOne("RentACar.Data.Entities.Reserve", "Reserve")
-                        .WithMany("ReserveDetails")
-                        .HasForeignKey("ReserveId");
-
                     b.HasOne("RentACar.Data.Entities.Vehicle", "Vehicle")
-                        .WithMany("ReserveDetails")
-                        .HasForeignKey("VehicleId");
+                        .WithMany()
+                        .HasForeignKey("VehicleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("Reserve");
+                    b.Navigation("User");
 
                     b.Navigation("Vehicle");
                 });
@@ -563,11 +531,11 @@ namespace RentACar.Migrations
             modelBuilder.Entity("RentACar.Data.Entities.User", b =>
                 {
                     b.HasOne("RentACar.Data.Entities.DocumentType", "DocumentType")
-                        .WithMany()
+                        .WithMany("Users")
                         .HasForeignKey("DocumentTypeId");
 
                     b.HasOne("RentACar.Data.Entities.LicenceType", "LicenceType")
-                        .WithMany()
+                        .WithMany("Users")
                         .HasForeignKey("LicenceTypeId");
 
                     b.Navigation("DocumentType");
@@ -595,9 +563,14 @@ namespace RentACar.Migrations
                     b.Navigation("VehicleCategories");
                 });
 
-            modelBuilder.Entity("RentACar.Data.Entities.Reserve", b =>
+            modelBuilder.Entity("RentACar.Data.Entities.DocumentType", b =>
                 {
-                    b.Navigation("ReserveDetails");
+                    b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("RentACar.Data.Entities.LicenceType", b =>
+                {
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("RentACar.Data.Entities.User", b =>
@@ -608,8 +581,6 @@ namespace RentACar.Migrations
             modelBuilder.Entity("RentACar.Data.Entities.Vehicle", b =>
                 {
                     b.Navigation("ImageVehicles");
-
-                    b.Navigation("ReserveDetails");
 
                     b.Navigation("VehicleCategories");
                 });

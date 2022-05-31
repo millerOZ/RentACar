@@ -13,8 +13,6 @@ namespace RentACar.Models
         public IEnumerable<SelectListItem> Categories { get; set; }
 
         [Display(Name = "Foto")]
-        public IFormFile ImageFile { get; set; }
-
-
+        public IFormFile? ImageFile { get; set; }
     }
 }
