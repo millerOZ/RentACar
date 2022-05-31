@@ -1,9 +1,6 @@
 ﻿
 @model RentACar.Models.HomeViewModel
 
-@{
-    ViewData["Title"] = "Index";
-}
 
 <style type="text/css">
     .card {
@@ -18,23 +15,65 @@
     }
 </style>
 
-    <a asp-action="ShowCart" class="btn btn-outline-primary">Mis Reservas (@Model.Quantity)</a>
 
-<div class="row row-cols-1 row-cols-md-4 g-4 mt-1">
+<div class="mb-2">
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+            Filtrar por?
+        </button>
+         <Ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+        @foreach (var item in Model.Categories)
+        {
+            <li> <a class="dropdown-item" href="@Url.Action("Index", "Home", new { searchString = item.Name})"> @item.Name&nbsp;</a></li>
+        }
+        </ul>
+     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+            Ordenar por?
+        </button>
+        <Ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+           <li> <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">Ordenar por Serie</a>&nbsp;&nbsp;</li>
+          <li>  <a asp-action="Index" asp-route-sortOrder="@ViewData["PriceSortParm"]">Ordenar por Precio</a></li>
+             </ul>
+    </div>
+
+<form asp-action="Index" method="get" class="text-center">
+    <div class="form-actions no-color">
+        <p>
+            Buscar por Serie o categoría: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+            <input type="submit" value="Buscar" class="btn btn-primary" />
+            <a asp-action="Index" class="btn btn-secondary">Ver Todos los Vehiculos</a>
+        </p>
+    </div>
+</form>
+</div>
+
+<div class="row row-cols-1 row-cols-md-4 g-4 mt-2 ">
     @if (Model.Vehicles.Count() > 0)
     {
         @foreach (var item in Model.Vehicles)
         {
-            <div class="col">
-                <div class="card h-100">
-                    <div class="text-center zoom">
-                        <img src="@item.ImageFullPath" style="height:150px; max-width:200px; border-radius:50%;" class="text-center"/>
+            <div class= "col">
+                <div class="card h-100" text-dark" style="max-width: 800px;">
+                    <div class="row g-0">
+                        <h5 class="text-center">@item.Serie </h5>
+                    <div class="col-md-4 ">
+                        
+                        <div class="text-center zoom">
+                        <img src="@item.ImageFullPath" style="height:100px; max-width:100px; border-radius:50%;" class="img-fluid rounded-start" />
+                        </div>
                     </div>
+                    <div class="col-md-8">
                     <div class="card-body">
-                        <p class="card-text smfnt">Serie:  @item.Serie</p>
-                        <p class="card-text smfnt">Marca:   @item.Brand</p>
-                        <p class="card-text smfnt">Placa:   @item.Plaque</p>
-                        <p class="card-text smfnt">Valor Diario:    @Html.DisplayFor(modelItem => item.PriceDay)</p>
+                        <p class="card-text smfnt">  </p>
+                        <p class="card-text smfnt">   @item.Brand</p>
+                        <p class="card-text smfnt">  @item.Plaque</p>
+                        <p class="text-smfnt"> @Html.DisplayFor(modelItem => item.PriceDay)</p>                       
+                                            <div text-center">
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-secondary"><i class="fa-solid fa-circle-info"></i> Ver</a>
+                        <a asp-action="ShowReserve" asp-route-id="@item.Id" class="btn btn-sm btn-primary"><i class="fa-solid fa-car-side"></i>Reservar</a>
+                    </div>
+
+                    </div>
                     </div>
                     <div class="card-footer text-center">
                         <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-secondary"><i class="fa-solid fa-circle-info"></i> Ver</a>
@@ -52,6 +91,28 @@
     {
         <h3>No hay Vehiculos con su criterio de búsqueda</h3>
     }
+</div>
+
+@{
+    var prevDisabled = !Model.Vehicles.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.Vehicles.HasNextPage ? "disabled" : "";
+}
+
+<div class="mt-5">
+    <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@(Model.Vehicles.PageIndex - 1)"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-primary @prevDisabled">
+        Anterior
+    </a>
+    <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@(Model.Vehicles.PageIndex + 1)"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-secondary @nextDisabled">
+        Siguiente
+    </a>
 </div>
 
 <!--modal placeholder. Also you can place this modal form in the _Layout.cshtml-->
@@ -72,7 +133,9 @@
 <partial name="_DeleteDialog" />
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 
     <script src="~/js/showmodal.js"></script>
 

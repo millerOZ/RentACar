@@ -1,21 +1,21 @@
 ﻿@model IEnumerable<RentACar.Data.Entities.Vehicle>
 
-
 @{
     ViewData["Title"] = "Index";
     
 }
 
- <flash dismissable="true" />
+<flash dismissable="true" />
 
+<!-- Content Wrapper. Contains page content -->
 <div class="container-fluid">
     <div class="card mt-2">
-        <div class="card-header text-danger">
-            <i class="fa fa-users"></i>  <strong>Crear Vehículo</strong>
+        <div class="card-header text-dark">
+            <i class="fa fa-car"></i>  <strong>Vehiculos</strong>
         </div>
         <div class="card-body">
             <div id="view-all">
-                @await Html.PartialAsync("_ViewAll", Model)
+                @await Html.PartialAsync("_ViewAllVehicles", Model)
             </div>
         </div>
     </div>
@@ -36,7 +36,9 @@
     </div>
 </div>
 
+
 <partial name="_DeleteDialog" />
+<partial name="_AddOrEditDialog" />
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
@@ -45,7 +47,7 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-            $('#ProductsTable').DataTable({
+            $('#VehiclesTable').DataTable({
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
                 },
@@ -58,6 +60,6 @@
     </script>
 
     <script>
-        sc_deleteDialog.openModal('deleteItem', true, 'btnYesDelete', '/Users/Delete/', false);
+        sc_deleteDialog.openModal('deleteItem', true, 'btnYesDelete', '/Vehicles/Delete/', false);
     </script>
 }

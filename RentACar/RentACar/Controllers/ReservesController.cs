@@ -84,6 +84,7 @@ namespace RentACar.Controllers
             return RedirectToAction(nameof(Details), new { Id = reserve.Id });
         }
 
+
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Cancel(int? id)
         {
@@ -109,6 +110,33 @@ namespace RentACar.Controllers
             }
 
             return RedirectToAction(nameof(Details), new { Id = reserve.Id });
+        }
+        
+        [Authorize(Roles = "User")]
+        public async Task<IActionResult> CancelUser(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Reserve reserve = await _context.Reserves.FindAsync(id);
+            if (reserve == null)
+            {
+                return NotFound();
+            }
+
+            if (reserve.ReserveStatus == ReserveStatus.Cancelada)
+            {
+                _flashMessage.Danger("No se puede cancelar una reserva que esté en estado 'cancelada'.");
+            }
+            else
+            {
+                await _reserveHelper.CancelReserveAsync(reserve.Id);
+                _flashMessage.Confirmation("Su reserva ha sido cancelada con exito'.");
+            }
+
+            return RedirectToAction(nameof(MyDetails), new { Id = reserve.Id });
         }
 
         [Authorize(Roles = "Admin")]
