@@ -224,7 +224,7 @@ namespace RentACar.Controllers
             User user = await _userHelper.GetUserAsync(User.Identity.Name);
             if (user == null)
             {
-                return NotFound();
+                return RedirectToAction("Login", "Account");
             }
 
             Vehicle vehicle = await _context.Vehicles
@@ -281,8 +281,6 @@ namespace RentACar.Controllers
         }
 
 
-
-
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -302,7 +300,6 @@ namespace RentACar.Controllers
                 DeliveryDate = reserve.DeliveryDate,
                 ReturnDate = reserve.ReturnDate,
                 Comments = reserve.Comments,
-                
             };
 
             return View(model);

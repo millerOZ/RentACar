@@ -19,15 +19,17 @@ namespace RentACar.Models
         [DataType(DataType.Date)]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public DateTime ReturnDate { get; set; }
+
         public ICollection<Reserve> Reserves { get; set; }
+
 
         [DisplayFormat(DataFormatString = "{0:C2}")]
         [Display(Name = "Valor")]
-        public decimal Value => Reserves == null ? 0 : (decimal)ReturnDate.Subtract(DeliveryDate).TotalDays * Vehicle.PriceDay;   
+        public decimal Value => Reserves == null ? 0 : Reserves.Sum(r => r.Value);
 
         [DataType(DataType.MultilineText)]
         [Display(Name = "Comentarios")]
         public string Comments { get; set; }
-        public Vehicle Vehicle { get;  set; }
+        public Vehicle Vehicle { get; set; }
     }
 }
