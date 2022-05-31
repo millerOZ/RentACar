@@ -105,13 +105,13 @@ namespace RentACar.Controllers
                     else
                     {
                         //ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
-                        _flashMessage.Danger(dbUpdateException.InnerException.Message);
+                        _flashMessages.Danger(dbUpdateException.InnerException.Message);
                     }
                 }
                 catch (Exception exception)
                 {
                     //ModelState.AddModelError(string.Empty, exception.Message);
-                    _flashMessage.Danger(exception.Message);
+                    _flashMessages.Danger(exception.Message);
                 }
             }
 
@@ -178,19 +178,19 @@ namespace RentACar.Controllers
                 if (dbUpdateException.InnerException.Message.Contains("duplicate"))
                 {
                     //ModelState.AddModelError(string.Empty, "Ya existe un vehículo con la misma placa.");
-                    _flashMessage.Danger("Ya existe un vehículo con la misma placa.");
+                    _flashMessages.Danger("Ya existe un vehículo con la misma placa.");
                     return RedirectToAction(nameof(Index));
                 }
                 else
                 {
                     //ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
-                    _flashMessage.Danger(dbUpdateException.InnerException.Message);
+                    _flashMessages.Danger(dbUpdateException.InnerException.Message);
                 }
             }
             catch (Exception exception)
             {
                 ModelState.AddModelError(string.Empty, exception.Message);
-                _flashMessage.Danger(exception.Message);
+                _flashMessages.Danger(exception.Message);
             }
 
             return Json(new { isValid = false, html = ModalHelper.RenderRazorViewToString(this, "Edit", model) });
