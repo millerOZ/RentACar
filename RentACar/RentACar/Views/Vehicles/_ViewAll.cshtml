@@ -38,19 +38,19 @@
                                         new {id=item.Id},
                                         Context.Request.Scheme)',
                                        'Editar Vehículo')" class="btn btn-dark">
-                                       Editar
+                                       <i class="fa fa-pencil-alt"></i>
                               </a>
                             <a onclick="showInPopup('@Url.Action("Details", 
                                         "Vehicles",
                                         new {id=item.Id},
                                         Context.Request.Scheme)',
                                        'Detalles Vehículo')" class="btn btn-dark">Detalles</a>
+                          <button data-id="@item.Id" 
+                             class="btn btn-sm btn-danger deleteItem" 
+                             data-bs-toggle="modal" 
+                             data-bs-target="#deleteDialog"><i class="fa fa-trash"></i>
+                         </button>
                           
-                            <a onclick="showInPopup('@Url.Action("Delete", 
-                                        "Vehicles",
-                                        new {id=item.Id},
-                                        Context.Request.Scheme)',
-                                       'Eliminar Vehículo')"  class="btn btn-dark">Borrar</a>
                         </div>
 
                         <div class="card-footer text-center">
