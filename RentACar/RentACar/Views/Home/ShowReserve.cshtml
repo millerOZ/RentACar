@@ -5,101 +5,109 @@
     Layout = null;
 }
 <flash dismissable="true" />
-<h1>Reserva</h1>
-<div class="container smfont">
-    <dl class="row">
-        <div class="col-md-6">
-            <div id="ImagesCarousel" class="carousel slide" data-ride="carousel">
-                <div style=" width: auto; height: auto;">
-                    @{
-                        var first = true;
-                    }
-                    @foreach (var item in @Model?.Vehicle.ImageVehicles)
-                    {
-                        <div class="carousel-item @(first?Html.Raw("active"):Html.Raw(""))">
-                            <img class="d-block w-100" src="@item.ImageFullPath" alt="@item.Id">
-                        </div>
-                        first = false;
-                    }
-                </div>
-                <a id="ImagesCarouselPrev" class="carousel-control-prev" href="#ImagesCarousel" role="button"
-                   data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only btn btn-secondary">Anterior</span>
-                </a>
-                <a id="ImagesCarouselNext" class="carousel-control-next" href="#ImagesCarousel" role="button"
-                   data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only btn-primary btn">Siguiente</span>
-                </a>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <dl class="row">
-                <dt class="col-sm-4">
-                    @Html.DisplayNameFor(model => model.Vehicle.Brand)
-                </dt>
-                <dd class="col-sm-8">
-                    @Html.DisplayFor(model => model.Vehicle.Brand)
-                </dd>
-                <dt class="col-sm-4">
-                    @Html.DisplayNameFor(model => model.Vehicle.PriceDay)
-                </dt>
-                <dd class="col-sm-8">
-                    @Html.DisplayFor(model => model.Vehicle.PriceDay)
-                </dd>
-                <dt class="col-sm-4">
-                    @Html.DisplayNameFor(model => model.Vehicle.Plaque)
-                </dt>
-                <dd class="col-sm-8">
-                    @Html.DisplayFor(model => model.Vehicle.Plaque)
-                </dd>
-                <dt class="col-sm-4">
-                    @Html.DisplayNameFor(model => model.Vehicle.Description)
-                </dt>
-                <dd class="col-sm-8">
-                    @Html.DisplayFor(model => model.Vehicle.Description)
-                </dd>
-            </dl>
-        </div>
-    </dl>
+<div class="text-success">
+    <h3>
+        @ViewBag.Message
+    </h3>
 </div>
-<div class="container smfont ">
-    <form asp-action="ShowReserve" autocomplete="off" asp-route-id="@Model" onsubmit="return jQueryAjaxPost(this);">
+
+<h1>Reserva</h1>
+<div class="row">
+    <div class="container smfont">
         <dl class="row">
             <div class="col-md-6">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input type="hidden" asp-for="Vehicle.Id" />
-                <input type="hidden" asp-for="User.Id" />
-
-                <div class="form-group">
-                    <label asp-for="DeliveryDate" class="control-label"></label>
-                    <input asp-for="DeliveryDate" type="datetime-local" class="form-control" />
-                    <span asp-validation-for="DeliveryDate" class="text-danger"></span>
+                <div id="ImagesCarousel" class="carousel slide" data-ride="carousel">
+                    <div style=" width: auto; height: auto;">
+                        @{
+                            var first = true;
+                        }
+                        @foreach (var item in @Model?.Vehicle.ImageVehicles)
+                        {
+                            <div class="carousel-item @(first?Html.Raw("active"):Html.Raw(""))">
+                                <img class="d-block w-100" src="@item.ImageFullPath" alt="@item.Id">
+                            </div>
+                            first = false;
+                        }
+                    </div>
+                    <a id="ImagesCarouselPrev" class="carousel-control-prev" href="#ImagesCarousel" role="button"
+                       data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only btn btn-secondary">Anterior</span>
+                    </a>
+                    <a id="ImagesCarouselNext" class="carousel-control-next" href="#ImagesCarousel" role="button"
+                       data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only btn-primary btn">Siguiente</span>
+                    </a>
                 </div>
             </div>
-
             <div class="col-md-6">
-                <div class="form-group">
-                    <label asp-for="ReturnDate" class="control-label"></label>
-                    <input asp-for="ReturnDate" type="datetime-local" class="form-control" />
-                    <span asp-validation-for="ReturnDate" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="form-group">
-                <label asp-for="Comments" class="control-label"></label>
-                <input asp-for="Comments" class="form-control" />
-                <span asp-validation-for="Comments" class="text-danger"></span>
+                <dl class="row">
+                    <dt class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.Vehicle.Brand)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.Vehicle.Brand)
+                    </dd>
+                    <dt class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.Vehicle.PriceDay)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.Vehicle.PriceDay)
+                    </dd>
+                    <dt class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.Vehicle.Plaque)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.Vehicle.Plaque)
+                    </dd>
+                    <dt class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.Vehicle.Description)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.Vehicle.Description)
+                    </dd>
+                </dl>
             </div>
         </dl>
-        <div class="form-group mt-2" style="text-center">
-            <input type="submit" value="Reservar" class="btn btn-outline-primary" />
-            <a asp-action="Index" class="btn btn-outline-success">Regresar</a>
-        </div>
-    </form>
+    </div>
+    <div class="container smfont ">
+        <form asp-action="ShowReserve" autocomplete="off" asp-route-id="@Model" onsubmit="return jQueryAjaxPost(this);">
+            <dl class="row">
+                <div class="col-md-6">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Vehicle.Id" />
+                    <input type="hidden" asp-for="User.Id" />
+
+                    <div class="form-group">
+                        <span class="required">*</span>
+                        <label asp-for="DeliveryDate" class="control-label"></label>
+                        <input asp-for="DeliveryDate" type="datetime-local" class="form-control" />
+                        <span asp-validation-for="DeliveryDate" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <span class="required">*</span>
+                        <label asp-for="ReturnDate" class="control-label"></label>
+                        <input asp-for="ReturnDate" type="datetime-local" class="form-control" />
+                        <span asp-validation-for="ReturnDate" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Comments" class="control-label"></label>
+                    <input asp-for="Comments" class="form-control" />
+                    <span asp-validation-for="Comments" class="text-danger"></span>
+                </div>
+            </dl>
+            <div class="form-group mt-2 text-center">
+                <input type="submit" value="Reservar" class="btn btn-outline-primary" />
+                <a asp-action="Index" class="btn btn-outline-success">Regresar</a>
+            </div>
+        </form>
+    </div>
 </div>
-
-
 
 
 @section Scripts {

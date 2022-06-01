@@ -2,11 +2,10 @@
 
 @{
     ViewData["Title"] = "Register";
+    Layout = null;
 }
 <flash dismissable="true" />
-<h2>Registrar</h2>
-
-<h4>Usuario</h4>
+<h2>Registro Nuevo Usuario</h2>
 
 <div class="text-success">
     <h3>
@@ -15,51 +14,59 @@
 </div>
 <hr />
 <div class="row">
-    <div class="col-md-12">
-        <form asp-action="Register" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <input type="hidden" asp-for="UserType" />
-            <input type="hidden" asp-for="DocumentTypes" />
-            <input type="hidden" asp-for="LicenceTypes" />
+    <div>
+        <div class="card bg-light mb-6" style="width: 750px; height: 600px">
+            <h5 class="card-header text-center"><i class="fa-solid fa-user-plus"></i>Registarme</h5>
+            <div class="card-body bg-info bg-gradient p-2 text-dark bg-opacity-75">
+                <form asp-action="Register" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Id" />
+                    <input type="hidden" asp-for="UserType" />
+                    <input type="hidden" asp-for="DocumentTypes" />
+                    <input type="hidden" asp-for="LicenceTypes" />
 
 
-            <div class="form-group">
-                 <span class="required">*</span>
-                <label asp-for="Username" class="control-label"></label>
-                <input asp-for="Username" class="form-control" />
-                <span asp-validation-for="Username" class="text-danger"></span>
-            </div>
-
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                         <span class="required">*</span>
-                        <label asp-for="Password" class="control-label"></label>
-                        <input asp-for="Password" class="form-control" />
-                        <span asp-validation-for="Password" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="col-md-6">
                     <div class="form-group">
                         <span class="required">*</span>
-                        <label asp-for="PasswordConfirm" class="control-label"></label>
-                        <input asp-for="PasswordConfirm" class="form-control" />
-                        <span asp-validation-for="PasswordConfirm" class="text-danger"></span>
+                        <label asp-for="Username" class="control-label"></label>
+                        <input asp-for="Username" class="form-control" />
+                        <span asp-validation-for="Username" class="text-danger"></span>
                     </div>
-                </div>
-            </div>    
 
-            <partial name="_User" />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <span class="required">*</span>
+                                <label asp-for="Password" class="control-label"></label>
+                                <input asp-for="Password" class="form-control" />
+                                <span asp-validation-for="Password" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <span class="required">*</span>
+                                <label asp-for="PasswordConfirm" class="control-label"></label>
+                                <input asp-for="PasswordConfirm" class="form-control" />
+                                <span asp-validation-for="PasswordConfirm" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <partial name="_User" />
 
-            <div class="form-group mt-2">
-                <input type="submit" value="Registrar" class="btn btn-outline-primary" />
+                    <div class="form-group mt-3 text-center">
+                        <input type="submit" value="Registrar" class="btn btn-dark" />
+                    </div>
+                </form>
             </div>
-        </form>
+            <div class="card-footer bg-transparent text-center">
+                <a asp-action="Login" class="btn btn-outline-secondary"><i class="fa-solid fa-arrow-rotate-left"></i>Regresar</a>
+            </div>
+        </div>
     </div>
 </div>
 
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
 }
