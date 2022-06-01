@@ -41,8 +41,9 @@
         {
         <tr>
             <td>
-                <a asp-action="Details" asp-controller="Reserves" asp-route-Id="@item.Id">@Html.DisplayFor(modelItem => item.User.FullName)</a>
+                <a asp-action="Details" asp-controller="Reserves" asp-route-Id="@item.Id">@Html.DisplayFor(modelItem => item.User.FullName)</a>                 
             </td>
+            
             <td>
                 @Html.DisplayFor(modelItem => item.Date)
             </td>
