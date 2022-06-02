@@ -267,7 +267,7 @@ namespace RentACar.Controllers
             Response response = await _reserveHelper.ProcessReserveAsync(model);
             if (response.IsSuccess)
             {
-                return RedirectToAction(nameof(ReserveSuccess));
+                 return RedirectToAction(nameof(ReserveSuccess));
             }
 
             ModelState.AddModelError(string.Empty, response.Message);
