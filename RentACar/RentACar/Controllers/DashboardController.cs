@@ -21,9 +21,11 @@ namespace RentACar.Controllers
         public async Task<IActionResult> Index()
         {
             ViewBag.UsersCount = _context.Users.Count();
-            ViewBag.ProductsCount = _context.Reserves.Count();
+            ViewBag.ProductsCount = _context.Vehicles.Count();
             ViewBag.NewReservesCount = _context.Reserves.Where(o => o.ReserveStatus == ReserveStatus.Nuevo).Count();
             ViewBag.ConfirmeReservesCount = _context.Reserves.Where(o => o.ReserveStatus == ReserveStatus.Confirmada).Count();
+            ViewBag.FinaliceReservesCount = _context.Reserves.Where(o => o.ReserveStatus == ReserveStatus.finalizada).Count();
+            ViewBag.FinaliceReservesCount = _context.Reserves.Where(o => o.ReserveStatus == ReserveStatus.finalizada).Count();
             ViewBag.FinaliceReservesCount = _context.Reserves.Where(o => o.ReserveStatus == ReserveStatus.finalizada).Count();
 
 
