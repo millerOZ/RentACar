@@ -1,7 +1,11 @@
 ﻿
 @model RentACar.Models.HomeViewModel
 
+@{
+    ViewData["Title"] = "Index";
+}
 
+<flash dismissable="true" />
 
 <style type="text/css">
     .card {
@@ -80,12 +84,17 @@
                         </div>
                     </div>
                     <div class="card-footer text-center">
-                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-secondary"><i class="fa-solid fa-circle-info"></i> Ver</a>
-                        <a onclick="showInPopup('@Url.Action("ShowReserve", 
+                        <a onclick="showInPopup('@Url.Action("Details", 
                                                             "Home", new { id=item.Id },
                                                             Context.Request.Scheme)',
-                                                            'Reserva')" class="btn btn-sm btn-primary">
-                                                            <i class="fa-solid fa-car-side"></i>Reservar</a>
+                                                            'Reserva')" class="btn btn-sm btn-secondary"><i class="fa-solid fa-circle-info"></i> Ver
+                        </a>
+                          @* <a asp-action="ShowReserve" asp-route-id="@item.Id" class="btn btn-sm btn-secondary"><i class="fa-solid fa-circle-info"></i> Reservar</a>*@
+                        <button onclick="showInPopup('@Url.Action("ShowReserve", 
+                                                            "Home", new { id=item.Id },
+                                                            Context.Request.Scheme)',
+                                                            'Cart')" class="btn btn-sm btn-primary">
+                                                            <i class="fa-solid fa-car-side"></i>Reservar</button>
                     </div>
                 </div>
              </div>
@@ -159,7 +168,7 @@
     </script>
 
     <script>
-        sc_deleteDialog.openModal('deleteItem', true, 'btnYesDelete', '/Categories/Delete/', false);
+        sc_deleteDialog.openModal('deleteItem', true, 'btnYesDelete', '/Vehicles/Delete/', false);
     </script>
 }
 

@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RentACar.Data.Entities;
-using RentACar.Helpers;
 using RentACar.Enums;
+using RentACar.Helpers;
 
 
 namespace RentACar.Data
@@ -124,7 +124,7 @@ namespace RentACar.Data
             await _userHelper.CheckRoleAsync(UserType.User.ToString());
         }
 
-    
+
 
 
 
@@ -133,18 +133,44 @@ namespace RentACar.Data
         {
             if (!_context.Vehicles.Any())
             {
-                await AddVehicleAsync("ZTS-01G", "TVS", "APACHE RT 160 4v - 2023", 60000, "Experimenta su tecnología Smart Xconnect y disfruta su ecosistema de conexión," +
+                await AddVehicleAsync("ZTS-01G", "TVS", "APACHE RT 160 4v - 2021", 60000, "Experimenta su tecnología Smart Xconnect y disfruta su ecosistema de conexión," +
+                    " telemetría en ruta, alerta y asistencia en navegación.", new List<string>() { "Motos", "Sport", "Urbanos" }, new List<string>() { "Apache160.png",
+                        "Apache_160.png" });
+                await AddVehicleAsync("ZTS-02G", "TVS", "APACHE RT 160 5v - 2022", 60000, "Experimenta su tecnología Smart Xconnect y disfruta su ecosistema de conexión," +
+                    " telemetría en ruta, alerta y asistencia en navegación.", new List<string>() { "Motos", "Sport", "Urbanos" }, new List<string>() { "Apache160.png",
+                        "Apache_160.png" });
+                await AddVehicleAsync("ZTS-03G", "TVS", "APACHE RT 160 6v - 2023", 60000, "Experimenta su tecnología Smart Xconnect y disfruta su ecosistema de conexión," +
+                    " telemetría en ruta, alerta y asistencia en navegación.", new List<string>() { "Motos", "Sport", "Urbanos" }, new List<string>() { "Apache160.png",
+                        "Apache_160.png" });
+                await AddVehicleAsync("ZTS-04G", "TVS", "APACHE RT 160 7v - 2024", 60000, "Experimenta su tecnología Smart Xconnect y disfruta su ecosistema de conexión," +
+                    " telemetría en ruta, alerta y asistencia en navegación.", new List<string>() { "Motos", "Sport", "Urbanos" }, new List<string>() { "Apache160.png",
+                        "Apache_160.png" });
+                await AddVehicleAsync("ZTS-05G", "TVS", "APACHE RT 160 8v - 2025", 60000, "Experimenta su tecnología Smart Xconnect y disfruta su ecosistema de conexión," +
+                    " telemetría en ruta, alerta y asistencia en navegación.", new List<string>() { "Motos", "Sport", "Urbanos" }, new List<string>() { "Apache160.png",
+                        "Apache_160.png" });
+                await AddVehicleAsync("ZTS-06G", "TVS", "APACHE RT 160 9v - 2023", 60000, "Experimenta su tecnología Smart Xconnect y disfruta su ecosistema de conexión," +
                     " telemetría en ruta, alerta y asistencia en navegación.", new List<string>() { "Motos", "Sport", "Urbanos" }, new List<string>() { "Apache160.png",
                         "Apache_160.png" });
 
-                await AddVehicleAsync("QRT-91G", "YAMAHA", "MT-09 - 2023", 90000,  "Transmisión constante de 6 velocidades, Full Inyeccion," +
+
+                await AddVehicleAsync("QRT-91G", "YAMAHA", "MT-09 - 2023", 90000, "Transmisión constante de 6 velocidades, Full Inyeccion," +
+                    " 890cc", new List<string>() { "Motos", "Sport" }, new List<string>() { "mt-09.jfif", "mt-09_2.jfif" });
+                await AddVehicleAsync("QRT-92G", "YAMAHA", "MT-01 - 2022", 90000, "Transmisión constante de 6 velocidades, Full Inyeccion," +
+                    " 890cc", new List<string>() { "Motos", "Sport" }, new List<string>() { "mt-09.jfif", "mt-09_2.jfif" });
+                await AddVehicleAsync("QRT-93G", "YAMAHA", "MT-02 - 2021", 90000, "Transmisión constante de 6 velocidades, Full Inyeccion," +
+                    " 890cc", new List<string>() { "Motos", "Sport" }, new List<string>() { "mt-09.jfif", "mt-09_2.jfif" });
+                await AddVehicleAsync("QRT-94G", "YAMAHA", "MT-03 - 2020", 90000, "Transmisión constante de 6 velocidades, Full Inyeccion," +
+                    " 890cc", new List<string>() { "Motos", "Sport" }, new List<string>() { "mt-09.jfif", "mt-09_2.jfif" });
+                await AddVehicleAsync("QRT-95G", "YAMAHA", "MT-04 - 2019", 90000, "Transmisión constante de 6 velocidades, Full Inyeccion," +
+                    " 890cc", new List<string>() { "Motos", "Sport" }, new List<string>() { "mt-09.jfif", "mt-09_2.jfif" });
+                await AddVehicleAsync("QRT-96G", "YAMAHA", "MT-05 - 2029", 90000, "Transmisión constante de 6 velocidades, Full Inyeccion," +
                     " 890cc", new List<string>() { "Motos", "Sport" }, new List<string>() { "mt-09.jfif", "mt-09_2.jfif" });
 
                 await AddVehicleAsync("TGH-903", "MAZDA", "CX-5 - 2023", 150000, "Sistema Inteligente de tracción AWD con Función Off-Road, Diseñada para" +
                     " maximizar tu comodidad. permite selección de diferentes modos de conducción, Sport, Off-Road.", new List<string>() { "Carros", "Sport", "Off-Road" },
                     new List<string>() { "Cx-5.jfif", "CX-5_2.jfif" });
 
-                await AddVehicleAsync("BC-01", "MOUNTAIN GEAR", "E-Hawk Aro 27.5", 35000,  "Batería de Litio 36V 10AH; Tiempo de Carga 4 -6 horas; Distancia " +
+                await AddVehicleAsync("BC-01", "MOUNTAIN GEAR", "E-Hawk Aro 27.5", 35000, "Batería de Litio 36V 10AH; Tiempo de Carga 4 -6 horas; Distancia " +
                     "40 - 60 Km; Velocidad max 25Km/hr; Pantalla Led", new List<string>() { "Bicicletas", "Electricos", "Urbanos" }, new List<string>() { "BiciE1.png", "BiciE2.png" });
 
                 await AddVehicleAsync("BC-02", "MOUNTAIN GEAR", "MTB Crane Aro 26", 35000, "Disco de freno mecanico, 21 cambios, Marco de acero Light Compress, " +
@@ -155,6 +181,23 @@ namespace RentACar.Data
                     "alcanza velocidad máxima de 25km/hr.", new List<string>() { "Scooter", "Urbanos", "Electricos" }, new List<string>() { "Scoo1.png", "Scoo2.png" });
 
                 await AddVehicleAsync("SCO-02", "KROSSRIDE", "Ace", 25000, "cuenta con doble suspensión que hará tu viaje más confortable, Ahorro de combustible" +
+                    " Eco Amigable, alcanza velocidad máxima de 55km/hr.", new List<string>() { "Scooter", "Urbanos", "Electricos" }, new List<string>() { "ScooA1.png", "ScooA2.png" });
+
+                await AddVehicleAsync("SCO-0222", "KROSSRIDE", "Ace1", 25000, "cuenta con doble suspensión que hará tu viaje más confortable, Ahorro de combustible" +
+                    " Eco Amigable, alcanza velocidad máxima de 55km/hr.", new List<string>() { "Scooter", "Urbanos", "Electricos" }, new List<string>() { "ScooA1.png", "ScooA2.png" });
+                await AddVehicleAsync("SCO-03", "KROSSRIDE", "Ace2", 25000, "cuenta con doble suspensión que hará tu viaje más confortable, Ahorro de combustible" +
+                    " Eco Amigable, alcanza velocidad máxima de 55km/hr.", new List<string>() { "Scooter", "Urbanos", "Electricos" }, new List<string>() { "ScooA1.png", "ScooA2.png" });
+                await AddVehicleAsync("SCO-04", "KROSSRIDE", "Ace3", 25000, "cuenta con doble suspensión que hará tu viaje más confortable, Ahorro de combustible" +
+                    " Eco Amigable, alcanza velocidad máxima de 55km/hr.", new List<string>() { "Scooter", "Urbanos", "Electricos" }, new List<string>() { "ScooA1.png", "ScooA2.png" });
+                await AddVehicleAsync("SCO-05", "KROSSRIDE", "Ace4", 25000, "cuenta con doble suspensión que hará tu viaje más confortable, Ahorro de combustible" +
+                    " Eco Amigable, alcanza velocidad máxima de 55km/hr.", new List<string>() { "Scooter", "Urbanos", "Electricos" }, new List<string>() { "ScooA1.png", "ScooA2.png" });
+                await AddVehicleAsync("SCO-06", "KROSSRIDE", "Ace5", 25000, "cuenta con doble suspensión que hará tu viaje más confortable, Ahorro de combustible" +
+                    " Eco Amigable, alcanza velocidad máxima de 55km/hr.", new List<string>() { "Scooter", "Urbanos", "Electricos" }, new List<string>() { "ScooA1.png", "ScooA2.png" });
+                await AddVehicleAsync("SCO-07", "KROSSRIDE", "Ace6", 25000, "cuenta con doble suspensión que hará tu viaje más confortable, Ahorro de combustible" +
+                    " Eco Amigable, alcanza velocidad máxima de 55km/hr.", new List<string>() { "Scooter", "Urbanos", "Electricos" }, new List<string>() { "ScooA1.png", "ScooA2.png" });
+                await AddVehicleAsync("SCO-08", "KROSSRIDE", "Ace7", 25000, "cuenta con doble suspensión que hará tu viaje más confortable, Ahorro de combustible" +
+                    " Eco Amigable, alcanza velocidad máxima de 55km/hr.", new List<string>() { "Scooter", "Urbanos", "Electricos" }, new List<string>() { "ScooA1.png", "ScooA2.png" });
+                await AddVehicleAsync("SCO-09", "KROSSRIDE", "Ace8", 25000, "cuenta con doble suspensión que hará tu viaje más confortable, Ahorro de combustible" +
                     " Eco Amigable, alcanza velocidad máxima de 55km/hr.", new List<string>() { "Scooter", "Urbanos", "Electricos" }, new List<string>() { "ScooA1.png", "ScooA2.png" });
 
 
@@ -190,47 +233,6 @@ namespace RentACar.Data
 
             _context.Vehicles.Add(vehicle);
         }
-
-        //private async Task CheckReservesAsync()
-        //{
-        //    if (!_context.Reserves.Any())
-        //    {
-        //        _context.Reserves.Add(new Reserve
-        //        {
-        //            DateReserve = new System.DateTime(2015, 3, 10, 2, 15, 10),
-        //            DateStartReserve = new System.DateTime(2015, 3, 10, 2, 15, 10),
-        //            DateFinishReserve = new System.DateTime(2015, 3, 10, 2, 15, 10),
-        //            PlaceFinishReserve = "Floresta",
-        //            StartReserve = true,
-        //            Rentals = new List<Rental>()
-        //            {
-        //                new Rental
-        //                {
-        //                    Name = "mILLER",
-        //                    Quantity = 1212,
-        //                    TotalValue = 122,
-        //                    PaymentType = "tajerta",
-        //                    RentalTypes = new List<RentalType>()
-        //                    {
-        //                        new RentalType {Name ="kilometros "},
-        //                    }
-        //                },
-        //                new Rental
-        //                {   Name = "henry",
-        //                    Quantity = 222,
-        //                    TotalValue = 22,
-        //                    PaymentType = "efectivo",
-        //                    RentalTypes = new List<RentalType>()
-        //                    {
-        //                        new RentalType {Name ="tiempo"},
-        //                    }
-        //                }
-        //            }
-        //        });
-
-        //        await _context.SaveChangesAsync();
-        //    }
-        //}
 
 
     }
