@@ -15,7 +15,7 @@ html {
 
 body {
     margin-bottom: 60px;
-    background-v: url(./Images/fast-car.jpg);
+    background: url(./Images/fast-car.jpg);
     background-repeat: no-repeat;
     background-position: center center;
     background-attachment: fixed;

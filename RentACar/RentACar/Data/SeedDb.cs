@@ -136,34 +136,34 @@ namespace RentACar.Data
                 await AddVehicleAsync("ZTS-01G", "TVS", "APACHE RT 160 4v - 2021", 60000, "Experimenta su tecnología Smart Xconnect y disfruta su ecosistema de conexión," +
                     " telemetría en ruta, alerta y asistencia en navegación.", new List<string>() { "Motos", "Sport", "Urbanos" }, new List<string>() { "Apache160.png",
                         "Apache_160.png" });
-                await AddVehicleAsync("ZTS-02G", "TVS", "APACHE RT 160 4v - 2022", 60000, "Experimenta su tecnología Smart Xconnect y disfruta su ecosistema de conexión," +
+                await AddVehicleAsync("ZTS-02G", "TVS", "APACHE RT 160 5v - 2022", 60000, "Experimenta su tecnología Smart Xconnect y disfruta su ecosistema de conexión," +
                     " telemetría en ruta, alerta y asistencia en navegación.", new List<string>() { "Motos", "Sport", "Urbanos" }, new List<string>() { "Apache160.png",
                         "Apache_160.png" });
-                await AddVehicleAsync("ZTS-03G", "TVS", "APACHE RT 160 4v - 2023", 60000, "Experimenta su tecnología Smart Xconnect y disfruta su ecosistema de conexión," +
+                await AddVehicleAsync("ZTS-03G", "TVS", "APACHE RT 160 6v - 2023", 60000, "Experimenta su tecnología Smart Xconnect y disfruta su ecosistema de conexión," +
                     " telemetría en ruta, alerta y asistencia en navegación.", new List<string>() { "Motos", "Sport", "Urbanos" }, new List<string>() { "Apache160.png",
                         "Apache_160.png" });
-                await AddVehicleAsync("ZTS-04G", "TVS", "APACHE RT 160 4v - 2024", 60000, "Experimenta su tecnología Smart Xconnect y disfruta su ecosistema de conexión," +
+                await AddVehicleAsync("ZTS-04G", "TVS", "APACHE RT 160 7v - 2024", 60000, "Experimenta su tecnología Smart Xconnect y disfruta su ecosistema de conexión," +
                     " telemetría en ruta, alerta y asistencia en navegación.", new List<string>() { "Motos", "Sport", "Urbanos" }, new List<string>() { "Apache160.png",
                         "Apache_160.png" });
-                await AddVehicleAsync("ZTS-05G", "TVS", "APACHE RT 160 4v - 2025", 60000, "Experimenta su tecnología Smart Xconnect y disfruta su ecosistema de conexión," +
+                await AddVehicleAsync("ZTS-05G", "TVS", "APACHE RT 160 8v - 2025", 60000, "Experimenta su tecnología Smart Xconnect y disfruta su ecosistema de conexión," +
                     " telemetría en ruta, alerta y asistencia en navegación.", new List<string>() { "Motos", "Sport", "Urbanos" }, new List<string>() { "Apache160.png",
                         "Apache_160.png" });
-                await AddVehicleAsync("ZTS-06G", "TVS", "APACHE RT 160 4v - 2023", 60000, "Experimenta su tecnología Smart Xconnect y disfruta su ecosistema de conexión," +
+                await AddVehicleAsync("ZTS-06G", "TVS", "APACHE RT 160 9v - 2023", 60000, "Experimenta su tecnología Smart Xconnect y disfruta su ecosistema de conexión," +
                     " telemetría en ruta, alerta y asistencia en navegación.", new List<string>() { "Motos", "Sport", "Urbanos" }, new List<string>() { "Apache160.png",
                         "Apache_160.png" });
 
 
                 await AddVehicleAsync("QRT-91G", "YAMAHA", "MT-09 - 2023", 90000, "Transmisión constante de 6 velocidades, Full Inyeccion," +
                     " 890cc", new List<string>() { "Motos", "Sport" }, new List<string>() { "mt-09.jfif", "mt-09_2.jfif" });
-                await AddVehicleAsync("QRT-92G", "YAMAHA", "MT-01 - 2023", 90000, "Transmisión constante de 6 velocidades, Full Inyeccion," +
+                await AddVehicleAsync("QRT-92G", "YAMAHA", "MT-01 - 2022", 90000, "Transmisión constante de 6 velocidades, Full Inyeccion," +
                     " 890cc", new List<string>() { "Motos", "Sport" }, new List<string>() { "mt-09.jfif", "mt-09_2.jfif" });
-                await AddVehicleAsync("QRT-93G", "YAMAHA", "MT-02 - 2023", 90000, "Transmisión constante de 6 velocidades, Full Inyeccion," +
+                await AddVehicleAsync("QRT-93G", "YAMAHA", "MT-02 - 2021", 90000, "Transmisión constante de 6 velocidades, Full Inyeccion," +
                     " 890cc", new List<string>() { "Motos", "Sport" }, new List<string>() { "mt-09.jfif", "mt-09_2.jfif" });
-                await AddVehicleAsync("QRT-94G", "YAMAHA", "MT-03 - 2023", 90000, "Transmisión constante de 6 velocidades, Full Inyeccion," +
+                await AddVehicleAsync("QRT-94G", "YAMAHA", "MT-03 - 2020", 90000, "Transmisión constante de 6 velocidades, Full Inyeccion," +
                     " 890cc", new List<string>() { "Motos", "Sport" }, new List<string>() { "mt-09.jfif", "mt-09_2.jfif" });
-                await AddVehicleAsync("QRT-95G", "YAMAHA", "MT-04 - 2023", 90000, "Transmisión constante de 6 velocidades, Full Inyeccion," +
+                await AddVehicleAsync("QRT-95G", "YAMAHA", "MT-04 - 2019", 90000, "Transmisión constante de 6 velocidades, Full Inyeccion," +
                     " 890cc", new List<string>() { "Motos", "Sport" }, new List<string>() { "mt-09.jfif", "mt-09_2.jfif" });
-                await AddVehicleAsync("QRT-96G", "YAMAHA", "MT-05 - 2023", 90000, "Transmisión constante de 6 velocidades, Full Inyeccion," +
+                await AddVehicleAsync("QRT-96G", "YAMAHA", "MT-05 - 2029", 90000, "Transmisión constante de 6 velocidades, Full Inyeccion," +
                     " 890cc", new List<string>() { "Motos", "Sport" }, new List<string>() { "mt-09.jfif", "mt-09_2.jfif" });
 
                 await AddVehicleAsync("TGH-903", "MAZDA", "CX-5 - 2023", 150000, "Sistema Inteligente de tracción AWD con Función Off-Road, Diseñada para" +
@@ -181,6 +181,23 @@ namespace RentACar.Data
                     "alcanza velocidad máxima de 25km/hr.", new List<string>() { "Scooter", "Urbanos", "Electricos" }, new List<string>() { "Scoo1.png", "Scoo2.png" });
 
                 await AddVehicleAsync("SCO-02", "KROSSRIDE", "Ace", 25000, "cuenta con doble suspensión que hará tu viaje más confortable, Ahorro de combustible" +
+                    " Eco Amigable, alcanza velocidad máxima de 55km/hr.", new List<string>() { "Scooter", "Urbanos", "Electricos" }, new List<string>() { "ScooA1.png", "ScooA2.png" });
+
+                await AddVehicleAsync("SCO-0222", "KROSSRIDE", "Ace1", 25000, "cuenta con doble suspensión que hará tu viaje más confortable, Ahorro de combustible" +
+                    " Eco Amigable, alcanza velocidad máxima de 55km/hr.", new List<string>() { "Scooter", "Urbanos", "Electricos" }, new List<string>() { "ScooA1.png", "ScooA2.png" });
+                await AddVehicleAsync("SCO-03", "KROSSRIDE", "Ace2", 25000, "cuenta con doble suspensión que hará tu viaje más confortable, Ahorro de combustible" +
+                    " Eco Amigable, alcanza velocidad máxima de 55km/hr.", new List<string>() { "Scooter", "Urbanos", "Electricos" }, new List<string>() { "ScooA1.png", "ScooA2.png" });
+                await AddVehicleAsync("SCO-04", "KROSSRIDE", "Ace3", 25000, "cuenta con doble suspensión que hará tu viaje más confortable, Ahorro de combustible" +
+                    " Eco Amigable, alcanza velocidad máxima de 55km/hr.", new List<string>() { "Scooter", "Urbanos", "Electricos" }, new List<string>() { "ScooA1.png", "ScooA2.png" });
+                await AddVehicleAsync("SCO-05", "KROSSRIDE", "Ace4", 25000, "cuenta con doble suspensión que hará tu viaje más confortable, Ahorro de combustible" +
+                    " Eco Amigable, alcanza velocidad máxima de 55km/hr.", new List<string>() { "Scooter", "Urbanos", "Electricos" }, new List<string>() { "ScooA1.png", "ScooA2.png" });
+                await AddVehicleAsync("SCO-06", "KROSSRIDE", "Ace5", 25000, "cuenta con doble suspensión que hará tu viaje más confortable, Ahorro de combustible" +
+                    " Eco Amigable, alcanza velocidad máxima de 55km/hr.", new List<string>() { "Scooter", "Urbanos", "Electricos" }, new List<string>() { "ScooA1.png", "ScooA2.png" });
+                await AddVehicleAsync("SCO-07", "KROSSRIDE", "Ace6", 25000, "cuenta con doble suspensión que hará tu viaje más confortable, Ahorro de combustible" +
+                    " Eco Amigable, alcanza velocidad máxima de 55km/hr.", new List<string>() { "Scooter", "Urbanos", "Electricos" }, new List<string>() { "ScooA1.png", "ScooA2.png" });
+                await AddVehicleAsync("SCO-08", "KROSSRIDE", "Ace7", 25000, "cuenta con doble suspensión que hará tu viaje más confortable, Ahorro de combustible" +
+                    " Eco Amigable, alcanza velocidad máxima de 55km/hr.", new List<string>() { "Scooter", "Urbanos", "Electricos" }, new List<string>() { "ScooA1.png", "ScooA2.png" });
+                await AddVehicleAsync("SCO-09", "KROSSRIDE", "Ace8", 25000, "cuenta con doble suspensión que hará tu viaje más confortable, Ahorro de combustible" +
                     " Eco Amigable, alcanza velocidad máxima de 55km/hr.", new List<string>() { "Scooter", "Urbanos", "Electricos" }, new List<string>() { "ScooA1.png", "ScooA2.png" });
 
 

@@ -102,7 +102,14 @@
                 </div>
             </dl>
             <div class="form-group mt-2 text-center">
-                <input type="submit" value="Reservar" class="btn btn-outline-primary" />
+              @*  <input type="submit" value="Reservar" class="btn btn-outline-primary" />*@
+                 <button type="submit" value="Reservar" onclick="showInPopup('@Url.Action("ReserveSuccess", 
+                     "Home", 
+                     new { id=0 }, 
+                     Context.Request.Scheme)' , 
+                     'Actualizar Reserva')" 
+                     class="btn btn-outline-primary"><i class="fa fa-pencil-alt"></i>Reservar 
+                 </button>
                 <a asp-action="Index" class="btn btn-outline-success">Regresar</a>
             </div>
         </form>
