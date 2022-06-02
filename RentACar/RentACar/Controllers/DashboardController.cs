@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RentACar.Data;
+using RentACar.Enums;
 using RentACar.Helpers;
 
 namespace RentACar.Controllers
@@ -19,8 +20,10 @@ namespace RentACar.Controllers
         {
             ViewBag.UsersCount = _context.Users.Count();
             ViewBag.ProductsCount = _context.Reserves.Count();
-            //ViewBag.NewOrdersCount = _context.Sales.Where(o => o.OrderStatus == OrderStatus.Nuevo).Count();
-            //ViewBag.ConfirmedOrdersCount = _context.Sales.Where(o => o.OrderStatus == OrderStatus.Confirmado).Count();
+            ViewBag.NewReservesCount = _context.Reserves.Where(o => o.ReserveStatus == ReserveStatus.Nuevo).Count();
+            ViewBag.ConfirmeReservesCount = _context.Reserves.Where(o => o.ReserveStatus == ReserveStatus.Confirmada).Count();
+            ViewBag.FinaliceReservesCount = _context.Reserves.Where(o => o.ReserveStatus == ReserveStatus.finalizada).Count();
+
 
             return View(await _context.Users
                  .Include(d => d.DocumentType)
