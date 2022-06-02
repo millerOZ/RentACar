@@ -4,25 +4,23 @@ using RentACar.Data;
 using RentACar.Data.Entities;
 using RentACar.Helpers;
 using Vereyon.Web;
+using Microsoft.Extensions.Azure;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 
-/*Conexión base de datos y datacontext*/
 builder.Services.AddDbContext<DataContext>(o =>
 {
     o.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
-//Paginas de redirección
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.LoginPath = "/Account/NotAuthorized";
     options.AccessDeniedPath = "/Account/NotAuthorized";
 });
 
-/*inyección de entidades*/
 builder.Services.AddTransient<SeedDb>();
 builder.Services.AddFlashMessage();
 builder.Services.AddScoped<ICombosHelper, CombosHelper>();
@@ -33,17 +31,16 @@ builder.Services.AddScoped<IReserveHelper, ReserveHelper>();
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 
 
-/*inyección de usuarios*/
 builder.Services.AddIdentity<User, IdentityRole>(cfg =>
 {
     cfg.Tokens.AuthenticatorTokenProvider = TokenOptions.DefaultAuthenticatorProvider;
     cfg.SignIn.RequireConfirmedEmail = true;
     cfg.User.RequireUniqueEmail = true;
-    cfg.Password.RequireDigit = false;
+    cfg.Password.RequireDigit = true;
     cfg.Password.RequiredUniqueChars = 0;
-    cfg.Password.RequireLowercase = false;
-    cfg.Password.RequireNonAlphanumeric = false;
-    cfg.Password.RequireUppercase = false;
+    cfg.Password.RequireLowercase = true;
+    cfg.Password.RequireNonAlphanumeric = true;
+    cfg.Password.RequireUppercase = true;
     cfg.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
     cfg.Lockout.MaxFailedAccessAttempts = 3;
     cfg.Lockout.AllowedForNewUsers = true;
@@ -51,7 +48,6 @@ builder.Services.AddIdentity<User, IdentityRole>(cfg =>
         .AddDefaultTokenProviders()
         .AddEntityFrameworkStores<DataContext>();
 
-/*Inyección de base de datos*/
 var app = builder.Build();
 SeedData();
 

@@ -61,7 +61,7 @@ namespace RentACar.Data
                     ImageId = imageId,
                 };
 
-                await _userHelper.AddUserAsync(user, "123456");
+                await _userHelper.AddUserAsync(user, "ProyectoProgram2022*");
                 await _userHelper.AddUserToRoleAsync(user, userType.ToString());
 
                 string token = await _userHelper.GenerateEmailConfirmationTokenAsync(user);

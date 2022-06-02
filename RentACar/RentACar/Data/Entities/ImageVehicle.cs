@@ -14,7 +14,7 @@ namespace RentACar.Data.Entities
         //TODO: Pending to change to the correct path
         [Display(Name = "Foto")]
         public string ImageFullPath => ImageId == Guid.Empty
-            ? $"https://localhost:7279/Images/NoImage.png"
+            ? $"https://rentacarsproyect.azurewebsites.net/Images/NoImage.png"
             : $"https://rentacar1.blob.core.windows.net/vehicles/{ImageId}";
     }
 }

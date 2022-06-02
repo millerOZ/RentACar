@@ -50,7 +50,7 @@ namespace RentACar.Data.Entities
         //TODO: Pending to change to the correct path
         [Display(Name = "Fotos")]
         public string ImageFullPath => ImageVehicles == null || ImageVehicles.Count == 0
-            ? $"https://https://localhost:7203/images/noimage.png"
+            ? $"https://rentacarsproyect.azurewebsites.net/images/noimage.png"
             : ImageVehicles.FirstOrDefault().ImageFullPath;
 
 

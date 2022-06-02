@@ -72,6 +72,8 @@
                     <input type="hidden" asp-for="Id" />
                     <div class="form-group mt-2">
                         <a asp-action="Index" class="btn btn-outline-success">Regresar</a>
+                        @if (User.Identity.IsAuthenticated)
+                                {
                         <a onclick="showInPopup('@Url.Action("ShowReserve",
                      "Home",
                      new { id=Model.Id},
@@ -80,7 +82,7 @@
                                 class="btn btn-outline-primary">
                             <i class="fa fa-pencil-alt"></i>Reservar
                         </a>
-
+                                }
                     </div>
                 </form>
             </div>
