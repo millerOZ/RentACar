@@ -22,11 +22,11 @@ namespace RentACar.Controllers
         {
             ViewBag.UsersCount = _context.Users.Count();
             ViewBag.ProductsCount = _context.Vehicles.Count();
+            ViewBag.ReservesCount = _context.Reserves.Count();
+            ViewBag.VehiclesReservesCount = _context.Vehicles.Where(o => o.VehicleStatus == VehicleStatus.Reservado).Count();
+            ViewBag.VehiclesDispCount = _context.Vehicles.Where(o => o.VehicleStatus == VehicleStatus.Diponible).Count();
             ViewBag.NewReservesCount = _context.Reserves.Where(o => o.ReserveStatus == ReserveStatus.Nuevo).Count();
             ViewBag.ConfirmeReservesCount = _context.Reserves.Where(o => o.ReserveStatus == ReserveStatus.Confirmada).Count();
-            ViewBag.FinaliceReservesCount = _context.Reserves.Where(o => o.ReserveStatus == ReserveStatus.finalizada).Count();
-            ViewBag.FinaliceReservesCount = _context.Reserves.Where(o => o.ReserveStatus == ReserveStatus.finalizada).Count();
-            ViewBag.FinaliceReservesCount = _context.Reserves.Where(o => o.ReserveStatus == ReserveStatus.finalizada).Count();
 
 
             return View(await _context.Users
