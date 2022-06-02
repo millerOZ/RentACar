@@ -12,8 +12,8 @@ using RentACar.Data;
 namespace RentACar.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220601215009_reserveHome")]
-    partial class reserveHome
+    [Migration("20220602204625_finhsdbproyect")]
+    partial class finhsdbproyect
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

@@ -221,6 +221,12 @@ namespace RentACar.Controllers
         [Authorize]
         public async Task<IActionResult> ShowReserve(int? id)
         {
+
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Login", "Account");           }
+
+
             User user = await _userHelper.GetUserAsync(User.Identity.Name);
             if (user == null)
             {
@@ -250,6 +256,8 @@ namespace RentACar.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ShowReserve(ReserveViewModel model)
         {
+           
+
             User user = await _userHelper.GetUserAsync(User.Identity.Name);
             if (user == null)
             {

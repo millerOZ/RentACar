@@ -17,7 +17,7 @@
         border-radius: 15px;
         font-family: sans-serif;
         margin: 5px;
-        
+
     }
     .body {
           background-image: url(./Images/fondo.gif);
@@ -26,7 +26,7 @@
     background-attachment: fixed;
     background-size: cover;
     }
-    
+
 </style>
 <body class="body">
 
@@ -36,10 +36,10 @@
             Filtrar por?
         </button>
          <Ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-        @foreach (var item in Model.Categories)
-        {
-            <li> <a class="dropdown-item" href="@Url.Action("Index", "Home", new { searchString = item.Name})"> @item.Name&nbsp;</a></li>
-        }
+                @foreach (var item in Model.Categories)
+                {
+                <li> <a class="dropdown-item" href="@Url.Action("Index", "Home", new { searchString = item.Name})"> @item.Name&nbsp;</a></li>
+                }
         </ul>
      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
             Ordenar por?
@@ -60,57 +60,65 @@
     </div>
 </form>
 </div>
-
+@if (!User.Identity.IsAuthenticated)
+                        {
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+  <strong>Bienvenido a nuestra web de reservas!</strong> Si deseas reservar alguno de nuestros vehiculos por favor registrate, si ya estas registrado <a  asp-area="" asp-controller="Account" asp-action="Login">Inicia sesión</a>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+                        }
 <div class="row row-cols-1 row-cols-md-4 g-4 mt-2 ">
-    @if (Model.Vehicles.Count() > 0)
-    {
-        @foreach (var item in Model.Vehicles)
+        @if (Model.Vehicles.Count() > 0)
         {
-            <div class= "col">
-                <div class="card bg-secces border-dark h-100" text-dark" style="max-width: 800px;">
-                    <div class="row g-0">
-                        <h5 class="text-center mt-3">@item.Serie </h5>
-                    <div class="col-md-4 ">
-                        
-                        <div class="text-center zoom">
-                        <img src="@item.ImageFullPath" style="height:100px; max-width:100px; border-radius:50%;" class="img-fluid rounded-start" />
-                        </div>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <p class="card-text smfnt justify-content-end" >   @item.Brand</p>
-                            <p class="card-text smfnt justify-content-end">  @item.Plaque</p>
-                            <p class="text-smfnt justify-content-end"> @Html.DisplayFor(modelItem => item.PriceDay)</p>                       
-                        </div>
-                    </div>
-                    <div class="card-footer text-center">
-                        <a onclick="showInPopup('@Url.Action("Details", 
+            @foreach (var item in Model.Vehicles)
+            {
+                    <div class= "col">
+                        <div class="card bg-secces border-dark h-100" text-dark" style="max-width: 800px;">
+                            <div class="row g-0">
+                                <h5 class="text-center mt-3">@item.Serie </h5>
+                            <div class="col-md-4 ">
+
+                                <div class="text-center zoom">
+                                <img src="@item.ImageFullPath" style="height:100px; max-width:100px; border-radius:50%;" class="img-fluid rounded-start" />
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <p class="card-text smfnt justify-content-end" >   @item.Brand</p>
+                                    <p class="card-text smfnt justify-content-end">  @item.Plaque</p>
+                                    <p class="text-smfnt justify-content-end"> @Html.DisplayFor(modelItem => item.PriceDay)</p>                       
+                                </div>
+                            </div>
+                            <div class="card-footer text-center">
+                                <a onclick="showInPopup('@Url.Action("Details", 
                                                             "Home", new { id=item.Id },
                                                             Context.Request.Scheme)',
-                                                            'Reserva')" class="btn btn-sm btn-secondary"><i class="fa-solid fa-circle-info"></i> Ver
-                        </a>
-                          @* <a asp-action="ShowReserve" asp-route-id="@item.Id" class="btn btn-sm btn-secondary"><i class="fa-solid fa-circle-info"></i> Reservar</a>*@
-                        <button onclick="showInPopup('@Url.Action("ShowReserve", 
+                                                            'Reserva')" class="btn btn-sm btn-secondary"><i class="fa-solid fa-circle-info"></i>Ver</a>
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                                <button onclick="showInPopup('@Url.Action("ShowReserve", 
                                                             "Home", new { id=item.Id },
                                                             Context.Request.Scheme)',
                                                             'Cart')" class="btn btn-sm btn-primary">
-                                                            <i class="fa-solid fa-car-side"></i>Reservar</button>
-                    </div>
-                </div>
-             </div>
-          </div>
+                                                    <i class="fa-solid fa-car-side"></i>Reservar</button>
+
+                                }
+                                    </div>
+                        </div>
+                     </div>
+                  </div>
+            }
         }
-    }
-    else
-    {
-        <h3>No hay Vehiculos con su criterio de búsqueda</h3>
-    }
+        else
+        {
+            <h3>No hay Vehiculos con su criterio de búsqueda</h3>
+        }
 </div>
 
-@{
-    var prevDisabled = !Model.Vehicles.HasPreviousPage ? "disabled" : "";
-    var nextDisabled = !Model.Vehicles.HasNextPage ? "disabled" : "";
-}
+    @{
+        var prevDisabled = !Model.Vehicles.HasPreviousPage ? "disabled" : "";
+        var nextDisabled = !Model.Vehicles.HasNextPage ? "disabled" : "";
+    }
 
 <div class="mt-5">
     <a asp-action="Index"

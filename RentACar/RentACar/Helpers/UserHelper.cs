@@ -26,7 +26,7 @@ namespace RentACar.Helpers
             return await _userManager.CreateAsync(user, password);
         }
 
-        public async Task<User> AddUserAsync(AddUserViewModel model/* Guid imageId*/)
+        public async Task<User> AddUserAsync(AddUserViewModel model)
         {
             User user = new()
             {

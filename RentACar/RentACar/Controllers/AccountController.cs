@@ -116,7 +116,6 @@ namespace RentACar.Controllers
                 User user = await _userHelper.AddUserAsync(model);
                 if (user == null)
                 {
-                   // ModelState.AddModelError(string.Empty, "Este correo ya está siendo usado.");
                     _flashMessage.Danger("Este correo ya está siendo usado.");
 
                     return View(model);
